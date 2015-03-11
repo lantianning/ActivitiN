@@ -10,339 +10,383 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Diagnostics.Tracing;
+using System.Linq;
 
-/**
- * @author Tijs Rademakers
- */
-public class Process extends BaseElement implements FlowElementsContainer, HasExecutionListeners {
+namespace org.activiti.bpmn.model
+{
 
-  protected String name;
-  protected boolean executable = true;
-  protected String documentation;
-  protected IOSpecification ioSpecification;
-  protected List<ActivitiListener> executionListeners = new ArrayList<ActivitiListener>();
-  protected List<Lane> lanes = new ArrayList<Lane>();
-  protected List<FlowElement> flowElementList = new ArrayList<FlowElement>();
-  protected List<ValuedDataObject> dataObjects = new ArrayList<ValuedDataObject>();
-  protected List<Artifact> artifactList = new ArrayList<Artifact>();
-  protected List<String> candidateStarterUsers = new ArrayList<String>();
-  protected List<String> candidateStarterGroups = new ArrayList<String>();
-  protected List<EventListener> eventListeners = new ArrayList<EventListener>();
-  
-  public Process() {
-  	
-  }
+	public class Process : BaseElement, FlowElementsContainer, HasExecutionListeners
+	{
 
-  public String getDocumentation() {
-    return documentation;
-  }
+		public String Name { get; set; }
+		public String Documentation { get; set; }
+		public IOSpecification IoSpecification { get; set; }
+		protected Boolean _executable = true;
+		protected List<ActivitiListener> _executionListeners = new List<ActivitiListener>();
+		protected List<Lane> _lanes = new List<Lane>();
+		protected List<FlowElement> _flowElementList = new List<FlowElement>();
+		protected List<ValuedDataObject> _dataObjects = new List<ValuedDataObject>();
+		protected List<Artifact> _artifactList = new List<Artifact>();
+		protected List<String> _candidateStarterUsers = new List<String>();
+		protected List<String> _candidateStarterGroups = new List<String>();
+		protected List<EventListener> _eventListeners = new List<EventListener>();
 
-  public void setDocumentation(String documentation) {
-    this.documentation = documentation;
-  }
+		public bool Executable
+		{
+			get { return _executable; }
+			set { _executable = value; }
+		}
 
-  public String getName() {
-    return name;
-  }
+		public List<ActivitiListener> ExecutionListeners
+		{
+			get { return _executionListeners; }
+			set { _executionListeners = value; }
+		}
 
-  public void setName(String name) {
-    this.name = name;
-  }
+		public List<Lane> Lanes
+		{
+			get { return _lanes; }
+			set { _lanes = value; }
+		}
 
-  public boolean isExecutable() {
-    return executable;
-  }
+		public List<FlowElement> FlowElements
+		{
+			get { return _flowElementList; }
+			set { _flowElementList = value; }
+		}
 
-  public void setExecutable(boolean executable) {
-    this.executable = executable;
-  }
+		public List<ValuedDataObject> DataObjects
+		{
+			get { return _dataObjects; }
+			set { _dataObjects = value; }
+		}
 
-  public IOSpecification getIoSpecification() {
-    return ioSpecification;
-  }
+		public List<Artifact> Artifacts
+		{
+			get { return _artifactList; }
+			set { _artifactList = value; }
+		}
 
-  public void setIoSpecification(IOSpecification ioSpecification) {
-    this.ioSpecification = ioSpecification;
-  }
+		public List<string> CandidateStarterUsers
+		{
+			get { return _candidateStarterUsers; }
+			set { _candidateStarterUsers = value; }
+		}
 
-  public List<ActivitiListener> getExecutionListeners() {
-    return executionListeners;
-  }
+		public List<string> CandidateStarterGroups
+		{
+			get { return _candidateStarterGroups; }
+			set { _candidateStarterGroups = value; }
+		}
 
-  public void setExecutionListeners(List<ActivitiListener> executionListeners) {
-    this.executionListeners = executionListeners;
-  }
+		public List<EventListener> EventListeners
+		{
+			get { return _eventListeners; }
+			set { _eventListeners = value; }
+		}
 
-  public List<Lane> getLanes() {
-    return lanes;
-  }
+		public Dictionary<string, List<ExtensionElement>> ExtensionElements1
+		{
+			get { return _extensionElements; }
+			set { _extensionElements = value; }
+		}
 
-  public void setLanes(List<Lane> lanes) {
-    this.lanes = lanes;
-  }
-  
-  public FlowElement getFlowElement(String flowElementId) {
-    return findFlowElementInList(flowElementId);
-  }
-  
-  /**
+		public Dictionary<string, List<ExtensionAttribute>> Attributes1
+		{
+			get { return _attributes; }
+			set { _attributes = value; }
+		}
+
+
+		public Process()
+		{
+
+		}
+
+		public FlowElement getFlowElement(String flowElementId)
+		{
+			return findFlowElementInList(flowElementId);
+		}
+
+		/**
    * Searches the whole process, including subprocesses (unlike {@link getFlowElements(String)}
    */
-  public FlowElement getFlowElementRecursive(String flowElementId) {
-  	 return getFlowElementRecursive(this, flowElementId);
-  }
-  
-  protected FlowElement getFlowElementRecursive(FlowElementsContainer flowElementsContainer, String flowElementId) {
-    for (FlowElement flowElement : flowElementsContainer.getFlowElements()) {
-      if (flowElement.getId() != null && flowElement.getId().equals(flowElementId)) {
-        return flowElement;
-      } else if (flowElement instanceof FlowElementsContainer) {
-        FlowElement result =  getFlowElementRecursive((FlowElementsContainer) flowElement, flowElementId);
-        if (result != null) {
-          return result;
-        }
-      }
-    }
-    return null;
-  }
-  
-  /**
+
+		public FlowElement getFlowElementRecursive(String flowElementId)
+		{
+			return getFlowElementRecursive(this, flowElementId);
+		}
+
+		protected FlowElement getFlowElementRecursive(FlowElementsContainer flowElementsContainer, String flowElementId)
+		{
+			foreach (FlowElement flowElement in
+			flowElementsContainer.FlowElements)
+			{
+				if (flowElement.Id != null && flowElement.Id.Equals(flowElementId))
+				{
+					return flowElement;
+				}
+				else if (flowElement is FlowElementsContainer)
+				{
+					FlowElement result = getFlowElementRecursive((FlowElementsContainer) flowElement, flowElementId);
+					if (result != null)
+					{
+						return result;
+					}
+				}
+			}
+			return null;
+		}
+
+		/**
    * Searches the whole process, including subprocesses
    */
-  public FlowElementsContainer getFlowElementsContainerRecursive(String flowElementId) {
-     return getFlowElementsContainerRecursive(this, flowElementId);
-  }
-  
-  protected FlowElementsContainer getFlowElementsContainerRecursive(FlowElementsContainer flowElementsContainer, String flowElementId) {
-    for (FlowElement flowElement : flowElementsContainer.getFlowElements()) {
-      if (flowElement.getId() != null && flowElement.getId().equals(flowElementId)) {
-        return flowElementsContainer;
-      } else if (flowElement instanceof FlowElementsContainer) {
-        FlowElementsContainer result =  getFlowElementsContainerRecursive((FlowElementsContainer) flowElement, flowElementId);
-        if (result != null) {
-          return result;
-        }
-      }
-    }
-    return null;
-  }
-  
-  protected FlowElement findFlowElementInList(String flowElementId) {
-    for (FlowElement f : flowElementList) {
-      if (f.getId() != null && f.getId().equals(flowElementId)) {
-        return f;
-      }
-    }
-    return null;
-  }
-  
-  public Collection<FlowElement> getFlowElements() {
-    return flowElementList;
-  }
-  
-  public void addFlowElement(FlowElement element) {
-    flowElementList.add(element);
-  }
-  
-  public void removeFlowElement(String elementId) {
-    FlowElement element = findFlowElementInList(elementId);
-    if (element != null) {
-      flowElementList.remove(element);
-    }
-  }
-  
-  public Artifact getArtifact(String id) {
-    Artifact foundArtifact = null;
-    for (Artifact artifact : artifactList) {
-      if (id.equals(artifact.getId())) {
-        foundArtifact = artifact;
-        break;
-      }
-    }
-    return foundArtifact;
-  }
-  
-  public Collection<Artifact> getArtifacts() {
-    return artifactList;
-  }
-  
-  public void addArtifact(Artifact artifact) {
-    artifactList.add(artifact);
-  }
-  
-  public void removeArtifact(String artifactId) {
-    Artifact artifact = getArtifact(artifactId);
-    if (artifact != null) {
-      artifactList.remove(artifact);
-    }
-  }
 
-  public List<String> getCandidateStarterUsers() {
-    return candidateStarterUsers;
-  }
+		public FlowElementsContainer getFlowElementsContainerRecursive(String flowElementId)
+		{
+			return getFlowElementsContainerRecursive(this, flowElementId);
+		}
 
-  public void setCandidateStarterUsers(List<String> candidateStarterUsers) {
-    this.candidateStarterUsers = candidateStarterUsers;
-  }
+		protected FlowElementsContainer getFlowElementsContainerRecursive(FlowElementsContainer flowElementsContainer,
+			String flowElementId)
+		{
+			foreach (FlowElement flowElement in
+			flowElementsContainer.FlowElements)
+			{
+				if (flowElement.Id != null && flowElement.Id.Equals(flowElementId))
+				{
+					return flowElementsContainer;
+				}
+				else if (flowElement
+				is FlowElementsContainer)
+				{
+					FlowElementsContainer result = getFlowElementsContainerRecursive(
+						(FlowElementsContainer) flowElement, flowElementId);
+					if (result != null)
+					{
+						return result;
+					}
+				}
+			}
+			return null;
+		}
 
-  public List<String> getCandidateStarterGroups() {
-    return candidateStarterGroups;
-  }
+		protected FlowElement findFlowElementInList(String flowElementId)
+		{
+			foreach (FlowElement f in
+			_flowElementList)
+			{
+				if (f.Id != null && f.Id.Equals(flowElementId))
+				{
+					return f;
+				}
+			}
+			return null;
+		}
 
-  public void setCandidateStarterGroups(List<String> candidateStarterGroups) {
-    this.candidateStarterGroups = candidateStarterGroups;
-  }
-  
-  public List<EventListener> getEventListeners() {
-	  return eventListeners;
-  }
-  
-  public void setEventListeners(List<EventListener> eventListeners) {
-	  this.eventListeners = eventListeners;
-  }
-  
-  
-  public <FlowElementType extends FlowElement> List<FlowElementType> findFlowElementsOfType(Class<FlowElementType> type) {
-    	return findFlowElementsOfType(type, true);
-  }
+		public void addFlowElement(FlowElement element)
+		{
+			_flowElementList.Add(element);
+		}
 
-  @SuppressWarnings("unchecked")
-  public <FlowElementType extends FlowElement> List<FlowElementType> findFlowElementsOfType(Class<FlowElementType> type, boolean goIntoSubprocesses) {
-    List<FlowElementType> foundFlowElements = new ArrayList<FlowElementType>();
-    for (FlowElement flowElement : this.getFlowElements()) {
-      if (type.isInstance(flowElement)) {
-        foundFlowElements.add((FlowElementType) flowElement);
-      }
-      if (flowElement instanceof SubProcess) {
-      	if (goIntoSubprocesses) {
-      		foundFlowElements.addAll(findFlowElementsInSubProcessOfType((SubProcess) flowElement, type));
-      	}
-      }
-    }
-    return foundFlowElements;
-  }
-  
-  public <FlowElementType extends FlowElement> List<FlowElementType> findFlowElementsInSubProcessOfType(SubProcess subProcess, Class<FlowElementType> type) {
-  	return findFlowElementsInSubProcessOfType(subProcess, type, true);
-  }
-  
-  @SuppressWarnings("unchecked")
-  public <FlowElementType extends FlowElement> List<FlowElementType> findFlowElementsInSubProcessOfType(SubProcess subProcess, Class<FlowElementType> type, boolean goIntoSubprocesses) {
-    List<FlowElementType> foundFlowElements = new ArrayList<FlowElementType>();
-    for (FlowElement flowElement : subProcess.getFlowElements()) {
-      if (type.isInstance(flowElement)) {
-        foundFlowElements.add((FlowElementType) flowElement);
-      }
-      if (flowElement instanceof SubProcess) {
-      	if (goIntoSubprocesses) {
-      		foundFlowElements.addAll(findFlowElementsInSubProcessOfType((SubProcess) flowElement, type));
-      	}
-      }
-    }
-    return foundFlowElements;
-  }
-  
-  public FlowElementsContainer findParent(FlowElement childElement) {
-  	 return findParent(childElement, this);
-  }
-  
-  public FlowElementsContainer findParent(FlowElement childElement, FlowElementsContainer flowElementsContainer) {
-  	for (FlowElement flowElement : flowElementsContainer.getFlowElements()) {
-      if (childElement.getId() != null && childElement.getId().equals(flowElement.getId())) {
-        return flowElementsContainer;
-      }
-      if (flowElement instanceof FlowElementsContainer) {
-      	FlowElementsContainer result = findParent(childElement, (FlowElementsContainer) flowElement);
-      	if (result != null) {
-      		return result;
-      	}
-      }
-    }
-  	return null;
-  }
-  
-  public Process clone() {
-    Process clone = new Process();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(Process otherElement) {
-    super.setValues(otherElement);
-    
-    setName(otherElement.getName());
-    setExecutable(otherElement.isExecutable());
-    setDocumentation(otherElement.getDocumentation());
-    if (otherElement.getIoSpecification() != null) {
-      setIoSpecification(otherElement.getIoSpecification().clone());
-    }
-    
-    executionListeners = new ArrayList<ActivitiListener>();
-    if (otherElement.getExecutionListeners() != null && !otherElement.getExecutionListeners().isEmpty()) {
-      for (ActivitiListener listener : otherElement.getExecutionListeners()) {
-        executionListeners.add(listener.clone());
-      }
-    }
-    
-    candidateStarterUsers = new ArrayList<String>();
-    if (otherElement.getCandidateStarterUsers() != null && !otherElement.getCandidateStarterUsers().isEmpty()) {
-      candidateStarterUsers.addAll(otherElement.getCandidateStarterUsers());
-    }
-    
-    candidateStarterGroups = new ArrayList<String>();
-    if (otherElement.getCandidateStarterGroups() != null && !otherElement.getCandidateStarterGroups().isEmpty()) {
-      candidateStarterGroups.addAll(otherElement.getCandidateStarterGroups());
-    }
-    
-    eventListeners = new ArrayList<EventListener>();
-    if(otherElement.getEventListeners() != null && !otherElement.getEventListeners().isEmpty()) {
-    	for(EventListener listener : otherElement.getEventListeners()) {
-    		eventListeners.add(listener.clone());
-    	}
-    }
-    
-    /*
-     * This is required because data objects in Designer have no DI info
-     * and are added as properties, not flow elements
-     *
-     * Determine the differences between the 2 elements' data object
-     */
-    for (ValuedDataObject thisObject : getDataObjects()) {
-      boolean exists = false;
-      for (ValuedDataObject otherObject : otherElement.getDataObjects()) {
-        if (thisObject.getId().equals(otherObject.getId())) {
-          exists = true;
-        }
-      }
-      if (!exists) {
-        // missing object
-        removeFlowElement(thisObject.getId());
-      }
-    }
-    
-    dataObjects = new ArrayList<ValuedDataObject>();
-    if (otherElement.getDataObjects() != null && !otherElement.getDataObjects().isEmpty()) {
-      for (ValuedDataObject dataObject : otherElement.getDataObjects()) {
-          ValuedDataObject clone = dataObject.clone();
-          dataObjects.add(clone);
-          // add it to the list of FlowElements
-          // if it is already there, remove it first so order is same as data object list
-          removeFlowElement(clone.getId());
-          addFlowElement(clone);
-      }
-    }
-  }
+		public void removeFlowElement(String elementId)
+		{
+			FlowElement element = findFlowElementInList(elementId);
+			if (element != null)
+			{
+				_flowElementList.Remove(element);
+			}
+		}
 
-  public List<ValuedDataObject> getDataObjects() {
-    return dataObjects;
-  }
+		public Artifact getArtifact(String id)
+		{
+			return _artifactList.SingleOrDefault(a => a.Id == id);
+		}
 
-  public void setDataObjects(List<ValuedDataObject> dataObjects) {
-    this.dataObjects = dataObjects;
-  }
+		public void addArtifact(Artifact artifact)
+		{
+			_artifactList.Add(artifact);
+		}
+
+		public void removeArtifact(String artifactId)
+		{
+			Artifact artifact = getArtifact(artifactId);
+			if (artifact != null)
+			{
+				_artifactList.Remove(artifact);
+			}
+		}
+
+		private List<FlowElementType> findFlowElementsOfType(Type type, Boolean goIntoSubprocesses = true)
+		{
+			List<FlowElementType> foundFlowElements = new List<FlowElementType>();
+			foreach (FlowElement flowElement in
+			this.FlowElements)
+			{
+				if (type== typeof(flowElement))
+				{
+					foundFlowElements.Add((FlowElementType) flowElement);
+				}
+				if (flowElement
+				is SubProcess)
+				{
+					if (goIntoSubprocesses)
+					{
+						foundFlowElements.AddRange(findFlowElementsInSubProcessOfType((SubProcess) flowElement, type));
+					}
+				}
+			}
+			return foundFlowElements;
+		}
+
+
+		private List<FlowElementType> findFlowElementsInSubProcessOfType(SubProcess subProcess,
+			Type type, Boolean goIntoSubprocesses = true)
+		{
+			List<FlowElementType> foundFlowElements = new List<FlowElementType>();
+			foreach (FlowElement flowElement in
+			subProcess.FlowElements)
+			{
+				if (type== typeof(flowElement))
+				{
+					foundFlowElements.Add((FlowElementType) flowElement);
+				}
+				if (flowElement
+				is SubProcess)
+				{
+					if (goIntoSubprocesses)
+					{
+						foundFlowElements.AddRange(findFlowElementsInSubProcessOfType((SubProcess) flowElement, type));
+					}
+				}
+			}
+			return foundFlowElements;
+		}
+
+		public FlowElementsContainer findParent(FlowElement childElement)
+		{
+			return findParent(childElement, this);
+		}
+
+		public FlowElementsContainer findParent(FlowElement childElement, FlowElementsContainer flowElementsContainer)
+		{
+			foreach (FlowElement flowElement in flowElementsContainer.FlowElements)
+			{
+				if (childElement.Id != null && childElement.Id.Equals(flowElement.Id))
+				{
+					return flowElementsContainer;
+				}
+				var element = flowElement as FlowElementsContainer;
+				if (element != null)
+				{
+					var result = findParent(childElement, element);
+					if (result != null)
+					{
+						return result;
+					}
+				}
+			}
+			return null;
+		}
+
+		public override object clone()
+		{
+			Process clone = new Process();
+			clone.setValues(this);
+			return clone;
+		}
+
+		public void setValues(Process otherElement)
+		{
+			base.setValues(otherElement);
+
+			Name = otherElement.Name;
+			Executable = otherElement.Executable;
+			Documentation = otherElement.Documentation;
+			if (otherElement.IoSpecification != null)
+			{
+				IoSpecification = (IoSpecification)otherElement.IoSpecification.clone();
+			}
+
+			_executionListeners = new List<ActivitiListener>();
+			if (otherElement.ExecutionListeners != null && otherElement.ExecutionListeners.Any())
+			{
+				foreach (ActivitiListener listener in
+				otherElement.ExecutionListeners)
+				{
+					_executionListeners.Add((ActivitiListener)listener.clone());
+				}
+			}
+
+			_candidateStarterUsers = new List<String>();
+			if (otherElement.CandidateStarterUsers != null && otherElement.CandidateStarterUsers.Any())
+			{
+				_candidateStarterUsers.AddRange(otherElement.CandidateStarterUsers);
+			}
+
+			_candidateStarterGroups = new List<String>();
+			if (otherElement.CandidateStarterGroups != null && otherElement.CandidateStarterGroups.Any())
+			{
+				_candidateStarterGroups.AddRange(otherElement.CandidateStarterGroups);
+			}
+
+			if (otherElement.EventListeners != null && otherElement.EventListeners.Any())
+			{
+				_eventListeners = otherElement.EventListeners.Select(evt => (EventListener) listener.clone()).ToList();
+			}
+
+			/*
+	 * This is required because data objects in Designer have no DI info
+	 * and are added as properties, not flow elements
+	 *
+	 * Determine the differences between the 2 elements' data object
+	 */
+			foreach (ValuedDataObject thisObject in DataObjects)
+			{
+				Boolean exists = false;
+				foreach (ValuedDataObject otherObject in otherElement.DataObjects)
+				{
+					if (thisObject.Id.Equals(otherObject.Id))
+					{
+						exists = true;
+					}
+				}
+				if (!exists)
+				{
+					// missing object
+					removeFlowElement(thisObject.Id);
+				}
+			}
+
+			_dataObjects = new List<ValuedDataObject>();
+			if (otherElement.DataObjects != null && otherElement.DataObjects.Any())
+			{
+				foreach (ValuedDataObject dataObject in
+				otherElement.DataObjects)
+				{
+					ValuedDataObject clone = dataObject.clone();
+					_dataObjects.Add(clone);
+					// add it to the list of FlowElements
+					// if it is already there, remove it first so order is same as data object list
+					removeFlowElement(clone.Id);
+					addFlowElement(clone);
+				}
+			}
+		}
+
+		public List<ValuedDataObject> getDataObjects()
+		{
+			return _dataObjects;
+		}
+
+		public void setDataObjects(List<ValuedDataObject> dataObjects)
+		{
+			this._dataObjects = dataObjects;
+		}
+	}
 }

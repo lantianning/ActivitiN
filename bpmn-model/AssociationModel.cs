@@ -10,17 +10,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
+using System;
 
-/**
- * @author Tijs Rademakers
- */
-public class AssociationModel {
+namespace org.activiti.bpmn.model
+{
+    public class AssociationModel
+    {
 
-  public String id;
-  public AssociationDirection associationDirection;
-  public String sourceRef;
-  public String targetRef;
-  public Process parentProcess;
+        public String id;
+        public AssociationDirection associationDirection;
+        public String sourceRef;
+        public String targetRef;
+        public Process parentProcess;
+    }
 }

@@ -10,54 +10,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
-/**
- * @author Tijs Rademakers
- */
-public class Association extends Artifact {
+using System;
 
-  protected AssociationDirection associationDirection = AssociationDirection.NONE;
-  protected String sourceRef;
-  protected String targetRef;
+namespace org.activiti.bpmn.model
+{
 
-  public AssociationDirection getAssociationDirection() {
-    return associationDirection;
-  }
+    public class Association : Artifact
+    {
 
-  public void setAssociationDirection(AssociationDirection associationDirection) {
-    this.associationDirection = associationDirection;
-  }
+        protected AssociationDirection _associationDirection = AssociationDirection.None;
+        public String SourceRef { get; set; }
+        public String TargetRef { get; set; }
 
-  public String getSourceRef() {
-    return sourceRef;
-  }
+        public AssociationDirection associationDirection
+        {
+            get{return _associationDirection;}
+            set{_associationDirection = value;}                   
+        }
+        public override object clone()
+        {
+            Association clone = new Association();
+            clone.setValues(this);
+            return clone;
+        }
 
-  public void setSourceRef(String sourceRef) {
-    this.sourceRef = sourceRef;
-  }
+        public void setValues(Association otherElement)
+        {
+            base.setValues(otherElement);
+            SourceRef=otherElement.SourceRef;
+            TargetRef=otherElement.TargetRef;
 
-  public String getTargetRef() {
-    return targetRef;
-  }
-
-  public void setTargetRef(String targetRef) {
-    this.targetRef = targetRef;
-  }
-
-  public Association clone() {
-    Association clone = new Association();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(Association otherElement) {
-    super.setValues(otherElement);
-    setSourceRef(otherElement.getSourceRef());
-    setTargetRef(otherElement.getTargetRef());
-    
-    if (otherElement.getAssociationDirection() != null) {
-      setAssociationDirection(otherElement.getAssociationDirection());
+            if (otherElement.associationDirection != null)
+            {
+                associationDirection=otherElement.associationDirection;
+            }
+        }
     }
-  }
 }

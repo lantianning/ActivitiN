@@ -10,22 +10,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
-import java.util.Collection;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
-/**
- * @author Tijs Rademakers
- */
-public interface FlowElementsContainer {
+namespace org.activiti.bpmn.model
+{
+    public interface FlowElementsContainer
+    {
 
-  FlowElement getFlowElement(String id);
-  Collection<FlowElement> getFlowElements();
-  void addFlowElement(FlowElement element);
-  void removeFlowElement(String elementId);
-  
-  Artifact getArtifact(String id);
-  Collection<Artifact> getArtifacts();
-  void addArtifact(Artifact artifact);
-  void removeArtifact(String artifactId);
+        FlowElement getFlowElement(String id);
+        List<FlowElement> FlowElements { get; }
+        void addFlowElement(FlowElement element);
+        void removeFlowElement(String elementId);
+
+        Artifact getArtifact(String id);
+        List<Artifact> Artifacts { get; }
+        void addArtifact(Artifact artifact);
+        void removeArtifact(String artifactId);
+    }
 }
