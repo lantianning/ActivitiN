@@ -366,8 +366,7 @@ namespace org.activiti.bpmn.model
 			_dataObjects = new List<ValuedDataObject>();
 			if (otherElement.DataObjects != null && otherElement.DataObjects.Any())
 			{
-				foreach (ValuedDataObject dataObject in
-				otherElement.DataObjects)
+				foreach (ValuedDataObject dataObject in otherElement.DataObjects)
 				{
 					ValuedDataObject clone = dataObject.clone();
 					_dataObjects.Add(clone);
