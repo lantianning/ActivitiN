@@ -93,7 +93,7 @@ namespace org.activiti.bpmn.model
             {
                 foreach (BoundaryEvent Event in otherActivity.BoundaryEvents)
                 {
-                    _boundaryEvents.Add(Event.clone())
+                    _boundaryEvents.Add((BoundaryEvent)Event.clone())
                     ;
                 }
             }
