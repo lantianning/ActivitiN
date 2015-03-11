@@ -17,7 +17,6 @@ namespace org.activiti.bpmn.model
 {
     public class BoundaryEvent : Event
     {
-
         public Activity AttachedToRef { get; set; }
         public String AttachedToRefId { get; set; }
         protected Boolean _cancelActivity = true;
