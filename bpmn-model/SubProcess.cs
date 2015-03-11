@@ -10,138 +10,172 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
-import org.apache.commons.lang3.StringUtils;
+namespace org.activiti.bpmn.model
+{
 
 
-/**
- * @author Tijs Rademakers
- */
-public class SubProcess extends Activity implements FlowElementsContainer {
+    public class SubProcess : Activity, FlowElementsContainer
+    {
 
-  protected List<FlowElement> flowElementList = new ArrayList<FlowElement>();
-  protected List<Artifact> artifactList = new ArrayList<Artifact>();
-  protected List<ValuedDataObject> dataObjects = new ArrayList<ValuedDataObject>();
+        protected List<FlowElement> flowElementList = new List<FlowElement>();
+        protected List<Artifact> artifactList = new List<Artifact>();
+        protected List<ValuedDataObject> dataObjects = new List<ValuedDataObject>();
 
-  public FlowElement getFlowElement(String id) {
-    FlowElement foundElement = null;
-    if (StringUtils.isNotEmpty(id)) {  
-      for (FlowElement element : flowElementList) {
-        if (id.equals(element.getId())) {
-          foundElement = element;
-          break;
+        public List<FlowElement> FlowElements
+        {
+            get { return flowElementList; }
+            set { flowElementList = value; }
         }
-      }
-    }
-    return foundElement;
-  }
-  
-  public Collection<FlowElement> getFlowElements() {
-    return flowElementList;
-  }
-  
-  public void addFlowElement(FlowElement element) {
-    flowElementList.add(element);
-  }
-  
-  public void removeFlowElement(String elementId) {
-    FlowElement element = getFlowElement(elementId);
-    if (element != null) {
-      flowElementList.remove(element);
-    }
-  }
-  
-  public Artifact getArtifact(String id) {
-    Artifact foundArtifact = null;
-    for (Artifact artifact : artifactList) {
-      if (id.equals(artifact.getId())) {
-        foundArtifact = artifact;
-        break;
-      }
-    }
-    return foundArtifact;
-  }
-  
-  public Collection<Artifact> getArtifacts() {
-    return artifactList;
-  }
-  
-  public void addArtifact(Artifact artifact) {
-    artifactList.add(artifact);
-  }
-  
-  public void removeArtifact(String artifactId) {
-    Artifact artifact = getArtifact(artifactId);
-    if (artifact != null) {
-      artifactList.remove(artifact);
-    }
-  }
-  
-  public SubProcess clone() {
-    SubProcess clone = new SubProcess();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(SubProcess otherElement) {
-    super.setValues(otherElement);
 
-    /*
+        public List<Artifact> Artifacts
+        {
+            get { return artifactList; }
+            set { artifactList = value; }
+        }
+
+        public List<ValuedDataObject> DataObjects
+        {
+            get { return dataObjects; }
+            set { dataObjects = value; }
+        }
+
+        public FlowElement getFlowElement(String id)
+        {
+            FlowElement foundElement = null;
+            if (!String.IsNullOrWhiteSpace(id))
+            {
+                foreach (FlowElement element  in  flowElementList)
+                {
+                    if (id.Equals(element.Id))
+                    {
+                        foundElement = element;
+                        break;
+                    }
+                }
+            }
+            return foundElement;
+        }
+
+        public void addFlowElement(FlowElement element)
+        {
+            flowElementList.Add(element);
+        }
+
+        public void removeFlowElement(String elementId)
+        {
+            FlowElement element = getFlowElement(elementId);
+            if (element != null)
+            {
+                flowElementList.Remove(element);
+            }
+        }
+
+        public Artifact getArtifact(String id)
+        {
+            Artifact foundArtifact = null;
+            foreach (Artifact artifact  in  artifactList)
+            {
+                if (id.Equals(artifact.Id))
+                {
+                    foundArtifact = artifact;
+                    break;
+                }
+            }
+            return foundArtifact;
+        }
+
+ 
+        public void addArtifact(Artifact artifact)
+        {
+            artifactList.Add(artifact);
+        }
+
+        public void removeArtifact(String artifactId)
+        {
+            Artifact artifact = getArtifact(artifactId);
+            if (artifact != null)
+            {
+                artifactList.Remove(artifact);
+            }
+        }
+
+        public override object clone()
+        {
+            SubProcess clone = new SubProcess();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(SubProcess otherElement)
+        {
+            base.setValues(otherElement);
+
+            /*
      * This is required because data objects in Designer have no DI info
      * and are added as properties, not flow elements
      *
      * Determine the differences between the 2 elements' data object
      */
-    for (ValuedDataObject thisObject : getDataObjects()) {
-      boolean exists = false;
-      for (ValuedDataObject otherObject : otherElement.getDataObjects()) {
-        if (thisObject.getId().equals(otherObject.getId())) {
-          exists = true;
-        }
-      }
-      if (!exists) {
-        // missing object
-        removeFlowElement(thisObject.getId());
-      }
-    }
-    
-    dataObjects = new ArrayList<ValuedDataObject>();
-    if (otherElement.getDataObjects() != null && !otherElement.getDataObjects().isEmpty()) {
-      for (ValuedDataObject dataObject : otherElement.getDataObjects()) {
-          ValuedDataObject clone = dataObject.clone();
-          dataObjects.add(clone);
-          // add it to the list of FlowElements
-          // if it is already there, remove it first so order is same as data object list
-          removeFlowElement(clone.getId());
-          addFlowElement(clone);
-      }
-    }
-    
-    /*flowElementList = new ArrayList<FlowElement>();
+            foreach (ValuedDataObject thisObject  in DataObjects)
+            {
+                bool exists = false;
+                foreach (ValuedDataObject otherObject  in  otherElement.DataObjects)
+                {
+                    if (thisObject.Id.Equals(otherObject.Id))
+                    {
+                        exists = true;
+                    }
+                }
+                if (!exists)
+                {
+                    // missing object
+                    removeFlowElement(thisObject.Id);
+                }
+            }
+
+            dataObjects = new List<ValuedDataObject>();
+            if (otherElement.DataObjects != null && otherElement.DataObjects.Any())
+            {
+                foreach (ValuedDataObject dataObject  in  otherElement.DataObjects)
+                {
+                    ValuedDataObject clone = (ValuedDataObject)dataObject.clone();
+                    dataObjects.Add(clone);
+                    // add it to the list of FlowElements
+                    // if it is already there, remove it first so order is same as data object list
+                    removeFlowElement(clone.Id);
+                    addFlowElement(clone);
+                }
+            }
+
+            /*flowElementList = new List<FlowElement>();
     if (otherElement.getFlowElements() != null && otherElement.getFlowElements().size() > 0) {
       for (FlowElement element : otherElement.getFlowElements()) {
-        flowElementList.add(element.clone());
+        flowElementList.Add(element.clone());
       }
     }
     
-    artifactList = new ArrayList<Artifact>();
+    artifactList = new List<Artifact>();
     if (otherElement.getArtifacts() != null && otherElement.getArtifacts().size() > 0) {
       for (Artifact artifact : otherElement.getArtifacts()) {
-        artifactList.add(artifact.clone());
+        artifactList.Add(artifact.clone());
       }
     }*/
-  }
-  
-  public List<ValuedDataObject> getDataObjects() {
-    return dataObjects;
-  }
+        }
 
-  public void setDataObjects(List<ValuedDataObject> dataObjects) {
-    this.dataObjects = dataObjects;
-  }
+        public List<ValuedDataObject> getDataObjects()
+        {
+            return dataObjects;
+        }
+
+        public void setDataObjects(List<ValuedDataObject> dataObjects)
+        {
+            this.dataObjects = dataObjects;
+        }
+    }
 }

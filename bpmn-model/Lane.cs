@@ -10,61 +10,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
-import java.util.ArrayList;
-import java.util.List;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+namespace org.activiti.bpmn.model
+{
 
-/**
- * @author Tijs Rademakers
- */
-public class Lane extends BaseElement {
-  
-  protected String name;
-  protected Process parentProcess;
-  protected List<String> flowReferences = new ArrayList<String>();
-  
-  public String getName() {
-    return name;
-  }
+    public class Lane : BaseElement
+    {
 
-  public void setName(String name) {
-    this.name = name;
-  }
+        protected String Name { get; set; }
+        protected Process ParentProcess { get; set; }
+        protected List<String> flowReferences = new List<String>();
 
-  @JsonBackReference
-  public Process getParentProcess() {
-    return parentProcess;
-  }
-  
-  public void setParentProcess(Process parentProcess) {
-    this.parentProcess = parentProcess;
-  }
+        public List<string> FlowReferences
+        {
+            get { return flowReferences; }
+            set { flowReferences = value; }
+        }
 
-  public List<String> getFlowReferences() {
-    return flowReferences;
-  }
+        public override object clone()
+        {
+            Lane clone = new Lane();
+            clone.setValues(this);
+            return clone;
+        }
 
-  public void setFlowReferences(List<String> flowReferences) {
-    this.flowReferences = flowReferences;
-  }
-  
-  public Lane clone() {
-    Lane clone = new Lane();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(Lane otherElement) {
-    super.setValues(otherElement);
-    setName(otherElement.getName());
-    setParentProcess(otherElement.getParentProcess());
-    
-    flowReferences = new ArrayList<String>();
-    if (otherElement.getFlowReferences() != null && !otherElement.getFlowReferences().isEmpty()) {
-      flowReferences.addAll(otherElement.getFlowReferences());
+        public void setValues(Lane otherElement)
+        {
+            base.setValues(otherElement);
+            Name = otherElement.Name;
+            ParentProcess = otherElement.ParentProcess;
+
+            flowReferences = new List<String>();
+            if (otherElement.FlowReferences != null && otherElement.FlowReferences.Any())
+            {
+                flowReferences.AddRange(otherElement.FlowReferences);
+            }
+        }
     }
-  }
 }

@@ -1,35 +1,42 @@
-package org.activiti.bpmn.model;
+using System;
+
+namespace org.activiti.bpmn.model
+{
 
 
-/**
- * @author Lori Small
- */
-public abstract class ValuedDataObject extends DataObject {
+    public abstract class ValuedDataObject : DataObject
+    {
+        public Object _value;
 
-  protected Object value;
-  
-  public Object getValue() {
-    return value;
-  }
+        public object Value
+        {
+            get { return _value; }
+            set { setValue(value); }
+        }
 
-  public abstract void setValue(Object value);
-  
-  public abstract ValuedDataObject clone();
+        public abstract void setValue(Object value);
 
-  public void setValues(ValuedDataObject otherElement) {
-    super.setValues(otherElement);
-    if (otherElement.getValue() != null) {
-      setValue(otherElement.getValue());
+        public abstract override object clone();
+
+        public void setValues(ValuedDataObject otherElement)
+        {
+            base.setValues(otherElement);
+            if (otherElement.Value != null)
+            {
+                setValue(otherElement.Value);
+            }
+        }
+
+        public bool equals(ValuedDataObject otherObject)
+        {
+
+            if (!otherObject.ItemSubjectRef.StructureRef.Equals(ItemSubjectRef.StructureRef))
+                return false;
+            if (!otherObject.Id.Equals(Id)) return false;
+            if (!otherObject.Name.Equals(Name)) return false;
+            if (!otherObject.Value.Equals(_value.ToString())) return false;
+
+            return true;
+        }
     }
-  }
-  
-  public boolean equals(ValuedDataObject otherObject) {
-    
-    if (!otherObject.getItemSubjectRef().getStructureRef().equals(this.itemSubjectRef.getStructureRef())) return false;
-    if (!otherObject.getId().equals(this.id)) return false;
-    if (!otherObject.getName().equals(this.name)) return false;
-    if (!otherObject.getValue().equals(this.value.toString())) return false;
-    
-    return true;
-  }
 }

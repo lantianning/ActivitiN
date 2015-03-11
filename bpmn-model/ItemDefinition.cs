@@ -1,35 +1,38 @@
-package org.activiti.bpmn.model;
+using System;
 
-public class ItemDefinition extends BaseElement {
+namespace org.activiti.bpmn.model
+{
 
-  protected String structureRef;
-  protected String itemKind;
+    public class ItemDefinition : BaseElement
+    {
 
-  public String getStructureRef() {
-    return structureRef;
-  }
+        protected String _structureRef;
+        protected String _itemKind;
 
-  public void setStructureRef(String structureRef) {
-    this.structureRef = structureRef;
-  }
+        public string StructureRef
+        {
+            get { return _structureRef; }
+            set { _structureRef = value; }
+        }
 
-  public String getItemKind() {
-    return itemKind;
-  }
+        public string ItemKind
+        {
+            get { return _itemKind; }
+            set { _itemKind = value; }
+        }
 
-  public void setItemKind(String itemKind) {
-    this.itemKind = itemKind;
-  }
-  
-  public ItemDefinition clone() {
-    ItemDefinition clone = new ItemDefinition();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(ItemDefinition otherElement) {
-    super.setValues(otherElement);
-    setStructureRef(otherElement.getStructureRef());
-    setItemKind(otherElement.getItemKind());
-  }
+        public override object clone()
+        {
+            ItemDefinition clone = new ItemDefinition();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(ItemDefinition otherElement)
+        {
+            base.setValues(otherElement);
+            StructureRef = otherElement.StructureRef;
+            ItemKind = otherElement.ItemKind;
+        }
+    }
 }

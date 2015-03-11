@@ -1,39 +1,34 @@
-package org.activiti.bpmn.model;
+using System;
 
-/**
- * @author Lori Small
- */
-public class DataObject extends FlowElement {
+namespace org.activiti.bpmn.model
+{
 
-  protected ItemDefinition itemSubjectRef;
-  
-  public String getName() {
-    return name;
-  }
+    public class DataObject : FlowElement
+{
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    protected ItemDefinition _itemSubjectRef;
 
-  public ItemDefinition getItemSubjectRef() {
-    return itemSubjectRef;
-  }
+        public ItemDefinition ItemSubjectRef
+        {
+            get { return _itemSubjectRef; }
+            set { _itemSubjectRef = value; }
+        }
 
-  public void setItemSubjectRef(ItemDefinition itemSubjectRef) {
-    this.itemSubjectRef = itemSubjectRef;
-  }
 
-  public DataObject clone() {
-    DataObject clone = new DataObject();
-    clone.setValues(this);
-    return clone;
-  }
+        public override object clone()
+    {
+        DataObject clone = new DataObject();
+        clone.setValues(this);
+        return clone;
+    }
 
-  public void setValues(DataObject otherElement) {
-    super.setValues(otherElement);
-    
-    setId(otherElement.getId());
-    setName(otherElement.getName());
-    setItemSubjectRef(otherElement.getItemSubjectRef());
-  }
+    public void setValues(DataObject otherElement)
+    {
+        base.setValues(otherElement);
+
+        Id = otherElement.Id;
+        Name = otherElement.Name;
+        ItemSubjectRef = otherElement.ItemSubjectRef;
+    }
+}
 }

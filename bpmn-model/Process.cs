@@ -14,7 +14,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.Tracing;
 using System.Linq;
 
 namespace org.activiti.bpmn.model
@@ -222,15 +221,14 @@ namespace org.activiti.bpmn.model
 			}
 		}
 
-		private List<FlowElementType> findFlowElementsOfType(Type type, Boolean goIntoSubprocesses = true)
+		private List<FlowElement> findFlowElementsOfType(Type type, Boolean goIntoSubprocesses = true)
 		{
-			List<FlowElementType> foundFlowElements = new List<FlowElementType>();
-			foreach (FlowElement flowElement in
-			this.FlowElements)
+			List<FlowElement> foundFlowElements = new List<FlowElement>();
+			foreach (FlowElement flowElement in FlowElements)
 			{
-				if (type== typeof(flowElement))
+				if (type == flowElement.GetType())
 				{
-					foundFlowElements.Add((FlowElementType) flowElement);
+					foundFlowElements.Add((FlowElement) flowElement);
 				}
 				if (flowElement
 				is SubProcess)
@@ -245,16 +243,16 @@ namespace org.activiti.bpmn.model
 		}
 
 
-		private List<FlowElementType> findFlowElementsInSubProcessOfType(SubProcess subProcess,
+		private List<FlowElement> findFlowElementsInSubProcessOfType(SubProcess subProcess,
 			Type type, Boolean goIntoSubprocesses = true)
 		{
-			List<FlowElementType> foundFlowElements = new List<FlowElementType>();
+			List<FlowElement> foundFlowElements = new List<FlowElement>();
 			foreach (FlowElement flowElement in
 			subProcess.FlowElements)
 			{
-				if (type== typeof(flowElement))
+				if (type== flowElement.GetType())
 				{
-					foundFlowElements.Add((FlowElementType) flowElement);
+					foundFlowElements.Add((FlowElement) flowElement);
 				}
 				if (flowElement
 				is SubProcess)
@@ -310,7 +308,7 @@ namespace org.activiti.bpmn.model
 			Documentation = otherElement.Documentation;
 			if (otherElement.IoSpecification != null)
 			{
-				IoSpecification = (IoSpecification)otherElement.IoSpecification.clone();
+				IoSpecification = (IOSpecification)otherElement.IoSpecification.clone();
 			}
 
 			_executionListeners = new List<ActivitiListener>();
@@ -337,7 +335,7 @@ namespace org.activiti.bpmn.model
 
 			if (otherElement.EventListeners != null && otherElement.EventListeners.Any())
 			{
-				_eventListeners = otherElement.EventListeners.Select(evt => (EventListener) listener.clone()).ToList();
+				_eventListeners = otherElement.EventListeners.Select(evt => (EventListener) evt.clone()).ToList();
 			}
 
 			/*
@@ -368,7 +366,7 @@ namespace org.activiti.bpmn.model
 			{
 				foreach (ValuedDataObject dataObject in otherElement.DataObjects)
 				{
-					ValuedDataObject clone = dataObject.clone();
+					ValuedDataObject clone = (ValuedDataObject)dataObject.clone();
 					_dataObjects.Add(clone);
 					// add it to the list of FlowElements
 					// if it is already there, remove it first so order is same as data object list
