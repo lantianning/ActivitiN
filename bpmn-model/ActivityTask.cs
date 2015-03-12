@@ -10,11 +10,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+namespace org.activiti.bpmn.model
+{
 
-/**
- * @author Tijs Rademakers
- */
-public abstract class Task extends Activity {
+    public abstract class ActivityTask : Activity
+    {
 
+    }
 }

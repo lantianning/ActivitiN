@@ -10,111 +10,113 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
-import java.util.ArrayList;
-import java.util.List;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-/**
- * @author Tijs Rademakers
- */
-public class FormProperty extends BaseElement {
+namespace org.activiti.bpmn.model
+{
 
-  protected String name;
-  protected String expression;
-  protected String variable;
-  protected String type;
-  protected String defaultExpression;
-  protected String datePattern;
-  protected boolean readable = true;
-  protected boolean writeable = true;
-  protected boolean required;
-  protected List<FormValue> formValues = new ArrayList<FormValue>();
 
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
-  }
-  public String getExpression() {
-    return expression;
-  }
-  public void setExpression(String expression) {
-    this.expression = expression;
-  }
-  public String getVariable() {
-    return variable;
-  }
-  public void setVariable(String variable) {
-    this.variable = variable;
-  }
-  public String getType() {
-    return type;
-  }
-  public String getDefaultExpression() {
-    return defaultExpression;
-  }
-  public void setDefaultExpression(String defaultExpression) {
-    this.defaultExpression = defaultExpression;
-  }
-  public void setType(String type) {
-    this.type = type;
-  }
-  public String getDatePattern() {
-    return datePattern;
-  }
-  public void setDatePattern(String datePattern) {
-    this.datePattern = datePattern;
-  }
-  public boolean isReadable() {
-    return readable;
-  }
-  public void setReadable(boolean readable) {
-    this.readable = readable;
-  }
-  public boolean isWriteable() {
-    return writeable;
-  }
-  public void setWriteable(boolean writeable) {
-    this.writeable = writeable;
-  }
-  public boolean isRequired() {
-    return required;
-  }
-  public void setRequired(boolean required) {
-    this.required = required;
-  }
-  public List<FormValue> getFormValues() {
-    return formValues;
-  }
-  public void setFormValues(List<FormValue> formValues) {
-    this.formValues = formValues;
-  }
-  
-  public FormProperty clone() {
-    FormProperty clone = new FormProperty();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(FormProperty otherProperty) {
-    super.setValues(otherProperty);
-    setName(otherProperty.getName());
-    setExpression(otherProperty.getExpression());
-    setVariable(otherProperty.getVariable());
-    setType(otherProperty.getType());
-    setDefaultExpression(otherProperty.getDefaultExpression());
-    setDatePattern(otherProperty.getDatePattern());
-    setReadable(otherProperty.isReadable());
-    setWriteable(otherProperty.isWriteable());
-    setRequired(otherProperty.isRequired());
-    
-    formValues = new ArrayList<FormValue>();
-    if (otherProperty.getFormValues() != null && !otherProperty.getFormValues().isEmpty()) {
-      for (FormValue formValue : otherProperty.getFormValues()) {
-        formValues.add(formValue.clone());
-      }
+    public class FormProperty : BaseElement
+    {
+
+        protected String name;
+        protected String expression;
+        protected String variable;
+        protected String type;
+        protected String defaultExpression;
+        protected String datePattern;
+        protected bool readable = true;
+        protected bool writeable = true;
+        protected bool required;
+        protected List<FormValue> formValues = new List<FormValue>();
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public string Expression
+        {
+            get { return expression; }
+            set { expression = value; }
+        }
+
+        public string Variable
+        {
+            get { return variable; }
+            set { variable = value; }
+        }
+
+        public string Type
+        {
+            get { return type; }
+            set { type = value; }
+        }
+
+        public string DefaultExpression
+        {
+            get { return defaultExpression; }
+            set { defaultExpression = value; }
+        }
+
+        public string DatePattern
+        {
+            get { return datePattern; }
+            set { datePattern = value; }
+        }
+
+        public bool Readable
+        {
+            get { return readable; }
+            set { readable = value; }
+        }
+
+        public bool Writeable
+        {
+            get { return writeable; }
+            set { writeable = value; }
+        }
+
+        public bool Required
+        {
+            get { return required; }
+            set { required = value; }
+        }
+
+        public List<FormValue> FormValues
+        {
+            get { return formValues; }
+            set { formValues = value; }
+        }
+
+        public override object clone()
+        {
+            FormProperty clone = new FormProperty();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(FormProperty otherProperty)
+        {
+            base.setValues(otherProperty);
+            Name = otherProperty.Name;
+            Expression = otherProperty.Expression;
+            Variable = otherProperty.Variable;
+            Type = otherProperty.Type;
+            DefaultExpression = otherProperty.DefaultExpression;
+            DatePattern = otherProperty.DatePattern;
+            Readable = otherProperty.Readable;
+            Writeable = otherProperty.Writeable;
+            Required = otherProperty.Required;
+
+            if (otherProperty.FormValues != null)
+            {
+                formValues = otherProperty.FormValues.Select(f => (FormValue) f.clone()).ToList();
+            }
+        }
     }
-  }
 }

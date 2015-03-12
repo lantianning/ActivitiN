@@ -10,175 +10,170 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-/**
- * @author Tijs Rademakers
- */
-public class UserTask extends Task {
+namespace org.activiti.bpmn.model
+{
 
-  protected String assignee;
-  protected String owner;
-  protected String priority;
-  protected String formKey;
-  protected String dueDate;
-  protected String category;
-  protected List<String> candidateUsers = new ArrayList<String>();
-  protected List<String> candidateGroups = new ArrayList<String>();
-  protected List<FormProperty> formProperties = new ArrayList<FormProperty>();
-  protected List<ActivitiListener> taskListeners = new ArrayList<ActivitiListener>();
-  protected String skipExpression;
+	public class UserTask : ActivityTask
+	{
 
-  protected Map<String, Set<String>> customUserIdentityLinks = new HashMap<String, Set<String>>(); 
-  protected Map<String, Set<String>> customGroupIdentityLinks = new HashMap<String, Set<String>>(); 
+		protected String assignee;
+		protected String owner;
+		protected String priority;
+		protected String formKey;
+		protected String dueDate;
+		protected String category;
+		protected List<String> candidateUsers = new List<String>();
+		protected List<String> candidateGroups = new List<String>();
+		protected List<FormProperty> formProperties = new List<FormProperty>();
+		protected List<ActivitiListener> taskListeners = new List<ActivitiListener>();
+		protected String skipExpression;
+		protected Dictionary<String, List<String>> customUserIdentityLinks = new Dictionary<String, List<String>>();
+		protected Dictionary<String, List<String>> customGroupIdentityLinks = new Dictionary<String, List<String>>();
 
-  public String getAssignee() {
-    return assignee;
-  }
-  public void setAssignee(String assignee) {
-    this.assignee = assignee;
-  }
-  public String getOwner() {
-    return owner;
-  }
-  public void setOwner(String owner) {
-    this.owner = owner;
-  }
-  public String getPriority() {
-    return priority;
-  }
-  public void setPriority(String priority) {
-    this.priority = priority;
-  }
-  public String getFormKey() {
-    return formKey;
-  }
-  public void setFormKey(String formKey) {
-    this.formKey = formKey;
-  }
-  public String getDueDate() {
-    return dueDate;
-  }
-  public void setDueDate(String dueDate) {
-    this.dueDate = dueDate;
-  }
-  public String getCategory() {
-		return category;
+		public string Assignee
+		{
+			get { return assignee; }
+			set { assignee = value; }
+		}
+
+		public string Owner
+		{
+			get { return owner; }
+			set { owner = value; }
+		}
+
+		public string Priority
+		{
+			get { return priority; }
+			set { priority = value; }
+		}
+
+		public string FormKey
+		{
+			get { return formKey; }
+			set { formKey = value; }
+		}
+
+		public string DueDate
+		{
+			get { return dueDate; }
+			set { dueDate = value; }
+		}
+
+		public string Category
+		{
+			get { return category; }
+			set { category = value; }
+		}
+
+		public List<string> CandidateUsers
+		{
+			get { return candidateUsers; }
+			set { candidateUsers = value; }
+		}
+
+		public List<string> CandidateGroups
+		{
+			get { return candidateGroups; }
+			set { candidateGroups = value; }
+		}
+
+		public List<FormProperty> FormProperties
+		{
+			get { return formProperties; }
+			set { formProperties = value; }
+		}
+
+		public List<ActivitiListener> TaskListeners
+		{
+			get { return taskListeners; }
+			set { taskListeners = value; }
+		}
+
+		public string SkipExpression
+		{
+			get { return skipExpression; }
+			set { skipExpression = value; }
+		}
+
+		public Dictionary<string, List<string>> CustomUserIdentityLinks
+		{
+			get { return customUserIdentityLinks; }
+			set { customUserIdentityLinks = value; }
+		}
+
+		public Dictionary<string, List<string>> CustomGroupIdentityLinks
+		{
+			get { return customGroupIdentityLinks; }
+			set { customGroupIdentityLinks = value; }
+		}
+
+		public void addCustomUserIdentityLink(String userId, String type)
+		{
+			List<String> userIdentityList = customUserIdentityLinks[type];
+
+			if (userIdentityList == null)
+			{
+				userIdentityList = new List<String>();
+				customUserIdentityLinks.Add(type, userIdentityList);
+			}
+
+			userIdentityList.Add(userId);
+		}
+
+		public void addCustomGroupIdentityLink(String groupId, String type)
+		{
+			List<String> groupIdentityList = customGroupIdentityLinks[type];
+
+			if (groupIdentityList == null)
+			{
+				groupIdentityList = new List<String>();
+				customGroupIdentityLinks.Add(type, groupIdentityList);
+			}
+
+			groupIdentityList.Add(groupId);
+		}
+
+
+		public override object clone()
+		{
+			UserTask clone = new UserTask();
+			clone.setValues(this);
+			return clone;
+		}
+
+		public void setValues(UserTask otherElement)
+		{
+			base.setValues(otherElement);
+			Assignee = otherElement.Assignee;
+			Owner = otherElement.Owner;
+			FormKey = otherElement.FormKey;
+			DueDate = otherElement.DueDate;
+			Priority = otherElement.Priority;
+			Category = otherElement.Category;
+
+			CandidateGroups = new List<String>(otherElement.CandidateGroups);
+			CandidateUsers = new List<String>(otherElement.CandidateUsers);
+
+			CustomGroupIdentityLinks = otherElement.customGroupIdentityLinks;
+			CustomUserIdentityLinks = otherElement.customUserIdentityLinks;
+
+			
+			if (otherElement.FormProperties != null && otherElement.FormProperties.Any())
+			{
+			    formProperties = otherElement.FormProperties.Select(act => (FormProperty) act.clone()).ToList();
+			}
+
+
+			if (otherElement.TaskListeners != null && otherElement.TaskListeners.Any())
+			{
+			    taskListeners = otherElement.TaskListeners.Select(act => (ActivitiListener) act.clone()).ToList();
+			}
+		}
 	}
-	public void setCategory(String category) {
-		this.category = category;
-	}
-	public List<String> getCandidateUsers() {
-    return candidateUsers;
-  }
-  public void setCandidateUsers(List<String> candidateUsers) {
-    this.candidateUsers = candidateUsers;
-  }
-  public List<String> getCandidateGroups() {
-    return candidateGroups;
-  }
-  public void setCandidateGroups(List<String> candidateGroups) {
-    this.candidateGroups = candidateGroups;
-  }
-  public List<FormProperty> getFormProperties() {
-    return formProperties;
-  }
-  public void setFormProperties(List<FormProperty> formProperties) {
-    this.formProperties = formProperties;
-  }
-  public List<ActivitiListener> getTaskListeners() {
-    return taskListeners;
-  }
-  public void setTaskListeners(List<ActivitiListener> taskListeners) {
-    this.taskListeners = taskListeners;
-  }
-  
-  public void addCustomUserIdentityLink(String userId, String type){
-	  Set<String> userIdentitySet = customUserIdentityLinks.get(type);
-	  
-	  if(userIdentitySet == null){
-		  userIdentitySet = new HashSet<String>();
-		  customUserIdentityLinks.put(type, userIdentitySet);
-	  }
-	  
-	  userIdentitySet.add(userId);
-  }
-  
-  public void addCustomGroupIdentityLink(String groupId, String type){
-	  Set<String> groupIdentitySet = customGroupIdentityLinks.get(type);
-	  
-	  if(groupIdentitySet == null){
-		  groupIdentitySet = new HashSet<String>();
-		  customGroupIdentityLinks.put(type, groupIdentitySet);
-	  }
-	  
-	  groupIdentitySet.add(groupId);
-  }
-  
-  public Map<String, Set<String>> getCustomUserIdentityLinks() {
-	return customUserIdentityLinks;
-  }
-  
-  public void setCustomUserIdentityLinks(
-		Map<String, Set<String>> customUserIdentityLinks) {
-	this.customUserIdentityLinks = customUserIdentityLinks;
-  }
-  
-  public Map<String, Set<String>> getCustomGroupIdentityLinks() {
-	return customGroupIdentityLinks;
-  }
-  
-  public void setCustomGroupIdentityLinks(Map<String, Set<String>> customGroupIdentityLinks) {
-    this.customGroupIdentityLinks = customGroupIdentityLinks;
-  }
-  
-  public String getSkipExpression() {
-    return skipExpression;
-  }
-  
-  public void setSkipExpression(String skipExpression) {
-    this.skipExpression = skipExpression;
-  }
-  public UserTask clone() {
-    UserTask clone = new UserTask();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(UserTask otherElement) {
-    super.setValues(otherElement);
-    setAssignee(otherElement.getAssignee());
-    setOwner(otherElement.getOwner());
-    setFormKey(otherElement.getFormKey());
-    setDueDate(otherElement.getDueDate());
-    setPriority(otherElement.getPriority());
-    setCategory(otherElement.getCategory());
-    
-    setCandidateGroups(new ArrayList<String>(otherElement.getCandidateGroups()));
-    setCandidateUsers(new ArrayList<String>(otherElement.getCandidateUsers()));
-    
-    setCustomGroupIdentityLinks(otherElement.customGroupIdentityLinks);
-    setCustomUserIdentityLinks(otherElement.customUserIdentityLinks);
-    
-    formProperties = new ArrayList<FormProperty>();
-    if (otherElement.getFormProperties() != null && !otherElement.getFormProperties().isEmpty()) {
-      for (FormProperty property : otherElement.getFormProperties()) {
-        formProperties.add(property.clone());
-      }
-    }
-    
-    taskListeners = new ArrayList<ActivitiListener>();
-    if (otherElement.getTaskListeners() != null && !otherElement.getTaskListeners().isEmpty()) {
-      for (ActivitiListener listener : otherElement.getTaskListeners()) {
-        taskListeners.add(listener.clone());
-      }
-    }
-  }
 }

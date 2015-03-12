@@ -10,32 +10,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+
+using System;
+
+namespace org.activiti.bpmn.model
+{
+
+    public class FormValue : BaseElement
+    {
+
+        protected String Name { get; set; }
 
 
-/**
- * @author Tijs Rademakers
- */
-public class FormValue extends BaseElement {
+        public override object clone()
+        {
+            FormValue clone = new FormValue();
+            clone.setValues(this);
+            return clone;
+        }
 
-  protected String name;
-  
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-  
-  public FormValue clone() {
-    FormValue clone = new FormValue();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(FormValue otherValue) {
-    super.setValues(otherValue);
-    setName(otherValue.getName());
-  }
+        public void setValues(FormValue otherValue)
+        {
+            base.setValues(otherValue);
+            Name=otherValue.Name;
+        }
+    }
 }
