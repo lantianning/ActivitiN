@@ -1,41 +1,27 @@
-package org.activiti.bpmn.model;
+using System;
 
+namespace org.activiti.bpmn.model
+{
+    public class Import : BaseElement
+    {
 
-public class Import extends BaseElement {
+        protected String ImportType { get; set; }
+        protected String Location { get; set; }
+        protected String Namespace { get; set; }
 
-  protected String importType;
-  protected String location;
-  protected String namespace;
-  
-  public String getImportType() {
-    return importType;
-  }
-  public void setImportType(String importType) {
-    this.importType = importType;
-  }
-  public String getLocation() {
-    return location;
-  }
-  public void setLocation(String location) {
-    this.location = location;
-  }
-  public String getNamespace() {
-    return namespace;
-  }
-  public void setNamespace(String namespace) {
-    this.namespace = namespace;
-  }
-  
-  public Import clone() {
-    Import clone = new Import();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(Import otherElement) {
-    super.setValues(otherElement);
-    setImportType(otherElement.getImportType());
-    setLocation(otherElement.getLocation());
-    setNamespace(otherElement.getNamespace());
-  }
+        public override object clone()
+        {
+            Import clone = new Import();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(Import otherElement)
+        {
+            base.setValues(otherElement);
+            ImportType = otherElement.ImportType;
+            Location = otherElement.Location;
+            Namespace = otherElement.Namespace;
+        }
+    }
 }

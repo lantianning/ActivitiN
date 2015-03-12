@@ -10,50 +10,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
-/**
- * @author Tijs Rademakers
- */
-public class Message extends BaseElement {
+using System;
 
-  protected String name;
-  protected String itemRef;
-  
-  public Message() {
-  }
-  
-  public Message(String id, String name, String itemRef) {
-    this.id = id;
-    this.name = name;
-    this.itemRef = itemRef;
-  }
+namespace org.activiti.bpmn.model
+{
+    public class Message : BaseElement
+    {
 
-  public String getName() {
-    return name;
-  }
+        protected String Name { get; set; }
+        protected String ItemRef { get; set; }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+        public Message()
+        {
+        }
 
-  public String getItemRef() {
-    return itemRef;
-  }
+        public Message(String id, String name, String itemRef)
+        {
+            Id = id;
+            Name = name;
+            ItemRef = itemRef;
+        }
 
-  public void setItemRef(String itemRef) {
-    this.itemRef = itemRef;
-  }
-  
-  public Message clone() {
-    Message clone = new Message();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(Message otherElement) {
-    super.setValues(otherElement);
-    setName(otherElement.getName());
-    setItemRef(otherElement.getItemRef());
-  }
+        public override object clone()
+        {
+            Message clone = new Message();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(Message otherElement)
+        {
+            base.setValues(otherElement);
+            Name=otherElement.Name;
+            ItemRef=otherElement.ItemRef;
+        }
+    }
 }

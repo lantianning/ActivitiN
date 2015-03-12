@@ -10,68 +10,69 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
+using System;
 
-/**
- * @author Tijs Rademakers
- */
-public class GraphicInfo {
-  
-  protected double x;
-  protected double y;
-  protected double height;
-  protected double width;
-  protected FlowElement element;
-  protected Boolean expanded;
-  protected int xmlRowNumber;
-  protected int xmlColumnNumber;
-  public double getX() {
-    return x;
-  }
-  public void setX(double x) {
-    this.x = x;
-  }
-  public double getY() {
-    return y;
-  }
-  public void setY(double y) {
-    this.y = y;
-  }
-  public double getHeight() {
-    return height;
-  }
-  public void setHeight(double height) {
-    this.height = height;
-  }
-  public double getWidth() {
-    return width;
-  }
-  public void setWidth(double width) {
-    this.width = width;
-  }
-  public Boolean getExpanded() {
-    return expanded;
-  }
-  public void setExpanded(Boolean expanded) {
-    this.expanded = expanded;
-  }
-  public FlowElement getElement() {
-    return element;
-  }
-  public void setElement(FlowElement element) {
-    this.element = element;
-  }
-  public int getXmlRowNumber() {
-    return xmlRowNumber;
-  }
-  public void setXmlRowNumber(int xmlRowNumber) {
-    this.xmlRowNumber = xmlRowNumber;
-  }
-  public int getXmlColumnNumber() {
-    return xmlColumnNumber;
-  }
-  public void setXmlColumnNumber(int xmlColumnNumber) {
-    this.xmlColumnNumber = xmlColumnNumber;
-  }
+namespace org.activiti.bpmn.model
+{
+    public class GraphicInfo
+    {
+
+        protected double x;
+        protected double y;
+        protected double height;
+        protected double width;
+        protected FlowElement element;
+        protected Boolean expanded;
+        protected int xmlRowNumber;
+        protected int xmlColumnNumber;
+
+        public double X
+        {
+            get { return x; }
+            set { x = value; }
+        }
+
+        public double Y
+        {
+            get { return y; }
+            set { y = value; }
+        }
+
+        public double Height
+        {
+            get { return height; }
+            set { height = value; }
+        }
+
+        public double Width
+        {
+            get { return width; }
+            set { width = value; }
+        }
+
+        public FlowElement Element
+        {
+            get { return element; }
+            set { element = value; }
+        }
+
+        public bool Expanded
+        {
+            get { return expanded; }
+            set { expanded = value; }
+        }
+
+        public int XmlRowNumber
+        {
+            get { return xmlRowNumber; }
+            set { xmlRowNumber = value; }
+        }
+
+        public int XmlColumnNumber
+        {
+            get { return xmlColumnNumber; }
+            set { xmlColumnNumber = value; }
+        }
+    }
 }

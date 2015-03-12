@@ -10,487 +10,582 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 
-import org.apache.commons.lang3.StringUtils;
+namespace org.activiti.bpmn.model
+{
+    public class BpmnModel
+    {
 
+        protected Dictionary<String, List<ExtensionAttribute>> definitionsAttributes =
+            new Dictionary<String, List<ExtensionAttribute>>();
 
-/**
- * @author Tijs Rademakers
- */
-public class BpmnModel {
-  
-  protected Map<String, List<ExtensionAttribute>> definitionsAttributes = new LinkedHashMap<String, List<ExtensionAttribute>>();
-	protected List<Process> processes = new ArrayList<Process>();
-	protected Map<String, GraphicInfo> locationMap = new LinkedHashMap<String, GraphicInfo>();
-	protected Map<String, GraphicInfo> labelLocationMap = new LinkedHashMap<String, GraphicInfo>();
-	protected Map<String, List<GraphicInfo>> flowLocationMap = new LinkedHashMap<String, List<GraphicInfo>>();
-	protected List<Signal> signals = new ArrayList<Signal>();
-	protected Map<String, MessageFlow> messageFlowMap = new LinkedHashMap<String, MessageFlow>();
-	protected Map<String, Message> messageMap = new LinkedHashMap<String, Message>();
-	protected Map<String, String> errorMap = new LinkedHashMap<String, String>();
-	protected Map<String, ItemDefinition> itemDefinitionMap = new LinkedHashMap<String, ItemDefinition>();
-	protected Map<String, DataStore> dataStoreMap = new LinkedHashMap<String, DataStore>();
-	protected List<Pool> pools = new ArrayList<Pool>();
-	protected List<Import> imports = new ArrayList<Import>();
-	protected List<Interface> interfaces = new ArrayList<Interface>();
-	protected List<Artifact> globalArtifacts = new ArrayList<Artifact>();
-	protected Map<String, String> namespaceMap = new LinkedHashMap<String, String>();
-	protected String targetNamespace;
-	protected List<String> userTaskFormTypes;
-  protected List<String> startEventFormTypes;
-	protected int nextFlowIdCounter = 1;
-	
-	
-	public Map<String, List<ExtensionAttribute>> getDefinitionsAttributes() {
-    return definitionsAttributes;
-  }
+        protected List<Process> processes = new List<Process>();
+        protected Dictionary<String, GraphicInfo> locationMap = new Dictionary<String, GraphicInfo>();
+        protected Dictionary<String, GraphicInfo> labelLocationMap = new Dictionary<String, GraphicInfo>();
+        protected Dictionary<String, List<GraphicInfo>> flowLocationMap = new Dictionary<String, List<GraphicInfo>>();
+        protected List<Signal> signals = new List<Signal>();
+        protected Dictionary<String, MessageFlow> messageFlowMap = new Dictionary<String, MessageFlow>();
+        protected Dictionary<String, Message> messageMap = new Dictionary<String, Message>();
+        protected Dictionary<String, String> errorMap = new Dictionary<String, String>();
+        protected Dictionary<String, ItemDefinition> itemDefinitionMap = new Dictionary<String, ItemDefinition>();
+        protected Dictionary<String, DataStore> dataStoreMap = new Dictionary<String, DataStore>();
+        protected List<Pool> pools = new List<Pool>();
+        protected List<Import> imports = new List<Import>();
+        protected List<Interface> interfaces = new List<Interface>();
+        protected List<Artifact> globalArtifacts = new List<Artifact>();
+        protected Dictionary<String, String> NamespaceMap = new Dictionary<String, String>();
+        protected String targetNamespace;
+        protected List<String> userTaskFormTypes;
+        protected List<String> startEventFormTypes;
+        protected int nextFlowIdCounter = 1;
 
-  public String getDefinitionsAttributeValue(String namespace, String name) {
-    List<ExtensionAttribute> attributes = getDefinitionsAttributes().get(name);
-    if (attributes != null && !attributes.isEmpty()) {
-      for (ExtensionAttribute attribute : attributes) {
-        if ( namespace.equals(attribute.getNamespace()))
-          return attribute.getValue();
-      }
-    }
-    return null;
-  }
+        public Dictionary<string, List<ExtensionAttribute>> DefinitionsAttributes
+        {
+            get { return definitionsAttributes; }
+            set { definitionsAttributes = value; }
+        }
 
-  public void addDefinitionsAttribute(ExtensionAttribute attribute) {
-    if (attribute != null && StringUtils.isNotEmpty(attribute.getName())) {
-      List<ExtensionAttribute> attributeList = null;
-      if (this.definitionsAttributes.containsKey(attribute.getName()) == false) {
-        attributeList = new ArrayList<ExtensionAttribute>();
-        this.definitionsAttributes.put(attribute.getName(), attributeList);
-      }
-      this.definitionsAttributes.get(attribute.getName()).add(attribute);
-    }
-  }
+        public List<Process> Processes
+        {
+            get { return processes; }
+            set { processes = value; }
+        }
 
-  public void setDefinitionsAttributes(Map<String, List<ExtensionAttribute>> attributes) {
-    this.definitionsAttributes = attributes;
-  }
+        public Dictionary<string, GraphicInfo> LocationMap
+        {
+            get { return locationMap; }
+            set { locationMap = value; }
+        }
 
-	public Process getMainProcess() {
-	  if (!getPools().isEmpty()) {
-	    return getProcess(getPools().get(0).getId());
-	  } else {
-	    return getProcess(null);
-	  }
-	}
+        public Dictionary<string, GraphicInfo> LabelLocationMap
+        {
+            get { return labelLocationMap; }
+            set { labelLocationMap = value; }
+        }
 
-	public Process getProcess(String poolRef) {
-	  for (Process process : processes) {
-	    boolean foundPool = false;
-	    for (Pool pool : pools) {
-        if (StringUtils.isNotEmpty(pool.getProcessRef()) && pool.getProcessRef().equalsIgnoreCase(process.getId())) {
-          
-          if(poolRef != null) {
-            if(pool.getId().equalsIgnoreCase(poolRef)) {
-              foundPool = true;
+        public Dictionary<string, List<GraphicInfo>> FlowLocationMap
+        {
+            get { return flowLocationMap; }
+            set { flowLocationMap = value; }
+        }
+
+        public List<Signal> Signals
+        {
+            get { return signals; }
+            set { signals = value; }
+        }
+
+        public Dictionary<string, MessageFlow> MessageFlowMap
+        {
+            get { return messageFlowMap; }
+            set { messageFlowMap = value; }
+        }
+
+        public Dictionary<string, Message> MessageMap
+        {
+            get { return messageMap; }
+            set { messageMap = value; }
+        }
+
+        public Dictionary<string, string> ErrorMap
+        {
+            get { return errorMap; }
+            set { errorMap = value; }
+        }
+
+        public Dictionary<string, ItemDefinition> ItemDefinitionMap
+        {
+            get { return itemDefinitionMap; }
+            set { itemDefinitionMap = value; }
+        }
+
+        public Dictionary<string, DataStore> DataStoreMap
+        {
+            get { return dataStoreMap; }
+            set { dataStoreMap = value; }
+        }
+
+        public List<Pool> Pools
+        {
+            get { return pools; }
+            set { pools = value; }
+        }
+
+        public List<Import> Imports
+        {
+            get { return imports; }
+            set { imports = value; }
+        }
+
+        public List<Interface> Interfaces
+        {
+            get { return interfaces; }
+            set { interfaces = value; }
+        }
+
+        public List<Artifact> GlobalArtifacts
+        {
+            get { return globalArtifacts; }
+            set { globalArtifacts = value; }
+        }
+
+        public Dictionary<string, string> NamespaceMap1
+        {
+            get { return NamespaceMap; }
+            set { NamespaceMap = value; }
+        }
+
+        public string TargetNamespace
+        {
+            get { return targetNamespace; }
+            set { targetNamespace = value; }
+        }
+
+        public List<string> UserTaskFormTypes
+        {
+            get { return userTaskFormTypes; }
+            set { userTaskFormTypes = value; }
+        }
+
+        public List<string> StartEventFormTypes
+        {
+            get { return startEventFormTypes; }
+            set { startEventFormTypes = value; }
+        }
+
+        public int NextFlowIdCounter
+        {
+            get { return nextFlowIdCounter; }
+            set { nextFlowIdCounter = value; }
+        }
+
+        public String getDefinitionsAttributeValue(String Namespace, String name)
+        {
+            List<ExtensionAttribute> attributes = DefinitionsAttributes[name];
+            if (attributes != null && attributes.Any())
+            {
+                foreach (ExtensionAttribute attribute  in  attributes)
+                {
+                    if (Namespace.Equals(attribute.Namespace))
+                        return attribute.Value;
+                }
             }
-          } else {
-            foundPool = true;
-          }
+            return null;
         }
-      }
-	    
-	    if(poolRef == null && foundPool == false) {
-	      return process;
-	    } else if(poolRef != null && foundPool == true) {
-	      return process;
-	    }
-	  }
-	  
-	  return null;
-  }
-	
-	public List<Process> getProcesses() {
-	  return processes;
-	}
-	
-	public void addProcess(Process process) {
-	  processes.add(process);
-	}
-	
-	public Pool getPool(String id) {
-	  Pool foundPool = null;
-	  if (StringUtils.isNotEmpty(id)) {
-  	  for (Pool pool : pools) {
-        if (id.equals(pool.getId())) {
-          foundPool = pool;
-          break;
+
+        public void addDefinitionsAttribute(ExtensionAttribute attribute)
+        {
+            if (attribute != null && !String.IsNullOrWhiteSpace(attribute.Name))
+            {
+                List<ExtensionAttribute> attributeList = null;
+                if (this.definitionsAttributes.ContainsKey(attribute.Name) == false)
+                {
+                    attributeList = new List<ExtensionAttribute>();
+                    this.definitionsAttributes.Add(attribute.Name, attributeList);
+                }
+                this.definitionsAttributes[attribute.Name].Add(attribute);
+            }
         }
-      }
-	  }
-	  return foundPool;
-	}
-	
-	public Lane getLane(String id) {
-	  Lane foundLane = null;
-    if (StringUtils.isNotEmpty(id)) {
-      for (Process process : processes) {
-        for (Lane lane : process.getLanes()) {
-          if (id.equals(lane.getId())) {
-            foundLane = lane;
-            break;
-          }
+
+        public Process getMainProcess()
+        {
+            if (Pools.Any())
+            {
+                return getProcess(Pools[0].Id);
+            }
+            else
+            {
+                return getProcess(null);
+            }
         }
-        if (foundLane != null) {
-          break;
+
+        public Process getProcess(String poolRef)
+        {
+            foreach (Process process  in  processes)
+            {
+                bool foundPool = false;
+                foreach (Pool pool  in  pools)
+                {
+                    if (!String.IsNullOrWhiteSpace(pool.ProcessRef) && 
+                        String.Equals(pool.ProcessRef, process.Id, StringComparison.CurrentCultureIgnoreCase))
+                    {
+
+                        if (poolRef != null)
+                        {
+                            if (String.Equals(pool.Id.ToLower(),poolRef.ToLower()))
+                            {
+                                foundPool = true;
+                            }
+                        }
+                        else
+                        {
+                            foundPool = true;
+                        }
+                    }
+                }
+
+                if (poolRef == null && foundPool == false)
+                {
+                    return process;
+                }
+                else if (poolRef != null && foundPool == true)
+                {
+                    return process;
+                }
+            }
+
+            return null;
         }
-      }
-    }
-    return foundLane;
-  }
-	
-	public FlowElement getFlowElement(String id) {
-	  FlowElement foundFlowElement = null;
-	  for (Process process : processes) {
-	    foundFlowElement = process.getFlowElement(id);
-	    if (foundFlowElement != null) {
-	      break;
-	    }
-	  }
-	  
-	  if (foundFlowElement == null) {
-	    for (Process process : processes) {
-	      for (FlowElement flowElement : process.findFlowElementsOfType(SubProcess.class)) {
-	        foundFlowElement = getFlowElementInSubProcess(id, (SubProcess) flowElement);
-	        if (foundFlowElement != null) {
-	          break;
-	        }
-	      }
-	      if (foundFlowElement != null) {
-          break;
+
+        public void addProcess(Process process)
+        {
+            processes.Add(process);
         }
-	    }
-	  }
-	  
-	  return foundFlowElement;
-	}
-	
-	protected FlowElement getFlowElementInSubProcess(String id, SubProcess subProcess) {
-	  FlowElement foundFlowElement = subProcess.getFlowElement(id);
-    if (foundFlowElement == null) {
-      for (FlowElement flowElement : subProcess.getFlowElements()) {
-        if (flowElement instanceof SubProcess) {
-          foundFlowElement = getFlowElementInSubProcess(id, (SubProcess) flowElement);
-          if (foundFlowElement != null) {
-            break;
-          }
+
+        public Pool getPool(String id)
+        {
+            Pool foundPool = null;
+            if (!String.IsNullOrWhiteSpace(id))
+            {
+                foreach (Pool pool  in  pools)
+                {
+                    if (id.Equals(pool.Id))
+                    {
+                        foundPool = pool;
+                        break;
+                    }
+                }
+            }
+            return foundPool;
         }
-      }
-    }
-    return foundFlowElement;
-	}
-	
-	public Artifact getArtifact(String id) {
-	  Artifact foundArtifact = null;
-    for (Process process : processes) {
-      foundArtifact = process.getArtifact(id);
-      if (foundArtifact != null) {
-        break;
-      }
-    }
-    
-    if (foundArtifact == null) {
-      for (Process process : processes) {
-        for (FlowElement flowElement : process.findFlowElementsOfType(SubProcess.class)) {
-          foundArtifact = getArtifactInSubProcess(id, (SubProcess) flowElement);
-          if (foundArtifact != null) {
-            break;
-          }
+
+        public Lane getLane(String id)
+        {
+            Lane foundLane = null;
+            if (!String.IsNullOrWhiteSpace(id))
+            {
+                foreach (Process process  in  processes)
+                {
+                    foreach (Lane lane  in  process.Lanes)
+                    {
+                        if (id.Equals(lane.Id))
+                        {
+                            foundLane = lane;
+                            break;
+                        }
+                    }
+                    if (foundLane != null)
+                    {
+                        break;
+                    }
+                }
+            }
+            return foundLane;
         }
-        if (foundArtifact != null) {
-          break;
+
+        public FlowElement getFlowElement(String id)
+        {
+            FlowElement foundFlowElement = null;
+            foreach (Process process  in  processes)
+            {
+                foundFlowElement = process.getFlowElement(id);
+                if (foundFlowElement != null)
+                {
+                    break;
+                }
+            }
+
+            if (foundFlowElement == null)
+            {
+                foreach (Process process  in  processes)
+                {
+                    foreach (FlowElement flowElement  in  process.findFlowElementsOfType(typeof(SubProcess) ) )
+                    {
+                        foundFlowElement = getFlowElementInSubProcess(id, (SubProcess) flowElement);
+                        if (foundFlowElement != null)
+                        {
+                            break;
+                        }
+                    }
+                    if (foundFlowElement != null)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return foundFlowElement;
         }
-      }
-    }
-    
-    return foundArtifact;
-  }
-  
-  protected Artifact getArtifactInSubProcess(String id, SubProcess subProcess) {
-    Artifact foundArtifact = subProcess.getArtifact(id);
-    if (foundArtifact == null) {
-      for (FlowElement flowElement : subProcess.getFlowElements()) {
-        if (flowElement instanceof SubProcess) {
-          foundArtifact = getArtifactInSubProcess(id, (SubProcess) flowElement);
-          if (foundArtifact != null) {
-            break;
-          }
+
+        protected FlowElement getFlowElementInSubProcess(String id, SubProcess subProcess)
+        {
+            FlowElement foundFlowElement = subProcess.getFlowElement(id);
+            if (foundFlowElement == null)
+            {
+                foreach (FlowElement flowElement  in  subProcess.FlowElements)
+                {
+                    if ((flowElement as SubProcess) != null)
+                    {
+                        foundFlowElement = getFlowElementInSubProcess(id, (SubProcess) flowElement);
+                        if (foundFlowElement != null)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            return foundFlowElement;
         }
-      }
+
+        public Artifact getArtifact(String id)
+        {
+            Artifact foundArtifact = null;
+            foreach (Process process  in  processes)
+            {
+                foundArtifact = process.getArtifact(id);
+                if (foundArtifact != null)
+                {
+                    break;
+                }
+            }
+
+            if (foundArtifact == null)
+            {
+                foreach (Process process  in  processes)
+                {
+                    foreach (FlowElement flowElement in process.findFlowElementsOfType(typeof(SubProcess)))
+                    {
+                        foundArtifact = getArtifactInSubProcess(id, (SubProcess) flowElement);
+                        if (foundArtifact != null)
+                        {
+                            break;
+                        }
+                    }
+                    if (foundArtifact != null)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return foundArtifact;
+        }
+
+        protected Artifact getArtifactInSubProcess(String id, SubProcess subProcess)
+        {
+            Artifact foundArtifact = subProcess.getArtifact(id);
+            if (foundArtifact == null)
+            {
+                foreach (FlowElement flowElement  in  subProcess.FlowElements)
+                {
+                    if ((flowElement as SubProcess)!=null)
+                    {
+                        foundArtifact = getArtifactInSubProcess(id, (SubProcess) flowElement);
+                        if (foundArtifact != null)
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+            return foundArtifact;
+        }
+
+        public void addGraphicInfo(String key, GraphicInfo graphicInfo)
+        {
+            locationMap.Add(key, graphicInfo);
+        }
+
+        public GraphicInfo getGraphicInfo(String key)
+        {
+            return locationMap[key];
+        }
+
+        public void removeGraphicInfo(String key)
+        {
+            locationMap.Remove(key);
+        }
+
+        public List<GraphicInfo> getFlowLocationGraphicInfo(String key)
+        {
+            return flowLocationMap[key];
+        }
+
+        public void removeFlowGraphicInfoList(String key)
+        {
+            flowLocationMap.Remove(key);
+        }
+
+        public GraphicInfo getLabelGraphicInfo(String key)
+        {
+            return labelLocationMap[key];
+        }
+
+        public void addLabelGraphicInfo(String key, GraphicInfo graphicInfo)
+        {
+            labelLocationMap.Add(key, graphicInfo);
+        }
+
+        public void removeLabelGraphicInfo(String key)
+        {
+            labelLocationMap.Remove(key);
+        }
+
+        public void addFlowGraphicInfoList(String key, List<GraphicInfo> graphicInfoList)
+        {
+            flowLocationMap.Add(key, graphicInfoList);
+        }
+
+        public void setSignals(Collection<Signal> signalList)
+        {
+            if (signalList != null)
+            {
+                signals.Clear();
+                signals.AddRange(signalList);
+            }
+        }
+
+        public void addSignal(Signal signal)
+        {
+            if (signal != null)
+            {
+                signals.Add(signal);
+            }
+        }
+
+        public bool containsSignalId(String signalId)
+        {
+            return getSignal(signalId) != null;
+        }
+
+        public Signal getSignal(String id)
+        {
+            foreach (Signal signal  in  signals)
+            {
+                if (id.Equals(signal.Id))
+                {
+                    return signal;
+                }
+            }
+            return null;
+        }
+
+        public void addMessageFlow(MessageFlow messageFlow)
+        {
+            if (messageFlow != null && !String.IsNullOrWhiteSpace(messageFlow.Id))
+            {
+                messageFlowMap.Add(messageFlow.Id, messageFlow);
+            }
+        }
+
+        public MessageFlow getMessageFlow(String id)
+        {
+            return messageFlowMap[id];
+        }
+
+        public bool containsMessageFlowId(String messageFlowId)
+        {
+            return messageFlowMap.ContainsKey(messageFlowId);
+        }
+
+        public void setMessages(Collection<Message> messageList)
+        {
+            if (messageList != null)
+            {
+                messageMap.Clear();
+                foreach (Message message  in  messageList)
+                {
+                    addMessage(message);
+                }
+            }
+        }
+
+        public void addMessage(Message message)
+        {
+            if (message != null && !String.IsNullOrWhiteSpace(message.Id))
+            {
+                messageMap.Add(message.Id, message);
+            }
+        }
+
+        public Message getMessage(String id)
+        {
+            return messageMap[id];
+        }
+
+        public bool containsMessageId(String messageId)
+        {
+            return messageMap.ContainsKey(messageId);
+        }
+
+        public void addError(String errorRef, String errorCode)
+        {
+            if (!String.IsNullOrWhiteSpace(errorRef))
+            {
+                errorMap.Add(errorRef, errorCode);
+            }
+        }
+
+        public bool containsErrorRef(String errorRef)
+        {
+            return errorMap.ContainsKey(errorRef);
+        }
+
+        public void addItemDefinition(String id, ItemDefinition item)
+        {
+            if (!String.IsNullOrWhiteSpace(id))
+            {
+                itemDefinitionMap.Add(id, item);
+            }
+        }
+
+        public bool containsItemDefinitionId(String id)
+        {
+            return itemDefinitionMap.ContainsKey(id);
+        }
+
+        public DataStore getDataStore(String id)
+        {
+            DataStore dataStore = null;
+            if (dataStoreMap.ContainsKey(id))
+            {
+                dataStore = dataStoreMap[id];
+            }
+            return dataStore;
+        }
+
+        public void addDataStore(String id, DataStore dataStore)
+        {
+            if (!String.IsNullOrWhiteSpace(id))
+            {
+                dataStoreMap.Add(id, dataStore);
+            }
+        }
+
+        public bool containsDataStore(String id)
+        {
+            return dataStoreMap.ContainsKey(id);
+        }
+
+        public void addNamespace(String prefix, String uri)
+        {
+            NamespaceMap.Add(prefix, uri);
+        }
+
+        public bool containsNamespacePrefix(String prefix)
+        {
+            return NamespaceMap.ContainsKey(prefix);
+        }
+
+        public String getNamespace(String prefix)
+        {
+            return NamespaceMap[prefix];
+        }
+
     }
-    return foundArtifact;
-  }
-	
-	public void addGraphicInfo(String key, GraphicInfo graphicInfo) {
-		locationMap.put(key, graphicInfo);
-	}
-	
-	public GraphicInfo getGraphicInfo(String key) {
-		return locationMap.get(key);
-	}
-	
-	public void removeGraphicInfo(String key) {
-    locationMap.remove(key);
-  }
-	
-	public List<GraphicInfo> getFlowLocationGraphicInfo(String key) {
-    return flowLocationMap.get(key);
-  }
-	
-	public void removeFlowGraphicInfoList(String key) {
-	  flowLocationMap.remove(key);
-  }
-	
-	public Map<String, GraphicInfo> getLocationMap() {
-		return locationMap;
-	}
-	
-	public Map<String, List<GraphicInfo>> getFlowLocationMap() {
-    return flowLocationMap;
-  }
-	
-	public GraphicInfo getLabelGraphicInfo(String key) {
-    return labelLocationMap.get(key);
-  }
-	
-	public void addLabelGraphicInfo(String key, GraphicInfo graphicInfo) {
-		labelLocationMap.put(key, graphicInfo);
-	}
-	
-	public void removeLabelGraphicInfo(String key) {
-	  labelLocationMap.remove(key);
-  }
-	
-	public Map<String, GraphicInfo> getLabelLocationMap() {
-    return labelLocationMap;
-  }
-	
-	public void addFlowGraphicInfoList(String key, List<GraphicInfo> graphicInfoList) {
-		flowLocationMap.put(key, graphicInfoList);
-	}
-	
-  public Collection<Signal> getSignals() {
-  	return signals;
-  }
-  
-  public void setSignals(Collection<Signal> signalList) {
-    if (signalList != null) {
-      signals.clear();
-      signals.addAll(signalList);
-    }
-  }
-  
-  public void addSignal(Signal signal) {
-    if (signal != null) {
-    	signals.add(signal);
-    }
-  }
-  
-  public boolean containsSignalId(String signalId) {
-    return getSignal(signalId) != null;
-  }
-  
-  public Signal getSignal(String id) {
-    for (Signal signal : signals) {
-    	if (id.equals(signal.getId())) {
-    		return signal;
-    	}
-    }
-    return null;
-  }
-  
-  public Map<String, MessageFlow> getMessageFlows() {
-    return messageFlowMap;
-  }
-  
-  public void setMessageFlows(Map<String, MessageFlow> messageFlows) {
-    this.messageFlowMap = messageFlows;
-  }
-
-  public void addMessageFlow(MessageFlow messageFlow) {
-    if (messageFlow != null && StringUtils.isNotEmpty(messageFlow.getId())) {
-      messageFlowMap.put(messageFlow.getId(), messageFlow);
-    }
-  }
-  
-  public MessageFlow getMessageFlow(String id) {
-    return messageFlowMap.get(id);
-  }
-  
-  public boolean containsMessageFlowId(String messageFlowId) {
-    return messageFlowMap.containsKey(messageFlowId);
-  }
-
-  public Collection<Message> getMessages() {
-    return messageMap.values();
-  }
-  
-  public void setMessages(Collection<Message> messageList) {
-    if (messageList != null) {
-      messageMap.clear();
-      for (Message message : messageList) {
-        addMessage(message);
-      }
-    }
-  }
-
-  public void addMessage(Message message) {
-    if (message != null && StringUtils.isNotEmpty(message.getId())) {
-      messageMap.put(message.getId(), message);
-    }
-  }
-  
-  public Message getMessage(String id) {
-    return messageMap.get(id);
-  }
-  
-  public boolean containsMessageId(String messageId) {
-    return messageMap.containsKey(messageId);
-  }
-  
-  public Map<String, String> getErrors() {
-    return errorMap;
-  }
-  
-  public void setErrors(Map<String, String> errorMap) {
-    this.errorMap = errorMap;
-  }
-
-  public void addError(String errorRef, String errorCode) {
-    if (StringUtils.isNotEmpty(errorRef)) {
-      errorMap.put(errorRef, errorCode);
-    }
-  }
-  
-  public boolean containsErrorRef(String errorRef) {
-    return errorMap.containsKey(errorRef);
-  }
-  
-  public Map<String, ItemDefinition> getItemDefinitions() {
-    return itemDefinitionMap;
-  }
-  
-  public void setItemDefinitions(Map<String, ItemDefinition> itemDefinitionMap) {
-    this.itemDefinitionMap = itemDefinitionMap;
-  }
-
-  public void addItemDefinition(String id, ItemDefinition item) {
-    if (StringUtils.isNotEmpty(id)) {
-      itemDefinitionMap.put(id, item);
-    }
-  }
-  
-  public boolean containsItemDefinitionId(String id) {
-    return itemDefinitionMap.containsKey(id);
-  }
-  
-  public Map<String, DataStore> getDataStores() {
-    return dataStoreMap;
-  }
-  
-  public void setDataStores(Map<String, DataStore> dataStoreMap) {
-    this.dataStoreMap = dataStoreMap;
-  }
-  
-  public DataStore getDataStore(String id) {
-    DataStore dataStore = null;
-    if (dataStoreMap.containsKey(id)) {
-      dataStore = dataStoreMap.get(id);
-    }
-    return dataStore;
-  }
-
-  public void addDataStore(String id, DataStore dataStore) {
-    if (StringUtils.isNotEmpty(id)) {
-      dataStoreMap.put(id, dataStore);
-    }
-  }
-  
-  public boolean containsDataStore(String id) {
-    return dataStoreMap.containsKey(id);
-  }
-
-  public List<Pool> getPools() {
-    return pools;
-  }
-  
-  public void setPools(List<Pool> pools) {
-    this.pools = pools;
-  }
-  
-  public List<Import> getImports() {
-    return imports;
-  }
-
-  public void setImports(List<Import> imports) {
-    this.imports = imports;
-  }
-
-  public List<Interface> getInterfaces() {
-    return interfaces;
-  }
-
-  public void setInterfaces(List<Interface> interfaces) {
-    this.interfaces = interfaces;
-  }
-
-  public List<Artifact> getGlobalArtifacts() {
-    return globalArtifacts;
-  }
-
-  public void setGlobalArtifacts(List<Artifact> globalArtifacts) {
-    this.globalArtifacts = globalArtifacts;
-  }
-
-  public void addNamespace(String prefix, String uri) {
-    namespaceMap.put(prefix, uri);
-  }
-  
-  public boolean containsNamespacePrefix(String prefix) {
-    return namespaceMap.containsKey(prefix);
-  }
-  
-  public String getNamespace(String prefix) {
-    return namespaceMap.get(prefix);
-  }
-  
-  public Map<String, String> getNamespaces() {
-    return namespaceMap;
-  }
-  
-  public String getTargetNamespace() {
-    return targetNamespace;
-  }
-
-  public void setTargetNamespace(String targetNamespace) {
-    this.targetNamespace = targetNamespace;
-  }
-  
-  public List<String> getUserTaskFormTypes() {
-    return userTaskFormTypes;
-  }
-  
-  public void setUserTaskFormTypes(List<String> userTaskFormTypes) {
-    this.userTaskFormTypes = userTaskFormTypes;
-  }
-  
-  public List<String> getStartEventFormTypes() {
-    return startEventFormTypes;
-  }
-  
-  public void setStartEventFormTypes(List<String> startEventFormTypes) {
-    this.startEventFormTypes = startEventFormTypes;
-  }
 }

@@ -221,7 +221,7 @@ namespace org.activiti.bpmn.model
 			}
 		}
 
-		private List<FlowElement> findFlowElementsOfType(Type type, Boolean goIntoSubprocesses = true)
+		public List<FlowElement> findFlowElementsOfType(Type type, Boolean goIntoSubprocesses = true)
 		{
 			List<FlowElement> foundFlowElements = new List<FlowElement>();
 			foreach (FlowElement flowElement in FlowElements)

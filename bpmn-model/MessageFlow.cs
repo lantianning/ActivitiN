@@ -10,74 +10,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
-/**
- * @author Tijs Rademakers
- */
-public class MessageFlow extends BaseElement {
+using System;
 
-  protected String name;
-  protected String sourceRef;
-  protected String targetRef;
-  protected String messageRef;
-  
-  public MessageFlow() {
-  	
-  }
-  
-  public MessageFlow(String sourceRef, String targetRef) {
-  	this.sourceRef = sourceRef;
-  	this.targetRef = targetRef;
-  }
+namespace org.activiti.bpmn.model
+{
+    public class MessageFlow : BaseElement
+    {
 
-  public String getName() {
-    return name;
-  }
+        protected String Name { get; set; }
+        protected String SourceRef { get; set; }
+        protected String TargetRef { get; set; }
+        protected String MessageRef { get; set; }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+        public MessageFlow()
+        {
 
-  public String getSourceRef() {
-    return sourceRef;
-  }
-  
-  public void setSourceRef(String sourceRef) {
-    this.sourceRef = sourceRef;
-  }
-  
-  public String getTargetRef() {
-    return targetRef;
-  }
-  
-  public void setTargetRef(String targetRef) {
-    this.targetRef = targetRef;
-  }
-  
-  public String getMessageRef() {
-    return messageRef;
-  }
+        }
 
-  public void setMessageRef(String messageRef) {
-    this.messageRef = messageRef;
-  }
+        public MessageFlow(String sourceRef, String targetRef)
+        {
+            SourceRef = sourceRef;
+            TargetRef = targetRef;
+        }
 
-  public String toString() {
-    return sourceRef + " --> " + targetRef;
-  }
-  
-  public MessageFlow clone() {
-    MessageFlow clone = new MessageFlow();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(MessageFlow otherFlow) {
-    super.setValues(otherFlow);
-    setName(otherFlow.getName());
-    setSourceRef(otherFlow.getSourceRef());
-    setTargetRef(otherFlow.getTargetRef());
-    setMessageRef(otherFlow.getMessageRef());
-  }
+        public String ToString()
+        {
+            return SourceRef + " --> " + TargetRef;
+        }
+
+        public override object clone()
+        {
+            MessageFlow clone = new MessageFlow();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(MessageFlow otherFlow)
+        {
+            base.setValues(otherFlow);
+            Name = otherFlow.Name;
+            SourceRef = otherFlow.SourceRef;
+            TargetRef = otherFlow.TargetRef;
+            MessageRef = otherFlow.MessageRef;
+        }
+    }
 }

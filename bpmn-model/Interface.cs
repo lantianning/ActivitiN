@@ -1,49 +1,55 @@
-package org.activiti.bpmn.model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-import java.util.ArrayList;
-import java.util.List;
+namespace org.activiti.bpmn.model
+{
+    public class Interface : BaseElement
+    {
 
-public class Interface extends BaseElement {
+        protected String name;
+        protected String implementationRef;
+        protected List<Operation> operations = new List<Operation>();
 
-  protected String name;
-  protected String implementationRef;
-  protected List<Operation> operations = new ArrayList<Operation>();
-  
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
-  }
-  public String getImplementationRef() {
-    return implementationRef;
-  }
-  public void setImplementationRef(String implementationRef) {
-    this.implementationRef = implementationRef;
-  }
-  public List<Operation> getOperations() {
-    return operations;
-  }
-  public void setOperations(List<Operation> operations) {
-    this.operations = operations;
-  }
-  
-  public Interface clone() {
-    Interface clone = new Interface();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(Interface otherElement) {
-    super.setValues(otherElement);
-    setName(otherElement.getName());
-    setImplementationRef(otherElement.getImplementationRef());
-    
-    operations = new ArrayList<Operation>();
-    if (otherElement.getOperations() != null && !otherElement.getOperations().isEmpty()) {
-      for (Operation operation : otherElement.getOperations()) {
-        operations.add(operation.clone());
-      }
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public string ImplementationRef
+        {
+            get { return implementationRef; }
+            set { implementationRef = value; }
+        }
+
+        public List<Operation> Operations
+        {
+            get { return operations; }
+            set { operations = value; }
+        }
+
+        public override object clone()
+        {
+            Interface clone = new Interface();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(Interface otherElement)
+        {
+            base.setValues(otherElement);
+            Name = otherElement.Name;
+            ImplementationRef = otherElement.ImplementationRef;
+
+            operations = new List<Operation>();
+            if (otherElement.Operations != null && otherElement.Operations.Any())
+            {
+                foreach (Operation operation in otherElement.getOperations())
+                {
+                    operations.Add((Operation) operation.clone());
+                }
+            }
+        }
     }
-  }
 }

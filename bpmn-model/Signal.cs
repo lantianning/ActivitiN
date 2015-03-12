@@ -10,53 +10,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
-/**
- * @author Tijs Rademakers
- */
-public class Signal extends BaseElement {
+using System;
 
-  public static final String SCOPE_GLOBAL = "global";
-  public static final String SCOPE_PROCESS_INSTANCE = "processInstance";
+namespace org.activiti.bpmn.model
+{
+    public class Signal : BaseElement
+    {
 
-  protected String name;
-  
-  protected String scope;
+        public static String SCOPE_GLOBAL = "global";
+        public static String SCOPE_PROCESS_INSTANCE = "processInstance";
 
-  public Signal() {
-  }
-  
-  public Signal(String id, String name) {
-    this.id = id;
-    this.name = name;
-  }
+        protected String Name { get; set; }
+        protected String Scope { get; set; }
 
-  public String getName() {
-    return name;
-  }
+        public Signal()
+        {
+        }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-  
-  public String getScope() {
-    return scope;
-  }
+        public Signal(String id, String name)
+        {
+            this.Id = id;
+            this.Name = name;
+        }
 
-  public void setScope(String scope) {
-    this.scope = scope;
-  }
-  
-  public Signal clone() {
-    Signal clone = new Signal();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(Signal otherElement) {
-    super.setValues(otherElement);
-    setName(otherElement.getName());
-    setScope(otherElement.getScope());
-  }
+
+        public override object clone()
+        {
+            Signal clone = new Signal();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(Signal otherElement)
+        {
+            base.setValues(otherElement);
+            Name = otherElement.Name;
+            Scope = otherElement.Scope;
+        }
+    }
 }

@@ -10,46 +10,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
-/**
- * @author Tijs Rademakers
- */
-public class Pool extends BaseElement {
+using System;
+
+namespace org.activiti.bpmn.model{
+public class Pool : BaseElement {
 
   protected String name;
   protected String processRef;
-  protected boolean executable = true;
-  
-  public String getName() {
-    return name;
-  }
-  public void setName(String name) {
-    this.name = name;
-  }
-  public String getProcessRef() {
-    return processRef;
-  }
-  public void setProcessRef(String processRef) {
-    this.processRef = processRef;
-  }
-  public boolean isExecutable(){
-    return this.executable;
-  }
-  public void setExecutable(boolean executable) {
-    this.executable = executable;
-  }
-  
-  public Pool clone() {
+  protected bool executable = true;
+
+    public string Name
+    {
+        get { return name; }
+        set { name = value; }
+    }
+
+    public string ProcessRef
+    {
+        get { return processRef; }
+        set { processRef = value; }
+    }
+
+    public bool Executable
+    {
+        get { return executable; }
+        set { executable = value; }
+    }
+
+    public override object clone() {
     Pool clone = new Pool();
     clone.setValues(this);
     return clone;
   }
   
   public void setValues(Pool otherElement) {
-    super.setValues(otherElement);
-    setName(otherElement.getName());
-    setProcessRef(otherElement.getProcessRef());
-    setExecutable(otherElement.isExecutable());
+    base.setValues(otherElement);
+    Name=otherElement.Name;
+    ProcessRef=otherElement.ProcessRef;
+    Executable=otherElement.Executable;
   }
 }
