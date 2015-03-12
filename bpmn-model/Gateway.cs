@@ -10,48 +10,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
+using System;
 
-/**
- * @author Tijs Rademakers
- */
-public abstract class Gateway extends FlowNode {
+namespace org.activiti.bpmn.model
+{
+    public abstract class Gateway : FlowNode
+    {
 
-  protected boolean asynchronous;
-  protected boolean notExclusive;
-  protected String defaultFlow;
-  
-  public boolean isAsynchronous() {
-    return asynchronous;
-  }
-  
-  public void setAsynchronous(boolean asynchronous) {
-    this.asynchronous = asynchronous;
-  }
-  
-  public boolean isNotExclusive() {
-    return notExclusive;
-  }
-  
-  public void setNotExclusive(boolean notExclusive) {
-    this.notExclusive = notExclusive;
-  }
+        protected bool Asynchronous { get; set; }
+        protected bool NotExclusive { get; set; }
+        protected String DefaultFlow { get; set; }
 
-  public String getDefaultFlow() {
-    return defaultFlow;
-  }
+ 
+        public abstract override object clone();
 
-  public void setDefaultFlow(String defaultFlow) {
-    this.defaultFlow = defaultFlow;
-  }
-  
-  public abstract Gateway clone();
-  
-  public void setValues(Gateway otherElement) {
-    super.setValues(otherElement);
-    setAsynchronous(otherElement.isAsynchronous());
-    setNotExclusive(otherElement.isNotExclusive());
-    setDefaultFlow(otherElement.getDefaultFlow());
-  }
+        public void setValues(Gateway otherElement)
+        {
+            base.setValues(otherElement);
+            Asynchronous = otherElement.Asynchronous;
+            NotExclusive = otherElement.NotExclusive;
+            DefaultFlow = otherElement.DefaultFlow;
+        }
+    }
 }

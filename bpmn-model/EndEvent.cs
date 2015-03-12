@@ -10,20 +10,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+namespace org.activiti.bpmn.model{
+public class EndEvent : Event {
 
-/**
- * @author Tijs Rademakers
- */
-public class EndEvent extends Event {
-
-  public EndEvent clone() {
+  public override object clone() {
     EndEvent clone = new EndEvent();
     clone.setValues(this);
     return clone;
   }
   
   public void setValues(EndEvent otherEvent) {
-    super.setValues(otherEvent);
+    base.setValues(otherEvent);
   }
+}
 }

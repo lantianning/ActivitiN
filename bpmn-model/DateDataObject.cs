@@ -1,19 +1,16 @@
-package org.activiti.bpmn.model;
+using System;
 
-import java.util.Date;
+namespace org.activiti.bpmn.model{
+public class DateDataObject : ValuedDataObject {
 
-/**
- * @author Lori Small
- */
-public class DateDataObject extends ValuedDataObject {
-
-  public void setValue(Object value) {
-    this.value = (Date) value;
+  public override void setValue(Object value) {
+    Value = (DateTime) value;
   }
 
-  public DateDataObject clone() {
+  public override object clone() {
     DateDataObject clone = new DateDataObject();
     clone.setValues(this);
     return clone;
   }
+}
 }

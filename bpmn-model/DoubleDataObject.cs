@@ -1,18 +1,16 @@
-package org.activiti.bpmn.model;
+using System;
 
+namespace org.activiti.bpmn.model{
+public class DoubleDataObject : ValuedDataObject {
 
-/**
- * @author Lori Small
- */
-public class DoubleDataObject extends ValuedDataObject {
-
-  public void setValue(Object value) {
-    this.value = Double.valueOf(value.toString());
+  public override void setValue(Object value) {
+    Value = Double.Parse(value.ToString());
   }
 
-  public DoubleDataObject clone() {
+  public override object clone() {
     DoubleDataObject clone = new DoubleDataObject();
     clone.setValues(this);
     return clone;
   }
+}
 }

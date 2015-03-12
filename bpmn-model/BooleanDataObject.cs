@@ -1,18 +1,21 @@
-package org.activiti.bpmn.model;
+using System;
 
+namespace org.activiti.bpmn.model
+{
 
-/**
- * @author Lori Small
- */
-public class BooleanDataObject extends ValuedDataObject {
+    public class BooleanDataObject : ValuedDataObject
+    {
 
-  public void setValue(Object value) {
-    this.value = Boolean.valueOf(value.toString());
-  }
+        public override void setValue(Object value)
+        {
+            Value = Boolean.Parse(value.ToString());
+        }
 
-  public BooleanDataObject clone() {
-    BooleanDataObject clone = new BooleanDataObject();
-    clone.setValues(this);
-    return clone;
-  }
+        public override object clone()
+        {
+            BooleanDataObject clone = new BooleanDataObject();
+            clone.setValues(this);
+            return clone;
+        }
+    }
 }

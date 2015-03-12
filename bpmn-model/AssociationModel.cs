@@ -18,10 +18,40 @@ namespace org.activiti.bpmn.model
     public class AssociationModel
     {
 
-        public String id;
-        public AssociationDirection associationDirection;
-        public String sourceRef;
-        public String targetRef;
-        public Process parentProcess;
+        protected String id;
+        protected AssociationDirection associationDirection;
+        protected String sourceRef;
+        protected String targetRef;
+        protected Process parentProcess;
+
+        public string Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
+
+        public AssociationDirection AssociationDirection
+        {
+            get { return associationDirection; }
+            set { associationDirection = value; }
+        }
+
+        public string SourceRef
+        {
+            get { return sourceRef; }
+            set { sourceRef = value; }
+        }
+
+        public string TargetRef
+        {
+            get { return targetRef; }
+            set { targetRef = value; }
+        }
+
+        public Process ParentProcess
+        {
+            get { return parentProcess; }
+            set { parentProcess = value; }
+        }
     }
 }

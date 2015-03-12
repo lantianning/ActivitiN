@@ -10,11 +10,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+namespace org.activiti.bpmn.model
+{
+    public class EventSubProcess : SubProcess
+    {
 
-/**
- * @author Tijs Rademakers
- */
-public class EventSubProcess extends SubProcess {
-
+    }
 }
