@@ -10,33 +10,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter{
+package org.activiti.bpmn.converter;
 
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
 
-
-
-
-
-
-
-
+import org.activiti.bpmn.converter.util.BpmnXMLUtil;
+import org.activiti.bpmn.model.BaseElement;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.ComplexGateway;
+import org.activiti.bpmn.model.ExclusiveGateway;
 
 /**
  * @author Tijs Rademakers
  */
-public class ComplexGatewayXMLConverter:BaseBpmnXMLConverter {
+public class ComplexGatewayXMLConverter extends BaseBpmnXMLConverter {
   
-  public Class<?:BaseElement> getBpmnElementType() {
+  public Class<? extends BaseElement> getBpmnElementType() {
     // complex gateway is not supported so transform it to exclusive gateway
     return ComplexGateway.class;
   }
   
-  
+  @Override
   protected String getXMLElementName() {
     return ELEMENT_GATEWAY_COMPLEX;
   }
   
-  
+  @Override
   protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
     ExclusiveGateway gateway = new ExclusiveGateway();
     BpmnXMLUtil.addXMLLocation(gateway, xtr);
@@ -44,11 +44,11 @@ public class ComplexGatewayXMLConverter:BaseBpmnXMLConverter {
     return gateway;
   }
 
-  
+  @Override
   protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
   }
   
-  
+  @Override
   protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
     
   }

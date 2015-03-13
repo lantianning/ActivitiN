@@ -10,19 +10,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.activiti.bpmn.converter;
 
-using System.Collections.Generic;
-using System.Diagnostics;
-using org.activiti.bpmn.constants;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-namespace org.activiti.bpmn.converter{
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
 
+import org.activiti.bpmn.constants.BpmnXMLConstants;
+import org.activiti.bpmn.converter.child.BaseChildElementParser;
+import org.activiti.bpmn.converter.export.ActivitiListenerExport;
+import org.activiti.bpmn.converter.export.FailedJobRetryCountExport;
+import org.activiti.bpmn.converter.export.MultiInstanceExport;
+import org.activiti.bpmn.converter.util.BpmnXMLUtil;
+import org.activiti.bpmn.model.Activity;
+import org.activiti.bpmn.model.Artifact;
+import org.activiti.bpmn.model.BaseElement;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.CompensateEventDefinition;
+import org.activiti.bpmn.model.DataObject;
+import org.activiti.bpmn.model.ErrorEventDefinition;
+import org.activiti.bpmn.model.Event;
+import org.activiti.bpmn.model.EventDefinition;
+import org.activiti.bpmn.model.ExtensionAttribute;
+import org.activiti.bpmn.model.ExtensionElement;
+import org.activiti.bpmn.model.FlowElement;
+import org.activiti.bpmn.model.FormProperty;
+import org.activiti.bpmn.model.FormValue;
+import org.activiti.bpmn.model.Gateway;
+import org.activiti.bpmn.model.MessageEventDefinition;
+import org.activiti.bpmn.model.Process;
+import org.activiti.bpmn.model.SequenceFlow;
+import org.activiti.bpmn.model.SignalEventDefinition;
+import org.activiti.bpmn.model.StartEvent;
+import org.activiti.bpmn.model.SubProcess;
+import org.activiti.bpmn.model.TerminateEventDefinition;
+import org.activiti.bpmn.model.ThrowEvent;
+import org.activiti.bpmn.model.TimerEventDefinition;
+import org.activiti.bpmn.model.UserTask;
+import org.activiti.bpmn.model.ValuedDataObject;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public abstract class BaseBpmnXMLConverter : BpmnXMLConstants {
+/**
+ * @author Tijs Rademakers
+ */
+public abstract class BaseBpmnXMLConverter implements BpmnXMLConstants {
 
-  protected static Logger LOGGER = LoggerFactory.getLogger(BaseBpmnXMLConverter.class);
+  protected static final Logger LOGGER = LoggerFactory.getLogger(BaseBpmnXMLConverter.class);
   
-  protected static List<ExtensionAttribute> defaultElementAttributes = Arrays.asList(
+  protected static final List<ExtensionAttribute> defaultElementAttributes = Arrays.asList(
       new ExtensionAttribute(ATTRIBUTE_ID),
       new ExtensionAttribute(ATTRIBUTE_NAME)
   );
@@ -181,7 +222,7 @@ public abstract class BaseBpmnXMLConverter : BpmnXMLConstants {
     xtw.writeEndElement();
   }
   
-  protected abstract Class<?:BaseElement> getBpmnElementType();
+  protected abstract Class<? extends BaseElement> getBpmnElementType();
   
   protected abstract BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception;
   

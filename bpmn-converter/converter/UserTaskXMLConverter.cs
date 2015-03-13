@@ -10,33 +10,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter{
+package org.activiti.bpmn.converter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import org.activiti.bpmn.converter.child.BaseChildElementParser;
+import org.activiti.bpmn.converter.util.BpmnXMLUtil;
+import org.activiti.bpmn.converter.util.CommaSplitter;
+import org.activiti.bpmn.model.BaseElement;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.ExtensionAttribute;
+import org.activiti.bpmn.model.UserTask;
+import org.activiti.bpmn.model.alfresco.AlfrescoUserTask;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Tijs Rademakers, Saeid Mirzaei
  */
-public class UserTaskXMLConverter:BaseBpmnXMLConverter {
+public class UserTaskXMLConverter extends BaseBpmnXMLConverter {
   
   protected Map<String, BaseChildElementParser> childParserMap = new HashMap<String, BaseChildElementParser>();
 
@@ -61,16 +61,16 @@ public class UserTaskXMLConverter:BaseBpmnXMLConverter {
     childParserMap.put(customIdentityLinkParser.getElementName(), customIdentityLinkParser);
   }
   
-  public Class<?:BaseElement> getBpmnElementType() {
+  public Class<? extends BaseElement> getBpmnElementType() {
     return UserTask.class;
   }
   
-  
+  @Override
   protected String getXMLElementName() {
     return ELEMENT_TASK_USER;
   }
   
-  
+  @Override
   @SuppressWarnings("unchecked")
   protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
     String formKey = xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_FORM_FORMKEY);
@@ -114,7 +114,7 @@ public class UserTaskXMLConverter:BaseBpmnXMLConverter {
     return userTask;
   }
   
-  
+  @Override
   @SuppressWarnings("unchecked")
   protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
     UserTask userTask = (UserTask) element;
@@ -136,7 +136,7 @@ public class UserTaskXMLConverter:BaseBpmnXMLConverter {
         defaultActivityAttributes, defaultUserTaskAttributes);
   }
   
-  
+  @Override
   protected boolean writeExtensionChildElements(BaseElement element, boolean didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
     UserTask userTask = (UserTask) element;
     didWriteExtensionStartElement = writeFormProperties(userTask, didWriteExtensionStartElement, xtw);
@@ -193,11 +193,11 @@ public class UserTaskXMLConverter:BaseBpmnXMLConverter {
     xtw.writeEndElement(); // End ELEMENT_CUSTOM_RESOURCE
   }
   
-  
+  @Override
   protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
   }
   
-  public class HumanPerformerParser:BaseChildElementParser {
+  public class HumanPerformerParser extends BaseChildElementParser {
 
     public String getElementName() {
       return "humanPerformer";
@@ -216,7 +216,7 @@ public class UserTaskXMLConverter:BaseBpmnXMLConverter {
 
  
 
-  public class PotentialOwnerParser:BaseChildElementParser {
+  public class PotentialOwnerParser extends BaseChildElementParser {
 
     public String getElementName() {
       return "potentialOwner";
@@ -260,7 +260,7 @@ public class UserTaskXMLConverter:BaseBpmnXMLConverter {
     }
   }
   
-  public class CustomIdentityLinkParser:BaseChildElementParser {
+  public class CustomIdentityLinkParser extends BaseChildElementParser {
 
     public String getElementName() {
       return ELEMENT_CUSTOM_RESOURCE;

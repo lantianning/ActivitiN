@@ -10,20 +10,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.export{
+package org.activiti.bpmn.converter.export;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
+import javax.xml.stream.XMLStreamWriter;
 
-
-
-
-
-
-
-
-
-
-
+import org.activiti.bpmn.constants.BpmnXMLConstants;
+import org.activiti.bpmn.converter.util.BpmnXMLUtil;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.ExtensionAttribute;
+import org.apache.commons.lang3.StringUtils;
 
 public class DefinitionsRootExport implements BpmnXMLConstants {
 

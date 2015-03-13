@@ -10,26 +10,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter{
+package org.activiti.bpmn.converter;
 
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
 
-
-
-
-
-
-
-
-
-
-
-
+import org.activiti.bpmn.converter.child.BaseChildElementParser;
+import org.activiti.bpmn.converter.child.TextAnnotationTextParser;
+import org.activiti.bpmn.converter.util.BpmnXMLUtil;
+import org.activiti.bpmn.model.BaseElement;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.TextAnnotation;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Tijs Rademakers
  */
-public class TextAnnotationXMLConverter:BaseBpmnXMLConverter {
+public class TextAnnotationXMLConverter extends BaseBpmnXMLConverter {
   
   protected Map<String, BaseChildElementParser> childParserMap = new HashMap<String, BaseChildElementParser>();
   
@@ -38,16 +38,16 @@ public class TextAnnotationXMLConverter:BaseBpmnXMLConverter {
     childParserMap.put(annotationTextParser.getElementName(), annotationTextParser);
   }
   
-  public Class<?:BaseElement> getBpmnElementType() {
+  public Class<? extends BaseElement> getBpmnElementType() {
     return TextAnnotation.class;
   }
   
-  
+  @Override
   protected String getXMLElementName() {
     return ELEMENT_TEXT_ANNOTATION;
   }
   
-  
+  @Override
   protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
     TextAnnotation textAnnotation = new TextAnnotation();
     BpmnXMLUtil.addXMLLocation(textAnnotation, xtr);
@@ -56,13 +56,13 @@ public class TextAnnotationXMLConverter:BaseBpmnXMLConverter {
     return textAnnotation;
   }
 
-  
+  @Override
   protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
     TextAnnotation textAnnotation = (TextAnnotation) element;
     writeDefaultAttribute(ATTRIBUTE_TEXTFORMAT, textAnnotation.getTextFormat(), xtw);
   }
   
-  
+  @Override
   protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
     TextAnnotation textAnnotation = (TextAnnotation) element;
     if (StringUtils.isNotEmpty(textAnnotation.getText())) {

@@ -10,18 +10,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
+package org.activiti.bpmn.converter.child;
 
+import javax.xml.stream.XMLStreamReader;
 
-
-
-
-
+import org.activiti.bpmn.model.BaseElement;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.TimerEventDefinition;
 
 /**
  * @author Tijs Rademakers
  */
-public class TimeDurationParser:BaseChildElementParser {
+public class TimeDurationParser extends BaseChildElementParser {
 
   public String getElementName() {
     return ATTRIBUTE_TIMER_DURATION;

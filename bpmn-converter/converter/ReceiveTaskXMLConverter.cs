@@ -10,31 +10,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter{
+package org.activiti.bpmn.converter;
 
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
 
-
-
-
-
-
-
+import org.activiti.bpmn.converter.util.BpmnXMLUtil;
+import org.activiti.bpmn.model.BaseElement;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.ReceiveTask;
 
 /**
  * @author Tijs Rademakers
  */
-public class ReceiveTaskXMLConverter:BaseBpmnXMLConverter {
+public class ReceiveTaskXMLConverter extends BaseBpmnXMLConverter {
   
-  public Class<?:BaseElement> getBpmnElementType() {
+  public Class<? extends BaseElement> getBpmnElementType() {
     return ReceiveTask.class;
   }
   
-  
+  @Override
   protected String getXMLElementName() {
     return ELEMENT_TASK_RECEIVE;
   }
   
-  
+  @Override
   protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
     ReceiveTask receiveTask = new ReceiveTask();
     BpmnXMLUtil.addXMLLocation(receiveTask, xtr);
@@ -42,11 +42,11 @@ public class ReceiveTaskXMLConverter:BaseBpmnXMLConverter {
     return receiveTask;
   }
 
-  
+  @Override
   protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
   }
   
-  
+  @Override
   protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
   }
 }

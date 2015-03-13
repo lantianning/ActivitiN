@@ -10,12 +10,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.exceptions{
+package org.activiti.bpmn.exceptions;
 
 /**
  * @author Tijs Rademakers
  */
-public class XMLException:RuntimeException {
+public class XMLException extends RuntimeException {
 
   private static final long serialVersionUID = 1L;
 

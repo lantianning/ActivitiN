@@ -10,34 +10,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter{
+package org.activiti.bpmn.converter;
 
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
 
-
-
-
-
-
-
-
-
-
+import org.activiti.bpmn.converter.export.FieldExtensionExport;
+import org.activiti.bpmn.converter.util.BpmnXMLUtil;
+import org.activiti.bpmn.model.BaseElement;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.ImplementationType;
+import org.activiti.bpmn.model.SendTask;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Tijs Rademakers
  */
-public class SendTaskXMLConverter:BaseBpmnXMLConverter {
+public class SendTaskXMLConverter extends BaseBpmnXMLConverter {
   
-  public Class<?:BaseElement> getBpmnElementType() {
+  public Class<? extends BaseElement> getBpmnElementType() {
     return SendTask.class;
   }
   
-  
+  @Override
   protected String getXMLElementName() {
     return ELEMENT_TASK_SEND;
   }
 
-  
+  @Override
   protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
 		SendTask sendTask = new SendTask();
 		BpmnXMLUtil.addXMLLocation(sendTask, xtr);
@@ -53,7 +53,7 @@ public class SendTaskXMLConverter:BaseBpmnXMLConverter {
 		return sendTask;
   }
   
-  
+  @Override
   protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
     
     SendTask sendTask = (SendTask) element;
@@ -63,14 +63,14 @@ public class SendTaskXMLConverter:BaseBpmnXMLConverter {
     }
   }
   
-  
+  @Override
   protected boolean writeExtensionChildElements(BaseElement element, boolean didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
     SendTask sendTask = (SendTask) element;
     didWriteExtensionStartElement = FieldExtensionExport.writeFieldExtensions(sendTask.getFieldExtensions(), didWriteExtensionStartElement, xtw);
     return didWriteExtensionStartElement;
   }
   
-  
+  @Override
   protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
   }
   

@@ -10,9 +10,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.util{
+package org.activiti.bpmn.converter.util;
 
-
+import java.io.InputStream;
 
 
 /**

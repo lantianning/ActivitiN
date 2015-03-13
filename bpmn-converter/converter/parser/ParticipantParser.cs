@@ -10,17 +10,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.parser{
+package org.activiti.bpmn.converter.parser;
 
+import javax.xml.stream.XMLStreamReader;
 
-
-
-
-
-
-
-
-
+import org.activiti.bpmn.constants.BpmnXMLConstants;
+import org.activiti.bpmn.converter.util.BpmnXMLUtil;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.Pool;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Tijs Rademakers

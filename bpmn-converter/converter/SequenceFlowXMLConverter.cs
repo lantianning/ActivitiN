@@ -10,32 +10,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter{
+package org.activiti.bpmn.converter;
 
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
 
-
-
-
-
-
-
-
+import org.activiti.bpmn.converter.util.BpmnXMLUtil;
+import org.activiti.bpmn.model.BaseElement;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.SequenceFlow;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Tijs Rademakers
  */
-public class SequenceFlowXMLConverter:BaseBpmnXMLConverter {
+public class SequenceFlowXMLConverter extends BaseBpmnXMLConverter {
   
-  public Class<?:BaseElement> getBpmnElementType() {
+  public Class<? extends BaseElement> getBpmnElementType() {
     return SequenceFlow.class;
   }
   
-  
+  @Override
   protected String getXMLElementName() {
     return ELEMENT_SEQUENCE_FLOW;
   }
   
-  
+  @Override
   protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
     SequenceFlow sequenceFlow = new SequenceFlow();
     BpmnXMLUtil.addXMLLocation(sequenceFlow, xtr);
@@ -49,7 +49,7 @@ public class SequenceFlowXMLConverter:BaseBpmnXMLConverter {
     return sequenceFlow;
   }
 
-  
+  @Override
   protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
     SequenceFlow sequenceFlow = (SequenceFlow) element;
     writeDefaultAttribute(ATTRIBUTE_FLOW_SOURCE_REF, sequenceFlow.getSourceRef(), xtw);
@@ -59,7 +59,7 @@ public class SequenceFlowXMLConverter:BaseBpmnXMLConverter {
     }
   }
   
-  
+  @Override
   protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
     SequenceFlow sequenceFlow = (SequenceFlow) element;
     

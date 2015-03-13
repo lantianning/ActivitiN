@@ -10,17 +10,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter{
+package org.activiti.bpmn.converter;
 
+import java.util.Stack;
 
-
-
-
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
 
 /**
  * @author Tijs Rademakers
  */
-public class IndentingXMLStreamWriter:DelegatingXMLStreamWriter {
+public class IndentingXMLStreamWriter extends DelegatingXMLStreamWriter {
 
   private final static Object SEEN_NOTHING = new Object();
   private final static Object SEEN_ELEMENT = new Object();

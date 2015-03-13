@@ -10,16 +10,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
+package org.activiti.bpmn.converter.child;
 
-
-
-
+import org.activiti.bpmn.model.ActivitiListener;
+import org.activiti.bpmn.model.BaseElement;
+import org.activiti.bpmn.model.HasExecutionListeners;
 
 /**
  * @author Tijs Rademakers
  */
-public class ExecutionListenerParser:ActivitiListenerParser {
+public class ExecutionListenerParser extends ActivitiListenerParser {
 
   public String getElementName() {
   	return ELEMENT_EXECUTION_LISTENER;

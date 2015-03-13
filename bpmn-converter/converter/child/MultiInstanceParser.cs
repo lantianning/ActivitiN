@@ -10,20 +10,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
+package org.activiti.bpmn.converter.child;
 
+import javax.xml.stream.XMLStreamReader;
 
-
-
-
-
-
-
+import org.activiti.bpmn.converter.util.BpmnXMLUtil;
+import org.activiti.bpmn.model.Activity;
+import org.activiti.bpmn.model.BaseElement;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.MultiInstanceLoopCharacteristics;
 
 /**
  * @author Tijs Rademakers
  */
-public class MultiInstanceParser:BaseChildElementParser {
+public class MultiInstanceParser extends BaseChildElementParser {
 
   public String getElementName() {
     return ELEMENT_MULTIINSTANCE;

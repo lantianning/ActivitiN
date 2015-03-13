@@ -10,19 +10,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.export{
+package org.activiti.bpmn.converter.export;
 
+import java.util.List;
 
+import javax.xml.stream.XMLStreamWriter;
 
-
-
-
-
-
-
-
-
-
+import org.activiti.bpmn.constants.BpmnXMLConstants;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.FlowElement;
+import org.activiti.bpmn.model.GraphicInfo;
+import org.activiti.bpmn.model.MessageFlow;
+import org.activiti.bpmn.model.SubProcess;
+import org.apache.commons.lang3.StringUtils;
 
 public class BPMNDIExport implements BpmnXMLConstants {
 

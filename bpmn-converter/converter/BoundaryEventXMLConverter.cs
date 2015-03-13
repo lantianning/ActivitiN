@@ -10,34 +10,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter{
+package org.activiti.bpmn.converter;
 
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
 
-
-
-
-
-
-
-
-
-
+import org.activiti.bpmn.converter.util.BpmnXMLUtil;
+import org.activiti.bpmn.model.BaseElement;
+import org.activiti.bpmn.model.BoundaryEvent;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.ErrorEventDefinition;
+import org.activiti.bpmn.model.EventDefinition;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Tijs Rademakers
  */
-public class BoundaryEventXMLConverter:BaseBpmnXMLConverter {
+public class BoundaryEventXMLConverter extends BaseBpmnXMLConverter {
   
-  public Class<?:BaseElement> getBpmnElementType() {
+  public Class<? extends BaseElement> getBpmnElementType() {
     return BoundaryEvent.class;
   }
   
-  
+  @Override
   protected String getXMLElementName() {
     return ELEMENT_EVENT_BOUNDARY;
   }
   
-  
+  @Override
   protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
     BoundaryEvent boundaryEvent = new BoundaryEvent();
     BpmnXMLUtil.addXMLLocation(boundaryEvent, xtr);
@@ -62,7 +62,7 @@ public class BoundaryEventXMLConverter:BaseBpmnXMLConverter {
     return boundaryEvent;
   }
 
-  
+  @Override
   protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
     BoundaryEvent boundaryEvent = (BoundaryEvent) element;
     if (boundaryEvent.getAttachedToRef() != null) {
@@ -78,7 +78,7 @@ public class BoundaryEventXMLConverter:BaseBpmnXMLConverter {
     }
   }
   
-  
+  @Override
   protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
     BoundaryEvent boundaryEvent = (BoundaryEvent) element;
     writeEventDefinitions(boundaryEvent, boundaryEvent.getEventDefinitions(), model, xtw);

@@ -1,46 +1,46 @@
-namespace org.activiti.bpmn.converter{
+package org.activiti.bpmn.converter;
 
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.regex.Pattern;
 
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import org.activiti.bpmn.converter.util.BpmnXMLUtil;
+import org.activiti.bpmn.model.BaseElement;
+import org.activiti.bpmn.model.BooleanDataObject;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.DateDataObject;
+import org.activiti.bpmn.model.DoubleDataObject;
+import org.activiti.bpmn.model.ExtensionElement;
+import org.activiti.bpmn.model.IntegerDataObject;
+import org.activiti.bpmn.model.ItemDefinition;
+import org.activiti.bpmn.model.LongDataObject;
+import org.activiti.bpmn.model.StringDataObject;
+import org.activiti.bpmn.model.ValuedDataObject;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Lori Small
  * @author Tijs Rademakers
  */
-public class ValuedDataObjectXMLConverter:BaseBpmnXMLConverter {
+public class ValuedDataObjectXMLConverter extends BaseBpmnXMLConverter {
   
   private final Pattern xmlChars = Pattern.compile("[<>&]");
   private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
   protected boolean didWriteExtensionStartElement = false;
   
-  public Class<?:BaseElement> getBpmnElementType() {
+  public Class<? extends BaseElement> getBpmnElementType() {
     return ValuedDataObject.class;
   }
   
-  
+  @Override
   protected String getXMLElementName() {
     return ELEMENT_DATA_OBJECT;
   }
   
-  
+  @Override
   protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
     ValuedDataObject dataObject = null;
     ItemDefinition itemSubjectRef = new ItemDefinition();
@@ -105,7 +105,7 @@ public class ValuedDataObjectXMLConverter:BaseBpmnXMLConverter {
     return dataObject;
   }
 
-  
+  @Override
   protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
     ValuedDataObject dataObject = (ValuedDataObject) element;
     if (dataObject.getItemSubjectRef() != null && StringUtils.isNotEmpty(dataObject.getItemSubjectRef().getStructureRef())) {
@@ -113,7 +113,7 @@ public class ValuedDataObjectXMLConverter:BaseBpmnXMLConverter {
     }
   }
 
-  
+  @Override
   protected boolean writeExtensionChildElements(BaseElement element, boolean didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
     ValuedDataObject dataObject = (ValuedDataObject) element;
 
@@ -148,7 +148,7 @@ public class ValuedDataObjectXMLConverter:BaseBpmnXMLConverter {
     return didWriteExtensionStartElement;
   }
 
-  
+  @Override
   protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
   }
 }

@@ -10,18 +10,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
+package org.activiti.bpmn.converter.child;
 
+import javax.xml.stream.XMLStreamReader;
 
-
-
-
-
+import org.activiti.bpmn.model.BaseElement;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.Lane;
 
 /**
  * @author Tijs Rademakers
  */
-public class FlowNodeRefParser:BaseChildElementParser {
+public class FlowNodeRefParser extends BaseChildElementParser {
 
   public String getElementName() {
     return ELEMENT_FLOWNODE_REF;

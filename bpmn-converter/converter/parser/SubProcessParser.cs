@@ -10,19 +10,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.parser{
+package org.activiti.bpmn.converter.parser;
 
+import java.util.List;
 
+import javax.xml.stream.XMLStreamReader;
 
-
-
-
-
-
-
-
-
-
+import org.activiti.bpmn.constants.BpmnXMLConstants;
+import org.activiti.bpmn.converter.util.BpmnXMLUtil;
+import org.activiti.bpmn.model.EventSubProcess;
+import org.activiti.bpmn.model.Process;
+import org.activiti.bpmn.model.SubProcess;
+import org.activiti.bpmn.model.Transaction;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Tijs Rademakers

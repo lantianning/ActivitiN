@@ -10,32 +10,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter{
+package org.activiti.bpmn.converter;
 
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
 
-
-
-
-
-
-
-
+import org.activiti.bpmn.converter.util.BpmnXMLUtil;
+import org.activiti.bpmn.model.BaseElement;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.DataStoreReference;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Tijs Rademakers
  */
-public class DataStoreReferenceXMLConverter:BaseBpmnXMLConverter {
+public class DataStoreReferenceXMLConverter extends BaseBpmnXMLConverter {
 
-  public Class<?:BaseElement> getBpmnElementType() {
+  public Class<? extends BaseElement> getBpmnElementType() {
     return DataStoreReference.class;
   }
   
-  
+  @Override
   protected String getXMLElementName() {
     return ELEMENT_DATA_STORE_REFERENCE;
   }
   
-  
+  @Override
   protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
     DataStoreReference dataStoreRef = new DataStoreReference();
     BpmnXMLUtil.addXMLLocation(dataStoreRef, xtr);
@@ -43,7 +43,7 @@ public class DataStoreReferenceXMLConverter:BaseBpmnXMLConverter {
     return dataStoreRef;
   }
 
-  
+  @Override
   protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
     DataStoreReference dataStoreRef = (DataStoreReference) element;
     if (StringUtils.isNotEmpty(dataStoreRef.getDataStoreRef())) {
@@ -55,7 +55,7 @@ public class DataStoreReferenceXMLConverter:BaseBpmnXMLConverter {
     }
   }
   
-  
+  @Override
   protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
     DataStoreReference dataStoreRef = (DataStoreReference) element;
     if (StringUtils.isNotEmpty(dataStoreRef.getDataState())) {

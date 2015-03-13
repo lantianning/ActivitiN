@@ -10,27 +10,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter{
+package org.activiti.bpmn.converter;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import javax.xml.stream.XMLStreamReader;
+import javax.xml.stream.XMLStreamWriter;
 
-
-
-
-
-
-
-
-
-
-
-
-
+import org.activiti.bpmn.converter.child.BaseChildElementParser;
+import org.activiti.bpmn.converter.util.BpmnXMLUtil;
+import org.activiti.bpmn.model.BaseElement;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.bpmn.model.CallActivity;
+import org.activiti.bpmn.model.IOParameter;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Tijs Rademakers
  */
-public class CallActivityXMLConverter:BaseBpmnXMLConverter {
+public class CallActivityXMLConverter extends BaseBpmnXMLConverter {
   
   protected Map<String, BaseChildElementParser> childParserMap = new HashMap<String, BaseChildElementParser>();
   
@@ -41,16 +41,16 @@ public class CallActivityXMLConverter:BaseBpmnXMLConverter {
     childParserMap.put(outParameterParser.getElementName(), outParameterParser);
   }
 
-  public Class<?:BaseElement> getBpmnElementType() {
+  public Class<? extends BaseElement> getBpmnElementType() {
     return CallActivity.class;
   }
   
-  
+  @Override
   protected String getXMLElementName() {
     return ELEMENT_CALL_ACTIVITY;
   }
   
-  
+  @Override
   protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
     CallActivity callActivity = new CallActivity();
     BpmnXMLUtil.addXMLLocation(callActivity, xtr);
@@ -59,7 +59,7 @@ public class CallActivityXMLConverter:BaseBpmnXMLConverter {
     return callActivity;
   }
 
-  
+  @Override
   protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
     CallActivity callActivity = (CallActivity) element;
     if (StringUtils.isNotEmpty(callActivity.getCalledElement())) {
@@ -67,7 +67,7 @@ public class CallActivityXMLConverter:BaseBpmnXMLConverter {
     }
   }
   
-  
+  @Override
   protected boolean writeExtensionChildElements(BaseElement element, boolean didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
     CallActivity callActivity = (CallActivity) element;
     didWriteExtensionStartElement = writeIOParameters(ELEMENT_CALL_ACTIVITY_IN_PARAMETERS, callActivity.getInParameters(), didWriteExtensionStartElement, xtw);
@@ -75,7 +75,7 @@ public class CallActivityXMLConverter:BaseBpmnXMLConverter {
     return didWriteExtensionStartElement;
   }
 
-  
+  @Override
   protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
   }
   
@@ -105,7 +105,7 @@ public class CallActivityXMLConverter:BaseBpmnXMLConverter {
     return didWriteExtensionStartElement;
   }
   
-  public class InParameterParser:BaseChildElementParser {
+  public class InParameterParser extends BaseChildElementParser {
 
     public String getElementName() {
       return ELEMENT_CALL_ACTIVITY_IN_PARAMETERS;
@@ -131,7 +131,7 @@ public class CallActivityXMLConverter:BaseBpmnXMLConverter {
     }
   }
   
-  public class OutParameterParser:BaseChildElementParser {
+  public class OutParameterParser extends BaseChildElementParser {
 
     public String getElementName() {
       return ELEMENT_CALL_ACTIVITY_OUT_PARAMETERS;
