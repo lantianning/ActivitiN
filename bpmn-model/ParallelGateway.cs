@@ -10,20 +10,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+namespace org.activiti.bpmn.model
+{
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class ParallelGateway extends Gateway {
-  
-  public ParallelGateway clone() {
-    ParallelGateway clone = new ParallelGateway();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(ParallelGateway otherElement) {
-    super.setValues(otherElement);
-  }
+
+    public class ParallelGateway : Gateway
+    {
+
+        public override object clone()
+        {
+            ParallelGateway clone = new ParallelGateway();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(ParallelGateway otherElement)
+        {
+            base.setValues(otherElement);
+        }
+    }
 }

@@ -9,7 +9,7 @@ namespace org.activiti.bpmn.model
 
         public String Name { get; set; }
         public String ItemSubjectRef { get; set; }
-        public Boolean IsCollection { get; set; }
+        public bool IsCollection { get; set; }
 
 
         public override object clone()

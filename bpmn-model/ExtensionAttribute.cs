@@ -38,7 +38,7 @@ public class ExtensionAttribute {
     return sb.ToString();
   }
   
-  public ExtensionAttribute clone() {
+  public object clone() {
     ExtensionAttribute clone = new ExtensionAttribute();
     clone.setValues(this);
     return clone;

@@ -10,32 +10,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+
+using System;
+
+namespace org.activiti.bpmn.model
+{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class MessageEventDefinition extends EventDefinition {
 
-  protected String messageRef;
+    public class MessageEventDefinition : EventDefinition
+    {
 
-  public String getMessageRef() {
-    return messageRef;
-  }
+        protected String messageRef;
 
-  public void setMessageRef(String messageRef) {
-    this.messageRef = messageRef;
-  }
-  
-  public MessageEventDefinition clone() {
-    MessageEventDefinition clone = new MessageEventDefinition();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(MessageEventDefinition otherDefinition) {
-    super.setValues(otherDefinition);
-    setMessageRef(otherDefinition.getMessageRef());
-  }
+        public String getMessageRef()
+        {
+            return messageRef;
+        }
+
+        public void setMessageRef(String messageRef)
+        {
+            this.messageRef = messageRef;
+        }
+
+        public override object clone()
+        {
+            MessageEventDefinition clone = new MessageEventDefinition();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(MessageEventDefinition otherDefinition)
+        {
+            base.setValues(otherDefinition);
+            setMessageRef(otherDefinition.getMessageRef());
+        }
+    }
 }

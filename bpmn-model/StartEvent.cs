@@ -10,55 +10,79 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
-import java.util.ArrayList;
-import java.util.List;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace org.activiti.bpmn.model
+{
+
+
+
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class StartEvent extends Event {
 
-  protected String initiator;
-  protected String formKey;
-  protected List<FormProperty> formProperties = new ArrayList<FormProperty>();
+    public class StartEvent : Event
+    {
 
-  public String getInitiator() {
-    return initiator;
-  }
-  public void setInitiator(String initiator) {
-    this.initiator = initiator;
-  }
-  public String getFormKey() {
-    return formKey;
-  }
-  public void setFormKey(String formKey) {
-    this.formKey = formKey;
-  }
-  public List<FormProperty> getFormProperties() {
-    return formProperties;
-  }
-  public void setFormProperties(List<FormProperty> formProperties) {
-    this.formProperties = formProperties;
-  }
-  
-  public StartEvent clone() {
-    StartEvent clone = new StartEvent();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(StartEvent otherEvent) {
-    super.setValues(otherEvent);
-    setInitiator(otherEvent.getInitiator());
-    setFormKey(otherEvent.getFormKey());
-    
-    formProperties = new ArrayList<FormProperty>();
-    if (otherEvent.getFormProperties() != null && !otherEvent.getFormProperties().isEmpty()) {
-      for (FormProperty property : otherEvent.getFormProperties()) {
-        formProperties.add(property.clone());
-      }
+        protected String initiator;
+        protected String formKey;
+        protected List<FormProperty> formProperties = new List<FormProperty>();
+
+        public String getInitiator()
+        {
+            return initiator;
+        }
+
+        public void setInitiator(String initiator)
+        {
+            this.initiator = initiator;
+        }
+
+        public String getFormKey()
+        {
+            return formKey;
+        }
+
+        public void setFormKey(String formKey)
+        {
+            this.formKey = formKey;
+        }
+
+        public List<FormProperty> getFormProperties()
+        {
+            return formProperties;
+        }
+
+        public void setFormProperties(List<FormProperty> formProperties)
+        {
+            this.formProperties = formProperties;
+        }
+
+        public override object clone()
+        {
+            StartEvent clone = new StartEvent();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(StartEvent otherEvent)
+        {
+            base.setValues(otherEvent);
+            setInitiator(otherEvent.getInitiator());
+            setFormKey(otherEvent.getFormKey());
+
+            formProperties = new List<FormProperty>();
+            if (otherEvent.getFormProperties() != null && otherEvent.getFormProperties().Any())
+            {
+                foreach (FormProperty property in otherEvent.getFormProperties())
+                {
+                    formProperties.Add((FormProperty) property.clone());
+                }
+            }
+        }
     }
-  }
 }

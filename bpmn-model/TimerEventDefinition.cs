@@ -10,46 +10,66 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+
+using System;
+
+namespace org.activiti.bpmn.model
+{
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class TimerEventDefinition extends EventDefinition {
 
-  protected String timeDate;
-  protected String timeDuration;
-  protected String timeCycle;
+    public class TimerEventDefinition : EventDefinition
+    {
 
-  public String getTimeDate() {
-    return timeDate;
-  }
-  public void setTimeDate(String timeDate) {
-    this.timeDate = timeDate;
-  }
-  public String getTimeDuration() {
-    return timeDuration;
-  }
-  public void setTimeDuration(String timeDuration) {
-    this.timeDuration = timeDuration;
-  }
-  public String getTimeCycle() {
-    return timeCycle;
-  }
-  public void setTimeCycle(String timeCycle) {
-    this.timeCycle = timeCycle;
-  }
-  
-  public TimerEventDefinition clone() {
-    TimerEventDefinition clone = new TimerEventDefinition();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(TimerEventDefinition otherDefinition) {
-    super.setValues(otherDefinition);
-    setTimeDate(otherDefinition.getTimeDate());
-    setTimeDuration(otherDefinition.getTimeDuration());
-    setTimeCycle(otherDefinition.getTimeCycle());
-  }
+        protected String timeDate;
+        protected String timeDuration;
+        protected String timeCycle;
+
+        public String getTimeDate()
+        {
+            return timeDate;
+        }
+
+        public void setTimeDate(String timeDate)
+        {
+            this.timeDate = timeDate;
+        }
+
+        public String getTimeDuration()
+        {
+            return timeDuration;
+        }
+
+        public void setTimeDuration(String timeDuration)
+        {
+            this.timeDuration = timeDuration;
+        }
+
+        public String getTimeCycle()
+        {
+            return timeCycle;
+        }
+
+        public void setTimeCycle(String timeCycle)
+        {
+            this.timeCycle = timeCycle;
+        }
+
+        public override object clone()
+        {
+            TimerEventDefinition clone = new TimerEventDefinition();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(TimerEventDefinition otherDefinition)
+        {
+            base.setValues(otherDefinition);
+            setTimeDate(otherDefinition.getTimeDate());
+            setTimeDuration(otherDefinition.getTimeDuration());
+            setTimeCycle(otherDefinition.getTimeCycle());
+        }
+    }
 }

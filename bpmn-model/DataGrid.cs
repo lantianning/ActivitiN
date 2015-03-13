@@ -10,38 +10,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
-import java.util.ArrayList;
-import java.util.List;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace org.activiti.bpmn.model
+{
+
+
+
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class DataGrid implements ComplexDataType {
 
-  protected List<DataGridRow> rows = new ArrayList<DataGridRow>();
+    public class DataGrid : ComplexDataType
+    {
 
-  public List<DataGridRow> getRows() {
-    return rows;
-  }
+        protected List<DataGridRow> rows = new List<DataGridRow>();
 
-  public void setRows(List<DataGridRow> rows) {
-    this.rows = rows;
-  }
-  
-  public DataGrid clone() {
-    DataGrid clone = new DataGrid();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(DataGrid otherGrid) {
-    rows = new ArrayList<DataGridRow>();
-    if (otherGrid.getRows() != null && !otherGrid.getRows().isEmpty()) {
-      for (DataGridRow row : otherGrid.getRows()) {
-        rows.add(row.clone());
-      }
+        public List<DataGridRow> getRows()
+        {
+            return rows;
+        }
+
+        public void setRows(List<DataGridRow> rows)
+        {
+            this.rows = rows;
+        }
+
+        public object clone()
+        {
+            DataGrid clone = new DataGrid();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(DataGrid otherGrid)
+        {
+            rows = new List<DataGridRow>();
+            if (otherGrid.getRows() != null && otherGrid.getRows().Any())
+            {
+                foreach (DataGridRow row in otherGrid.getRows())
+                {
+                    rows.Add((DataGridRow) row.clone());
+                }
+            }
+        }
     }
-  }
 }

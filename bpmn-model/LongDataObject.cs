@@ -1,18 +1,26 @@
-package org.activiti.bpmn.model;
+using System;
+
+namespace org.activiti.bpmn.model
+{
 
 
 /**
- * @author Lori Small
+ * //@author Lori Small
  */
-public class LongDataObject extends ValuedDataObject {
 
-  public void setValue(Object value) {
-    this.value = Long.valueOf(value.toString());
-  }
+    public class LongDataObject : ValuedDataObject
+    {
 
-  public LongDataObject clone() {
-    LongDataObject clone = new LongDataObject();
-    clone.setValues(this);
-    return clone;
-  }
+        public override void setValue(Object value)
+        {
+            Value = long.Parse(value.ToString()) ;
+        }
+
+        public override object clone()
+        {
+            LongDataObject clone = new LongDataObject();
+            clone.setValues(this);
+            return clone;
+        }
+    }
 }

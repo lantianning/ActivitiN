@@ -10,41 +10,54 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+
+using System;
+
+namespace org.activiti.bpmn.model
+{
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class SignalEventDefinition extends EventDefinition {
 
-  protected String signalRef;
-  protected boolean async;
+    public class SignalEventDefinition : EventDefinition
+    {
 
-  public String getSignalRef() {
-    return signalRef;
-  }
+        protected String signalRef;
+        protected bool async;
 
-  public void setSignalRef(String signalRef) {
-    this.signalRef = signalRef;
-  }
+        public String getSignalRef()
+        {
+            return signalRef;
+        }
 
-  public boolean isAsync() {
-    return async;
-  }
+        public void setSignalRef(String signalRef)
+        {
+            this.signalRef = signalRef;
+        }
 
-  public void setAsync(boolean async) {
-    this.async = async;
-  }
-  
-  public SignalEventDefinition clone() {
-    SignalEventDefinition clone = new SignalEventDefinition();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(SignalEventDefinition otherDefinition) {
-    super.setValues(otherDefinition);
-    setSignalRef(otherDefinition.getSignalRef());
-    setAsync(otherDefinition.isAsync());
-  }
+        public bool isAsync()
+        {
+            return async;
+        }
+
+        public void setAsync(bool async)
+        {
+            this.async = async;
+        }
+
+        public override object clone()
+        {
+            SignalEventDefinition clone = new SignalEventDefinition();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(SignalEventDefinition otherDefinition)
+        {
+            base.setValues(otherDefinition);
+            setSignalRef(otherDefinition.getSignalRef());
+            setAsync(otherDefinition.isAsync());
+        }
+    }
 }

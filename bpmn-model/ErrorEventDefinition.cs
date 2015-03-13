@@ -10,30 +10,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+
+using System;
+
+namespace org.activiti.bpmn.model
+{
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class ErrorEventDefinition extends EventDefinition {
 
-  protected String errorCode;
+    public class ErrorEventDefinition : EventDefinition
+    {
 
-  public String getErrorCode() {
-    return errorCode;
-  }
-  public void setErrorCode(String errorCode) {
-    this.errorCode = errorCode;
-  }
-  
-  public ErrorEventDefinition clone() {
-    ErrorEventDefinition clone = new ErrorEventDefinition();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(ErrorEventDefinition otherDefinition) {
-    super.setValues(otherDefinition);
-    setErrorCode(otherDefinition.getErrorCode());
-  }
+        protected String errorCode;
+
+        public String getErrorCode()
+        {
+            return errorCode;
+        }
+
+        public void setErrorCode(String errorCode)
+        {
+            this.errorCode = errorCode;
+        }
+
+        public override object clone()
+        {
+            ErrorEventDefinition clone = new ErrorEventDefinition();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(ErrorEventDefinition otherDefinition)
+        {
+            base.setValues(otherDefinition);
+            setErrorCode(otherDefinition.getErrorCode());
+        }
+    }
 }

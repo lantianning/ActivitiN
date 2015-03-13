@@ -10,61 +10,87 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
-import java.util.ArrayList;
-import java.util.List;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace org.activiti.bpmn.model
+{
+
+
+
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class CallActivity extends Activity {
 
-  protected String calledElement;
-  protected List<IOParameter> inParameters = new ArrayList<IOParameter>();
-  protected List<IOParameter> outParameters = new ArrayList<IOParameter>();
+    public class CallActivity : Activity
+    {
 
-  public String getCalledElement() {
-    return calledElement;
-  }
-  public void setCalledElement(String calledElement) {
-    this.calledElement = calledElement;
-  }
-  public List<IOParameter> getInParameters() {
-    return inParameters;
-  }
-  public void setInParameters(List<IOParameter> inParameters) {
-    this.inParameters = inParameters;
-  }
-  public List<IOParameter> getOutParameters() {
-    return outParameters;
-  }
-  public void setOutParameters(List<IOParameter> outParameters) {
-    this.outParameters = outParameters;
-  }
-  
-  public CallActivity clone() {
-    CallActivity clone = new CallActivity();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(CallActivity otherElement) {
-    super.setValues(otherElement);
-    setCalledElement(otherElement.getCalledElement());
-    
-    inParameters = new ArrayList<IOParameter>();
-    if (otherElement.getInParameters() != null && !otherElement.getInParameters().isEmpty()) {
-      for (IOParameter parameter : otherElement.getInParameters()) {
-        inParameters.add(parameter.clone());
-      }
+        protected String calledElement;
+        protected List<IOParameter> inParameters = new List<IOParameter>();
+        protected List<IOParameter> outParameters = new List<IOParameter>();
+
+        public String getCalledElement()
+        {
+            return calledElement;
+        }
+
+        public void setCalledElement(String calledElement)
+        {
+            this.calledElement = calledElement;
+        }
+
+        public List<IOParameter> getInParameters()
+        {
+            return inParameters;
+        }
+
+        public void setInParameters(List<IOParameter> inParameters)
+        {
+            this.inParameters = inParameters;
+        }
+
+        public List<IOParameter> getOutParameters()
+        {
+            return outParameters;
+        }
+
+        public void setOutParameters(List<IOParameter> outParameters)
+        {
+            this.outParameters = outParameters;
+        }
+
+        public override object clone()
+        {
+            CallActivity clone = new CallActivity();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(CallActivity otherElement)
+        {
+            base.setValues(otherElement);
+            setCalledElement(otherElement.getCalledElement());
+
+            inParameters = new List<IOParameter>();
+            if (otherElement.getInParameters() != null && otherElement.getInParameters().Any())
+            {
+                foreach (IOParameter parameter in otherElement.getInParameters())
+                {
+                    inParameters.Add((IOParameter) parameter.clone());
+                }
+            }
+
+            outParameters = new List<IOParameter>();
+            if (otherElement.getOutParameters() != null && otherElement.getOutParameters().Any())
+            {
+                foreach (IOParameter parameter in otherElement.getOutParameters())
+                {
+                    outParameters.Add((IOParameter) parameter.clone());
+                }
+            }
+        }
     }
-    
-    outParameters = new ArrayList<IOParameter>();
-    if (otherElement.getOutParameters() != null && !otherElement.getOutParameters().isEmpty()) {
-      for (IOParameter parameter : otherElement.getOutParameters()) {
-        outParameters.add(parameter.clone());
-      }
-    }
-  }
 }

@@ -10,20 +10,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+namespace org.activiti.bpmn.model
+{
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class ManualTask extends Task {
 
-  public ManualTask clone() {
-    ManualTask clone = new ManualTask();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(ManualTask otherElement) {
-    super.setValues(otherElement);
-  }
+    public class ManualTask : ActivityTask
+    {
+
+        public override object clone()
+        {
+            ManualTask clone = new ManualTask();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(ManualTask otherElement)
+        {
+            base.setValues(otherElement);
+        }
+    }
 }

@@ -24,7 +24,7 @@ namespace org.activiti.bpmn.model
         public String CompletionCondition { get; set; }
         public String ElementVariable { get; set; }
         public String ElementIndexVariable { get; set; }
-        public Boolean IsSequential { get; set; }
+        public bool IsSequential { get; set; }
 
 
         public override object clone()

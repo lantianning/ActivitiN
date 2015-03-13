@@ -119,7 +119,7 @@ namespace org.activiti.bpmn.model
                         List<ExtensionAttribute> attributeList = new List<ExtensionAttribute>();
                         foreach (ExtensionAttribute extensionAttribute in otherAttributeList)
                         {
-                            attributeList.Add(extensionAttribute.clone());
+                            attributeList.Add((ExtensionAttribute)extensionAttribute.clone());
                         }
                         Attributes.Add(key, attributeList);
                     }

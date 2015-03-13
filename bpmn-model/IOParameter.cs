@@ -10,54 +10,78 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+
+using System;
+
+namespace org.activiti.bpmn.model
+{
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class IOParameter extends BaseElement {
 
-  protected String source;
-  protected String sourceExpression;
-  protected String target;
-  protected String targetExpression;
+    public class IOParameter : BaseElement
+    {
 
-  public String getSource() {
-    return source;
-  }
-  public void setSource(String source) {
-    this.source = source;
-  }
-  public String getTarget() {
-    return target;
-  }
-  public void setTarget(String target) {
-    this.target = target;
-  }
-  public String getSourceExpression() {
-    return sourceExpression;
-  }
-  public void setSourceExpression(String sourceExpression) {
-    this.sourceExpression = sourceExpression;
-  }
-  public String getTargetExpression() {
-    return targetExpression;
-  }
-  public void setTargetExpression(String targetExpression) {
-    this.targetExpression = targetExpression;
-  }
-  
-  public IOParameter clone() {
-    IOParameter clone = new IOParameter();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(IOParameter otherElement) {
-    super.setValues(otherElement);
-    setSource(otherElement.getSource());
-    setSourceExpression(otherElement.getSourceExpression());
-    setTarget(otherElement.getTarget());
-    setTargetExpression(otherElement.getTargetExpression());
-  }
+        protected String source;
+        protected String sourceExpression;
+        protected String target;
+        protected String targetExpression;
+
+        public String getSource()
+        {
+            return source;
+        }
+
+        public void setSource(String source)
+        {
+            this.source = source;
+        }
+
+        public String getTarget()
+        {
+            return target;
+        }
+
+        public void setTarget(String target)
+        {
+            this.target = target;
+        }
+
+        public String getSourceExpression()
+        {
+            return sourceExpression;
+        }
+
+        public void setSourceExpression(String sourceExpression)
+        {
+            this.sourceExpression = sourceExpression;
+        }
+
+        public String getTargetExpression()
+        {
+            return targetExpression;
+        }
+
+        public void setTargetExpression(String targetExpression)
+        {
+            this.targetExpression = targetExpression;
+        }
+
+        public override object clone()
+        {
+            IOParameter clone = new IOParameter();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(IOParameter otherElement)
+        {
+            base.setValues(otherElement);
+            setSource(otherElement.getSource());
+            setSourceExpression(otherElement.getSourceExpression());
+            setTarget(otherElement.getTarget());
+            setTargetExpression(otherElement.getTargetExpression());
+        }
+    }
 }

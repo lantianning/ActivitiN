@@ -10,20 +10,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+namespace org.activiti.bpmn.model
+{
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class ExclusiveGateway extends Gateway {
 
-  public ExclusiveGateway clone() {
-    ExclusiveGateway clone = new ExclusiveGateway();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(ExclusiveGateway otherElement) {
-    super.setValues(otherElement);
-  }
+    public class ExclusiveGateway : Gateway
+    {
+
+        public override object clone()
+        {
+            ExclusiveGateway clone = new ExclusiveGateway();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(ExclusiveGateway otherElement)
+        {
+            base.setValues(otherElement);
+        }
+    }
 }

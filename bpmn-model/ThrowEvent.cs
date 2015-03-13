@@ -10,21 +10,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+namespace org.activiti.bpmn.model
+{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class ThrowEvent extends Event {
-  
-  public ThrowEvent clone() {
-    ThrowEvent clone = new ThrowEvent();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(ThrowEvent otherEvent) {
-    super.setValues(otherEvent);
-  }
+
+    public class ThrowEvent : Event
+    {
+
+        public override object clone()
+        {
+            ThrowEvent clone = new ThrowEvent();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(ThrowEvent otherEvent)
+        {
+            base.setValues(otherEvent);
+        }
+    }
 }

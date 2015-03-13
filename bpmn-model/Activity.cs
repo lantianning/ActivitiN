@@ -20,10 +20,10 @@ namespace org.activiti.bpmn.model
     public abstract class Activity : FlowNode
     {
 
-        public Boolean Asynchronous { get; set; }
-        public Boolean NotExclusive { get; set; }
+        public bool Asynchronous { get; set; }
+        public bool NotExclusive { get; set; }
         public String DefaultFlow { get; set; }
-        public Boolean ForCompensation { get; set; }
+        public bool ForCompensation { get; set; }
         public MultiInstanceLoopCharacteristics LoopCharacteristics { get; set; }
         public IOSpecification IoSpecification { get; set; }
         protected List<DataAssociation> _dataInputAssociations = new List<DataAssociation>();

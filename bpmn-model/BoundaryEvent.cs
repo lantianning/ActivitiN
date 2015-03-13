@@ -19,8 +19,8 @@ namespace org.activiti.bpmn.model
     {
         public Activity AttachedToRef { get; set; }
         public String AttachedToRefId { get; set; }
-        protected Boolean _cancelActivity = true;
-        public Boolean CancelActivity { get { return _cancelActivity; } set { _cancelActivity = value; } }
+        protected bool _cancelActivity = true;
+        public bool CancelActivity { get { return _cancelActivity; } set { _cancelActivity = value; } }
 
         public override object clone()
         {

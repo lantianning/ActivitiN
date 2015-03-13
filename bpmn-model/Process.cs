@@ -25,7 +25,7 @@ namespace org.activiti.bpmn.model
 		public String Name { get; set; }
 		public String Documentation { get; set; }
 		public IOSpecification IoSpecification { get; set; }
-		protected Boolean _executable = true;
+		protected bool _executable = true;
 		protected List<ActivitiListener> _executionListeners = new List<ActivitiListener>();
 		protected List<Lane> _lanes = new List<Lane>();
 		protected List<FlowElement> _flowElementList = new List<FlowElement>();
@@ -113,7 +113,7 @@ namespace org.activiti.bpmn.model
 		}
 
 		/**
-   * Searches the whole process, including subprocesses (unlike {@link getFlowElements(String)}
+   * Searches the whole process, including subprocesses (unlike {//@link getFlowElements(String)}
    */
 
 		public FlowElement getFlowElementRecursive(String flowElementId)
@@ -221,7 +221,7 @@ namespace org.activiti.bpmn.model
 			}
 		}
 
-		public List<FlowElement> findFlowElementsOfType(Type type, Boolean goIntoSubprocesses = true)
+		public List<FlowElement> findFlowElementsOfType(Type type, bool goIntoSubprocesses = true)
 		{
 			List<FlowElement> foundFlowElements = new List<FlowElement>();
 			foreach (FlowElement flowElement in FlowElements)
@@ -244,7 +244,7 @@ namespace org.activiti.bpmn.model
 
 
 		private List<FlowElement> findFlowElementsInSubProcessOfType(SubProcess subProcess,
-			Type type, Boolean goIntoSubprocesses = true)
+			Type type, bool goIntoSubprocesses = true)
 		{
 			List<FlowElement> foundFlowElements = new List<FlowElement>();
 			foreach (FlowElement flowElement in
@@ -346,7 +346,7 @@ namespace org.activiti.bpmn.model
 	 */
 			foreach (ValuedDataObject thisObject in DataObjects)
 			{
-				Boolean exists = false;
+				bool exists = false;
 				foreach (ValuedDataObject otherObject in otherElement.DataObjects)
 				{
 					if (thisObject.Id.Equals(otherObject.Id))

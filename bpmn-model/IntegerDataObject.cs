@@ -1,18 +1,26 @@
-package org.activiti.bpmn.model;
+using System;
+
+namespace org.activiti.bpmn.model
+{
 
 
 /**
- * @author Lori Small
+ * //@author Lori Small
  */
-public class IntegerDataObject extends ValuedDataObject {
 
-  public void setValue(Object value) {
-    this.value = Integer.valueOf(value.toString());
-  }
+    public class IntegerDataObject : ValuedDataObject
+    {
 
-  public IntegerDataObject clone() {
-    IntegerDataObject clone = new IntegerDataObject();
-    clone.setValues(this);
-    return clone;
-  }
+        public override void setValue(Object value)
+        {
+            Value = int.Parse(value.ToString());
+        }
+
+        public override object clone()
+        {
+            IntegerDataObject clone = new IntegerDataObject();
+            clone.setValues(this);
+            return clone;
+        }
+    }
 }

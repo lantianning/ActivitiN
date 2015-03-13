@@ -10,20 +10,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+namespace org.activiti.bpmn.model
+{
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class TerminateEventDefinition extends EventDefinition {
 
-  public TerminateEventDefinition clone() {
-    TerminateEventDefinition clone = new TerminateEventDefinition();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(TerminateEventDefinition otherDefinition) {
-    super.setValues(otherDefinition);
-  }
+    public class TerminateEventDefinition : EventDefinition
+    {
+
+        public override object clone()
+        {
+            TerminateEventDefinition clone = new TerminateEventDefinition();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(TerminateEventDefinition otherDefinition)
+        {
+            base.setValues(otherDefinition);
+        }
+    }
 }

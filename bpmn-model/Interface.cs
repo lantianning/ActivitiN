@@ -45,7 +45,7 @@ namespace org.activiti.bpmn.model
             operations = new List<Operation>();
             if (otherElement.Operations != null && otherElement.Operations.Any())
             {
-                foreach (Operation operation in otherElement.getOperations())
+                foreach (Operation operation in otherElement.Operations)
                 {
                     operations.Add((Operation) operation.clone());
                 }

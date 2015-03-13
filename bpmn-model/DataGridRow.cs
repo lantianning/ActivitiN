@@ -10,46 +10,65 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
 
-import java.util.ArrayList;
-import java.util.List;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace org.activiti.bpmn.model
+{
+
+
+
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class DataGridRow {
 
-  protected int index;
-  protected List<DataGridField> fields = new ArrayList<DataGridField>();
+    public class DataGridRow
+    {
 
-  public int getIndex() {
-    return index;
-  }
-  public void setIndex(int index) {
-    this.index = index;
-  }
-  public List<DataGridField> getFields() {
-    return fields;
-  }
-  public void setFields(List<DataGridField> fields) {
-    this.fields = fields;
-  }
-  
-  public DataGridRow clone() {
-    DataGridRow clone = new DataGridRow();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(DataGridRow otherRow) {
-    setIndex(otherRow.getIndex());
-    
-    fields = new ArrayList<DataGridField>();
-    if (otherRow.getFields() != null && !otherRow.getFields().isEmpty()) {
-      for (DataGridField field : otherRow.getFields()) {
-        fields.add(field.clone());
-      }
+        protected int index;
+        protected List<DataGridField> fields = new List<DataGridField>();
+
+        public int getIndex()
+        {
+            return index;
+        }
+
+        public void setIndex(int index)
+        {
+            this.index = index;
+        }
+
+        public List<DataGridField> getFields()
+        {
+            return fields;
+        }
+
+        public void setFields(List<DataGridField> fields)
+        {
+            this.fields = fields;
+        }
+
+        public object clone()
+        {
+            DataGridRow clone = new DataGridRow();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(DataGridRow otherRow)
+        {
+            setIndex(otherRow.getIndex());
+
+            fields = new List<DataGridField>();
+            if (otherRow.getFields() != null && otherRow.getFields().Any())
+            {
+                foreach (DataGridField field in otherRow.getFields())
+                {
+                    fields.Add((DataGridField) field.clone());
+                }
+            }
+        }
     }
-  }
 }

@@ -1,18 +1,26 @@
-package org.activiti.bpmn.model;
+using System;
+
+namespace org.activiti.bpmn.model
+{
 
 
 /**
- * @author Lori Small
+ * //@author Lori Small
  */
-public class StringDataObject extends ValuedDataObject {
 
-  public void setValue(Object value) {
-    this.value = value.toString();
-  }
+    public class StringDataObject : ValuedDataObject
+    {
 
-  public StringDataObject clone() {
-    StringDataObject clone = new StringDataObject();
-    clone.setValues(this);
-    return clone;
-  }
+        public override void setValue(Object value)
+        {
+            Value = value.ToString();
+        }
+
+        public override object clone()
+        {
+            StringDataObject clone = new StringDataObject();
+            clone.setValues(this);
+            return clone;
+        }
+    }
 }

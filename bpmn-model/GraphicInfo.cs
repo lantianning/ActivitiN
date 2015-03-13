@@ -23,7 +23,7 @@ namespace org.activiti.bpmn.model
         protected double height;
         protected double width;
         protected FlowElement element;
-        protected Boolean expanded;
+        protected bool expanded;
         protected int xmlRowNumber;
         protected int xmlColumnNumber;
 

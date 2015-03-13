@@ -3,17 +3,17 @@ using System;
 namespace org.activiti.bpmn.model
 {
 
-    public class BooleanDataObject : ValuedDataObject
+    public class boolDataObject : ValuedDataObject
     {
 
         public override void setValue(Object value)
         {
-            Value = Boolean.Parse(value.ToString());
+            Value = bool.Parse(value.ToString());
         }
 
         public override object clone()
         {
-            BooleanDataObject clone = new BooleanDataObject();
+            boolDataObject clone = new boolDataObject();
             clone.setValues(this);
             return clone;
         }

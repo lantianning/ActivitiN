@@ -13,41 +13,46 @@
 
 using System;
 
-namespace org.activiti.bpmn.model{
-public class Pool : BaseElement {
-
-  protected String name;
-  protected String processRef;
-  protected bool executable = true;
-
-    public string Name
+namespace org.activiti.bpmn.model
+{
+    public class Pool : BaseElement
     {
-        get { return name; }
-        set { name = value; }
-    }
 
-    public string ProcessRef
-    {
-        get { return processRef; }
-        set { processRef = value; }
-    }
+        protected String name;
+        protected String processRef;
+        protected bool executable = true;
 
-    public bool Executable
-    {
-        get { return executable; }
-        set { executable = value; }
-    }
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
 
-    public override object clone() {
-    Pool clone = new Pool();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(Pool otherElement) {
-    base.setValues(otherElement);
-    Name=otherElement.Name;
-    ProcessRef=otherElement.ProcessRef;
-    Executable=otherElement.Executable;
-  }
+        public string ProcessRef
+        {
+            get { return processRef; }
+            set { processRef = value; }
+        }
+
+        public bool Executable
+        {
+            get { return executable; }
+            set { executable = value; }
+        }
+
+        public override object clone()
+        {
+            Pool clone = new Pool();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(Pool otherElement)
+        {
+            base.setValues(otherElement);
+            Name = otherElement.Name;
+            ProcessRef = otherElement.ProcessRef;
+            Executable = otherElement.Executable;
+        }
+    }
 }

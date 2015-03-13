@@ -10,20 +10,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+namespace org.activiti.bpmn.model
+{
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class IntermediateCatchEvent extends Event {
 
-  public IntermediateCatchEvent clone() {
-    IntermediateCatchEvent clone = new IntermediateCatchEvent();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(IntermediateCatchEvent otherEvent) {
-    super.setValues(otherEvent);
-  }
+    public class IntermediateCatchEvent : Event
+    {
+
+        public override object clone()
+        {
+            IntermediateCatchEvent clone = new IntermediateCatchEvent();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(IntermediateCatchEvent otherEvent)
+        {
+            base.setValues(otherEvent);
+        }
+    }
 }

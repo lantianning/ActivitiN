@@ -10,41 +10,54 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+
+using System;
+
+namespace org.activiti.bpmn.model
+{
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class TextAnnotation extends Artifact {
-  
-  protected String text;
-  protected String textFormat;
-  
-  public String getText() {
-    return text;
-  }
-  
-  public void setText(String text) {
-    this.text = text;
-  }
-  
-  public String getTextFormat() {
-    return textFormat;
-  }
-  
-  public void setTextFormat(String textFormat) {
-    this.textFormat = textFormat;
-  }
-  
-  public TextAnnotation clone() {
-    TextAnnotation clone = new TextAnnotation();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(TextAnnotation otherElement) {
-    super.setValues(otherElement);
-    setText(otherElement.getText());
-    setTextFormat(otherElement.getTextFormat());
-  }
+
+    public class TextAnnotation : Artifact
+    {
+
+        protected String text;
+        protected String textFormat;
+
+        public String getText()
+        {
+            return text;
+        }
+
+        public void setText(String text)
+        {
+            this.text = text;
+        }
+
+        public String getTextFormat()
+        {
+            return textFormat;
+        }
+
+        public void setTextFormat(String textFormat)
+        {
+            this.textFormat = textFormat;
+        }
+
+        public override object clone()
+        {
+            TextAnnotation clone = new TextAnnotation();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(TextAnnotation otherElement)
+        {
+            base.setValues(otherElement);
+            setText(otherElement.getText());
+            setTextFormat(otherElement.getTextFormat());
+        }
+    }
 }

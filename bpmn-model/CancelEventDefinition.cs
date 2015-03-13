@@ -10,20 +10,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+namespace org.activiti.bpmn.model
+{
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class CancelEventDefinition extends EventDefinition {
 
-  public CancelEventDefinition clone() {
-    CancelEventDefinition clone = new CancelEventDefinition();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(CancelEventDefinition otherDefinition) {
-    super.setValues(otherDefinition);
-  }
+    public class CancelEventDefinition : EventDefinition
+    {
+
+        public override object clone()
+        {
+            CancelEventDefinition clone = new CancelEventDefinition();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(CancelEventDefinition otherDefinition)
+        {
+            base.setValues(otherDefinition);
+        }
+    }
 }

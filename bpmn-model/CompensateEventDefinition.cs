@@ -10,38 +10,54 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.model;
+
+using System;
+
+namespace org.activiti.bpmn.model
+{
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
  */
-public class CompensateEventDefinition extends EventDefinition {
 
-  protected String activityRef;
-  protected boolean waitForCompletion = true;
-  
-  public String getActivityRef() {
-    return activityRef;
-  }
-  public void setActivityRef(String activityRef) {
-    this.activityRef = activityRef;
-  }
-  public boolean isWaitForCompletion() {
-    return waitForCompletion;
-  }
-  public void setWaitForCompletion(boolean waitForCompletion) {
-    this.waitForCompletion = waitForCompletion;
-  }
-  
-  public CompensateEventDefinition clone() {
-    CompensateEventDefinition clone = new CompensateEventDefinition();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(CompensateEventDefinition otherDefinition) {
-    super.setValues(otherDefinition);
-    setActivityRef(otherDefinition.getActivityRef());
-    setWaitForCompletion(otherDefinition.isWaitForCompletion());
-  }
+    public class CompensateEventDefinition : EventDefinition
+    {
+
+        protected String activityRef;
+        protected bool waitForCompletion = true;
+
+        public String getActivityRef()
+        {
+            return activityRef;
+        }
+
+        public void setActivityRef(String activityRef)
+        {
+            this.activityRef = activityRef;
+        }
+
+        public bool isWaitForCompletion()
+        {
+            return waitForCompletion;
+        }
+
+        public void setWaitForCompletion(bool waitForCompletion)
+        {
+            this.waitForCompletion = waitForCompletion;
+        }
+
+        public override object clone()
+        {
+            CompensateEventDefinition clone = new CompensateEventDefinition();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(CompensateEventDefinition otherDefinition)
+        {
+            base.setValues(otherDefinition);
+            setActivityRef(otherDefinition.getActivityRef());
+            setWaitForCompletion(otherDefinition.isWaitForCompletion());
+        }
+    }
 }
