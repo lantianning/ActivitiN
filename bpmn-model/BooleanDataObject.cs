@@ -3,7 +3,7 @@ using System;
 namespace org.activiti.bpmn.model
 {
 
-    public class boolDataObject : ValuedDataObject
+    public class BooleanDataObject : ValuedDataObject
     {
 
         public override void setValue(Object value)
@@ -13,7 +13,7 @@ namespace org.activiti.bpmn.model
 
         public override object clone()
         {
-            boolDataObject clone = new boolDataObject();
+            BooleanDataObject clone = new BooleanDataObject();
             clone.setValues(this);
             return clone;
         }
