@@ -13,10 +13,10 @@ namespace org.activiti.bpmn.model
 
         public override void setValue(Object value)
         {
-            Value = value.ToString();
+            this.value = value.ToString();
         }
 
-        public override object clone()
+        public override Object clone()
         {
             StringDataObject clone = new StringDataObject();
             clone.setValues(this);

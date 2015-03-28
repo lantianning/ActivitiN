@@ -19,6 +19,12 @@ namespace org.activiti.bpmn.model
 {
 
 
+
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public class FormProperty : BaseElement
     {
 
@@ -28,72 +34,112 @@ namespace org.activiti.bpmn.model
         protected String type;
         protected String defaultExpression;
         protected String datePattern;
-        protected bool readable = true;
-        protected bool writeable = true;
-        protected bool required;
+        protected Boolean readable = true;
+        protected Boolean writeable = true;
+        protected Boolean required;
         protected List<FormValue> formValues = new List<FormValue>();
 
-        public string Name
+        public String getName()
         {
-            get { return name; }
-            set { name = value; }
+            return name;
         }
 
-        public string Expression
+        public void setName(String name)
         {
-            get { return expression; }
-            set { expression = value; }
+            this.name = name;
         }
 
-        public string Variable
+        public String getExpression()
         {
-            get { return variable; }
-            set { variable = value; }
+            return expression;
         }
 
-        public string Type
+        public void setExpression(String expression)
         {
-            get { return type; }
-            set { type = value; }
+            this.expression = expression;
         }
 
-        public string DefaultExpression
+        public String getVariable()
         {
-            get { return defaultExpression; }
-            set { defaultExpression = value; }
+            return variable;
         }
 
-        public string DatePattern
+        public void setVariable(String variable)
         {
-            get { return datePattern; }
-            set { datePattern = value; }
+            this.variable = variable;
         }
 
-        public bool Readable
+        public String getType()
         {
-            get { return readable; }
-            set { readable = value; }
+            return type;
         }
 
-        public bool Writeable
+        public String getDefaultExpression()
         {
-            get { return writeable; }
-            set { writeable = value; }
+            return defaultExpression;
         }
 
-        public bool Required
+        public void setDefaultExpression(String defaultExpression)
         {
-            get { return required; }
-            set { required = value; }
+            this.defaultExpression = defaultExpression;
         }
 
-        public List<FormValue> FormValues
+        public void setType(String type)
         {
-            get { return formValues; }
-            set { formValues = value; }
+            this.type = type;
         }
 
-        public override object clone()
+        public String getDatePattern()
+        {
+            return datePattern;
+        }
+
+        public void setDatePattern(String datePattern)
+        {
+            this.datePattern = datePattern;
+        }
+
+        public Boolean isReadable()
+        {
+            return readable;
+        }
+
+        public void setReadable(Boolean readable)
+        {
+            this.readable = readable;
+        }
+
+        public Boolean isWriteable()
+        {
+            return writeable;
+        }
+
+        public void setWriteable(Boolean writeable)
+        {
+            this.writeable = writeable;
+        }
+
+        public Boolean isRequired()
+        {
+            return required;
+        }
+
+        public void setRequired(Boolean required)
+        {
+            this.required = required;
+        }
+
+        public List<FormValue> getFormValues()
+        {
+            return formValues;
+        }
+
+        public void setFormValues(List<FormValue> formValues)
+        {
+            this.formValues = formValues;
+        }
+
+        public override Object clone()
         {
             FormProperty clone = new FormProperty();
             clone.setValues(this);
@@ -103,19 +149,23 @@ namespace org.activiti.bpmn.model
         public void setValues(FormProperty otherProperty)
         {
             base.setValues(otherProperty);
-            Name = otherProperty.Name;
-            Expression = otherProperty.Expression;
-            Variable = otherProperty.Variable;
-            Type = otherProperty.Type;
-            DefaultExpression = otherProperty.DefaultExpression;
-            DatePattern = otherProperty.DatePattern;
-            Readable = otherProperty.Readable;
-            Writeable = otherProperty.Writeable;
-            Required = otherProperty.Required;
+            setName(otherProperty.getName());
+            setExpression(otherProperty.getExpression());
+            setVariable(otherProperty.getVariable());
+            setType(otherProperty.getType());
+            setDefaultExpression(otherProperty.getDefaultExpression());
+            setDatePattern(otherProperty.getDatePattern());
+            setReadable(otherProperty.isReadable());
+            setWriteable(otherProperty.isWriteable());
+            setRequired(otherProperty.isRequired());
 
-            if (otherProperty.FormValues != null)
+            formValues = new List<FormValue>();
+            if (otherProperty.getFormValues() != null && otherProperty.getFormValues().Any())
             {
-                formValues = otherProperty.FormValues.Select(f => (FormValue) f.clone()).ToList();
+                foreach (FormValue formValue in otherProperty.getFormValues())
+                {
+                    formValues.Add((FormValue) formValue.clone());
+                }
             }
         }
     }

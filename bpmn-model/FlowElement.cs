@@ -18,34 +18,65 @@ using System.Linq;
 namespace org.activiti.bpmn.model
 {
 
-    public abstract class FlowElement : BaseElement, HasExecutionListeners
+
+
+
+
+/**
+ * //@author Tijs Rademakers
+ */
+
+    public abstract class FlowElement : BaseElement , HasExecutionListeners
     {
 
-        public String Name { get; set; }
-        public String Documentation { get; set; }
-        protected List<ActivitiListener> _executionListeners = new List<ActivitiListener>();
+        protected String name;
+        protected String documentation;
+        protected List<ActivitiListener> executionListeners = new List<ActivitiListener>();
 
-        public List<ActivitiListener> ExecutionListeners
+        public String getName()
         {
-            get { return _executionListeners; }
-            set { _executionListeners = value; }
+            return name;
         }
 
-        public abstract override object clone();
+        public void setName(String name)
+        {
+            this.name = name;
+        }
+
+        public String getDocumentation()
+        {
+            return documentation;
+        }
+
+        public void setDocumentation(String documentation)
+        {
+            this.documentation = documentation;
+        }
+
+        public List<ActivitiListener> getExecutionListeners()
+        {
+            return executionListeners;
+        }
+
+        public void setExecutionListeners(List<ActivitiListener> executionListeners)
+        {
+            this.executionListeners = executionListeners;
+        }
+
+        public abstract override Object clone();
 
         public void setValues(FlowElement otherElement)
         {
             base.setValues(otherElement);
-            Name = otherElement.Name;
-            Documentation = otherElement.Documentation;
+            setName(otherElement.getName());
+            setDocumentation(otherElement.getDocumentation());
 
-            ExecutionListeners = new List<ActivitiListener>();
-            if (otherElement.ExecutionListeners != null && otherElement.ExecutionListeners.Any())
+            executionListeners = new List<ActivitiListener>();
+            if (otherElement.getExecutionListeners() != null && otherElement.getExecutionListeners().Any())
             {
-                foreach (ActivitiListener listener in
-                otherElement.ExecutionListeners)
+                foreach (ActivitiListener listener in otherElement.getExecutionListeners())
                 {
-                    ExecutionListeners.Add((ActivitiListener)listener.clone());
+                    executionListeners.Add((ActivitiListener) listener.clone());
                 }
             }
         }

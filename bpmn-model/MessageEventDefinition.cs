@@ -36,7 +36,7 @@ namespace org.activiti.bpmn.model
             this.messageRef = messageRef;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             MessageEventDefinition clone = new MessageEventDefinition();
             clone.setValues(this);

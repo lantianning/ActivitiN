@@ -27,7 +27,7 @@ public class DataAssociationParser implements BpmnXMLConstants {
   protected static final Logger LOGGER = LoggerFactory.getLogger(DataAssociationParser.class.getName());
 
   public static void parseDataAssociation(DataAssociation dataAssociation, String elementName, XMLStreamReader xtr) {
-    boolean readyWithDataAssociation = false;
+    bool readyWithDataAssociation = false;
     Assignment assignment = null;
     try {
       

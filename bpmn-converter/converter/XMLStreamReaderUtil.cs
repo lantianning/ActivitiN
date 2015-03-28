@@ -44,7 +44,7 @@ public class XMLStreamReaderUtil {
     return null;
   }
   
-  public static boolean moveToEndOfElement(XMLStreamReader xtr, String elementName ) {
+  public static bool moveToEndOfElement(XMLStreamReader xtr, String elementName ) {
     try {
       while (xtr.hasNext() ) {
         int event = xtr.next();

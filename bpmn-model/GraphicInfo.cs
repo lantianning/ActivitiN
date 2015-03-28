@@ -15,6 +15,12 @@ using System;
 
 namespace org.activiti.bpmn.model
 {
+
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public class GraphicInfo
     {
 
@@ -23,56 +29,88 @@ namespace org.activiti.bpmn.model
         protected double height;
         protected double width;
         protected FlowElement element;
-        protected bool expanded;
+        protected Boolean expanded;
         protected int xmlRowNumber;
         protected int xmlColumnNumber;
 
-        public double X
+        public double getX()
         {
-            get { return x; }
-            set { x = value; }
+            return x;
         }
 
-        public double Y
+        public void setX(double x)
         {
-            get { return y; }
-            set { y = value; }
+            this.x = x;
         }
 
-        public double Height
+        public double getY()
         {
-            get { return height; }
-            set { height = value; }
+            return y;
         }
 
-        public double Width
+        public void setY(double y)
         {
-            get { return width; }
-            set { width = value; }
+            this.y = y;
         }
 
-        public FlowElement Element
+        public double getHeight()
         {
-            get { return element; }
-            set { element = value; }
+            return height;
         }
 
-        public bool Expanded
+        public void setHeight(double height)
         {
-            get { return expanded; }
-            set { expanded = value; }
+            this.height = height;
         }
 
-        public int XmlRowNumber
+        public double getWidth()
         {
-            get { return xmlRowNumber; }
-            set { xmlRowNumber = value; }
+            return width;
         }
 
-        public int XmlColumnNumber
+        public void setWidth(double width)
         {
-            get { return xmlColumnNumber; }
-            set { xmlColumnNumber = value; }
+            this.width = width;
+        }
+
+        public Boolean getExpanded()
+        {
+            return expanded;
+        }
+
+        public void setExpanded(Boolean expanded)
+        {
+            this.expanded = expanded;
+        }
+
+        public FlowElement getElement()
+        {
+            return element;
+        }
+
+        public void setElement(FlowElement element)
+        {
+            this.element = element;
+        }
+
+        public int getXmlRowNumber()
+        {
+            return xmlRowNumber;
+        }
+
+        public void setXmlRowNumber(int xmlRowNumber)
+        {
+            this.xmlRowNumber = xmlRowNumber;
+        }
+
+        public int getXmlColumnNumber()
+        {
+            return xmlColumnNumber;
+        }
+
+        public void setXmlColumnNumber(int xmlColumnNumber)
+        {
+            this.xmlColumnNumber = xmlColumnNumber;
         }
     }
 }

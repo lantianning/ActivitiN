@@ -15,15 +15,49 @@ using System;
 
 namespace org.activiti.bpmn.model
 {
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public class FieldExtension : BaseElement
     {
 
-        public String FieldName { get; set; }
-        public String StringValue { get; set; }
-        public String Expression { get; set; }
+        protected String fieldName;
+        protected String stringValue;
+        protected String expression;
 
+        public String getFieldName()
+        {
+            return fieldName;
+        }
 
-        public override object clone()
+        public void setFieldName(String fieldName)
+        {
+            this.fieldName = fieldName;
+        }
+
+        public String getStringValue()
+        {
+            return stringValue;
+        }
+
+        public void setStringValue(String stringValue)
+        {
+            this.stringValue = stringValue;
+        }
+
+        public String getExpression()
+        {
+            return expression;
+        }
+
+        public void setExpression(String expression)
+        {
+            this.expression = expression;
+        }
+
+        public override Object clone()
         {
             FieldExtension clone = new FieldExtension();
             clone.setValues(this);
@@ -32,9 +66,9 @@ namespace org.activiti.bpmn.model
 
         public void setValues(FieldExtension otherExtension)
         {
-            FieldName=otherExtension.FieldName;
-            StringValue=otherExtension.StringValue;
-            Expression=otherExtension.Expression;
+            setFieldName(otherExtension.getFieldName());
+            setStringValue(otherExtension.getStringValue());
+            setExpression(otherExtension.getExpression());
         }
     }
 }

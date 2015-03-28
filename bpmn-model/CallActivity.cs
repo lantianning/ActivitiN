@@ -62,7 +62,7 @@ namespace org.activiti.bpmn.model
             this.outParameters = outParameters;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             CallActivity clone = new CallActivity();
             clone.setValues(this);

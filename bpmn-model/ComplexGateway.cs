@@ -10,17 +10,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.model{
-public class ComplexGateway : Gateway {
 
-  public override object clone() {
-    ComplexGateway clone = new ComplexGateway();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(ComplexGateway otherElement) {
-    base.setValues(otherElement);
-  }
-}
+using System;
+
+namespace org.activiti.bpmn.model
+{
+
+/**
+ * //@author Tijs Rademakers
+ */
+
+    public class ComplexGateway : Gateway
+    {
+
+        public override Object clone()
+        {
+            ComplexGateway clone = new ComplexGateway();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(ComplexGateway otherElement)
+        {
+            base.setValues(otherElement);
+        }
+    }
 }

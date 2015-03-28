@@ -26,7 +26,7 @@ public class CommaSplitter {
     List<String> result = new ArrayList<String>();
     int offset = 0;
     
-    boolean inExpression = false;
+    bool inExpression = false;
     for (int i = 0; i < st.length(); i++) {
       if (inExpression == false && st.charAt(i) == ',') {
         if ((i - offset) > 1) {

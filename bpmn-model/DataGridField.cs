@@ -47,7 +47,7 @@ namespace org.activiti.bpmn.model
             this.value = value;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             DataGridField clone = new DataGridField();
             clone.setValues(this);

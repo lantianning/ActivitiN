@@ -15,13 +15,18 @@ using System;
 
 namespace org.activiti.bpmn.model
 {
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public class MessageFlow : BaseElement
     {
 
-        protected String Name { get; set; }
-        protected String SourceRef { get; set; }
-        protected String TargetRef { get; set; }
-        protected String MessageRef { get; set; }
+        protected String name;
+        protected String sourceRef;
+        protected String targetRef;
+        protected String messageRef;
 
         public MessageFlow()
         {
@@ -30,16 +35,56 @@ namespace org.activiti.bpmn.model
 
         public MessageFlow(String sourceRef, String targetRef)
         {
-            SourceRef = sourceRef;
-            TargetRef = targetRef;
+            this.sourceRef = sourceRef;
+            this.targetRef = targetRef;
+        }
+
+        public String getName()
+        {
+            return name;
+        }
+
+        public void setName(String name)
+        {
+            this.name = name;
+        }
+
+        public String getSourceRef()
+        {
+            return sourceRef;
+        }
+
+        public void setSourceRef(String sourceRef)
+        {
+            this.sourceRef = sourceRef;
+        }
+
+        public String getTargetRef()
+        {
+            return targetRef;
+        }
+
+        public void setTargetRef(String targetRef)
+        {
+            this.targetRef = targetRef;
+        }
+
+        public String getMessageRef()
+        {
+            return messageRef;
+        }
+
+        public void setMessageRef(String messageRef)
+        {
+            this.messageRef = messageRef;
         }
 
         public String ToString()
         {
-            return SourceRef + " --> " + TargetRef;
+            return sourceRef + " --> " + targetRef;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             MessageFlow clone = new MessageFlow();
             clone.setValues(this);
@@ -49,10 +94,10 @@ namespace org.activiti.bpmn.model
         public void setValues(MessageFlow otherFlow)
         {
             base.setValues(otherFlow);
-            Name = otherFlow.Name;
-            SourceRef = otherFlow.SourceRef;
-            TargetRef = otherFlow.TargetRef;
-            MessageRef = otherFlow.MessageRef;
+            setName(otherFlow.getName());
+            setSourceRef(otherFlow.getSourceRef());
+            setTargetRef(otherFlow.getTargetRef());
+            setMessageRef(otherFlow.getMessageRef());
         }
     }
 }

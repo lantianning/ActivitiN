@@ -10,17 +10,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.model{
-public class EndEvent : Event {
 
-  public override object clone() {
-    EndEvent clone = new EndEvent();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(EndEvent otherEvent) {
-    base.setValues(otherEvent);
-  }
-}
+using System;
+
+namespace org.activiti.bpmn.model
+{
+
+/**
+ * //@author Tijs Rademakers
+ */
+
+    public class EndEvent : Event
+    {
+
+        public override Object clone()
+        {
+            EndEvent clone = new EndEvent();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(EndEvent otherEvent)
+        {
+            base.setValues(otherEvent);
+        }
+    }
 }

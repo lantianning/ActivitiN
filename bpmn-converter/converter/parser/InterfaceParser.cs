@@ -38,7 +38,7 @@ public class InterfaceParser implements BpmnXMLConstants {
     interfaceObject.setName(xtr.getAttributeValue(null, ATTRIBUTE_NAME));
     interfaceObject.setImplementationRef(parseMessageRef(xtr.getAttributeValue(null, ATTRIBUTE_IMPLEMENTATION_REF), model));
     
-    boolean readyWithInterface = false;
+    bool readyWithInterface = false;
     Operation operation = null;
     try {
       while (readyWithInterface == false && xtr.hasNext()) {

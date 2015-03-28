@@ -10,12 +10,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+
 namespace org.activiti.bpmn.model
 {
+
+/**
+ * //@author Tijs Rademakers
+ */
 
     public abstract class Artifact : BaseElement
     {
 
-        public abstract override object clone();
+        public abstract override Object clone();
     }
 }

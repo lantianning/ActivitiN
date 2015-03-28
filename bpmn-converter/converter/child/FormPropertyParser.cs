@@ -46,16 +46,16 @@ public class FormPropertyParser extends BaseChildElementParser {
     property.setDefaultExpression(xtr.getAttributeValue(null, ATTRIBUTE_FORM_DEFAULT));
     property.setDatePattern(xtr.getAttributeValue(null, ATTRIBUTE_FORM_DATEPATTERN));
     if (StringUtils.isNotEmpty(xtr.getAttributeValue(null, ATTRIBUTE_FORM_REQUIRED))) {
-      property.setRequired(Boolean.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_FORM_REQUIRED)));
+      property.setRequired(bool.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_FORM_REQUIRED)));
     }
     if (StringUtils.isNotEmpty(xtr.getAttributeValue(null, ATTRIBUTE_FORM_READABLE))) {
-      property.setReadable(Boolean.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_FORM_READABLE)));
+      property.setReadable(bool.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_FORM_READABLE)));
     }
     if (StringUtils.isNotEmpty(xtr.getAttributeValue(null, ATTRIBUTE_FORM_WRITABLE))) {
-      property.setWriteable(Boolean.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_FORM_WRITABLE)));
+      property.setWriteable(bool.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_FORM_WRITABLE)));
     }
     
-    boolean readyWithFormProperty = false;
+    bool readyWithFormProperty = false;
     try {
       while (readyWithFormProperty == false && xtr.hasNext()) {
         xtr.next();

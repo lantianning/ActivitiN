@@ -18,21 +18,62 @@ using System.Linq;
 namespace org.activiti.bpmn.model
 {
 
+
+
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public class ActivitiListener : BaseElement
     {
 
-        public String Event { get; set; }
-        public String ImplementationType { get; set; }
-        public String Implementation { get; set; }
-        protected List<FieldExtension> _fieldExtensions = new List<FieldExtension>();
+        protected String Event;
+        protected String implementationType;
+        protected String implementation;
+        protected List<FieldExtension> fieldExtensions = new List<FieldExtension>();
 
-        public List<FieldExtension> FieldExtensions
+        public String getEvent()
         {
-            get { return _fieldExtensions; }
-            set { _fieldExtensions = value; }
+            return Event;
         }
 
-        public override object clone()
+        public void setEvent(String Event)
+        {
+            this.Event = Event;
+        }
+
+        public String getImplementationType()
+        {
+            return implementationType;
+        }
+
+        public void setImplementationType(String implementationType)
+        {
+            this.implementationType = implementationType;
+        }
+
+        public String getImplementation()
+        {
+            return implementation;
+        }
+
+        public void setImplementation(String implementation)
+        {
+            this.implementation = implementation;
+        }
+
+        public List<FieldExtension> getFieldExtensions()
+        {
+            return fieldExtensions;
+        }
+
+        public void setFieldExtensions(List<FieldExtension> fieldExtensions)
+        {
+            this.fieldExtensions = fieldExtensions;
+        }
+
+        public override Object clone()
         {
             ActivitiListener clone = new ActivitiListener();
             clone.setValues(this);
@@ -41,16 +82,16 @@ namespace org.activiti.bpmn.model
 
         public void setValues(ActivitiListener otherListener)
         {
-            Event = otherListener.Event;
-            Implementation = otherListener.Implementation;
-            ImplementationType = otherListener.ImplementationType;
+            setEvent(otherListener.getEvent());
+            setImplementation(otherListener.getImplementation());
+            setImplementationType(otherListener.getImplementationType());
 
-            FieldExtensions = new List<FieldExtension>();
-            if (otherListener.FieldExtensions != null && otherListener.FieldExtensions.Any())
+            fieldExtensions = new List<FieldExtension>();
+            if (otherListener.getFieldExtensions() != null && otherListener.getFieldExtensions().Any())
             {
-                foreach (FieldExtension extension in otherListener.FieldExtensions)
+                foreach (FieldExtension extension in otherListener.getFieldExtensions())
                 {
-                    FieldExtensions.Add((FieldExtension)extension.clone());
+                    fieldExtensions.Add((FieldExtension) extension.clone());
                 }
             }
         }

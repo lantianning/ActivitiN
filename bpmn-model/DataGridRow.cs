@@ -11,6 +11,7 @@
  * limitations under the License.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -50,7 +51,7 @@ namespace org.activiti.bpmn.model
             this.fields = fields;
         }
 
-        public object clone()
+        public Object clone()
         {
             DataGridRow clone = new DataGridRow();
             clone.setValues(this);
@@ -66,7 +67,7 @@ namespace org.activiti.bpmn.model
             {
                 foreach (DataGridField field in otherRow.getFields())
                 {
-                    fields.Add((DataGridField) field.clone());
+                    fields.Add((DataGridField)field.clone());
                 }
             }
         }

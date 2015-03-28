@@ -137,14 +137,14 @@ public class UserTaskXMLConverter extends BaseBpmnXMLConverter {
   }
   
   @Override
-  protected boolean writeExtensionChildElements(BaseElement element, boolean didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
+  protected bool writeExtensionChildElements(BaseElement element, bool didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
     UserTask userTask = (UserTask) element;
     didWriteExtensionStartElement = writeFormProperties(userTask, didWriteExtensionStartElement, xtw);
     didWriteExtensionStartElement = writeCustomIdentities(element, didWriteExtensionStartElement, xtw);
     return didWriteExtensionStartElement;
   }
   
-  protected boolean writeCustomIdentities(BaseElement element, boolean didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
+  protected bool writeCustomIdentities(BaseElement element, bool didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
 	  UserTask userTask = (UserTask) element;
 	  if(userTask.getCustomUserIdentityLinks().isEmpty() && userTask.getCustomGroupIdentityLinks().isEmpty())
 		  return didWriteExtensionStartElement;

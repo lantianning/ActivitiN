@@ -16,19 +16,48 @@ using System;
 namespace org.activiti.bpmn.model
 {
 
+/**
+ * //@author Tijs Rademakers
+ */
+
     public class Association : Artifact
     {
 
-        protected AssociationDirection _associationDirection = AssociationDirection.None;
-        public String SourceRef { get; set; }
-        public String TargetRef { get; set; }
+        protected AssociationDirection associationDirection = AssociationDirection.None;
+        protected String sourceRef;
+        protected String targetRef;
 
-        public AssociationDirection associationDirection
+        public AssociationDirection getAssociationDirection()
         {
-            get{return _associationDirection;}
-            set{_associationDirection = value;}                   
+            return associationDirection;
         }
-        public override object clone()
+
+        public void setAssociationDirection(AssociationDirection associationDirection)
+        {
+            this.associationDirection = associationDirection;
+        }
+
+        public String getSourceRef()
+        {
+            return sourceRef;
+        }
+
+        public void setSourceRef(String sourceRef)
+        {
+            this.sourceRef = sourceRef;
+        }
+
+        public String getTargetRef()
+        {
+            return targetRef;
+        }
+
+        public void setTargetRef(String targetRef)
+        {
+            this.targetRef = targetRef;
+        }
+
+        public override Object clone()
         {
             Association clone = new Association();
             clone.setValues(this);
@@ -38,12 +67,12 @@ namespace org.activiti.bpmn.model
         public void setValues(Association otherElement)
         {
             base.setValues(otherElement);
-            SourceRef=otherElement.SourceRef;
-            TargetRef=otherElement.TargetRef;
+            setSourceRef(otherElement.getSourceRef());
+            setTargetRef(otherElement.getTargetRef());
 
-            if (otherElement.associationDirection != null)
+            if (otherElement.getAssociationDirection() != null)
             {
-                associationDirection=otherElement.associationDirection;
+                setAssociationDirection(otherElement.getAssociationDirection());
             }
         }
     }

@@ -15,11 +15,16 @@ using System;
 
 namespace org.activiti.bpmn.model
 {
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public class Message : BaseElement
     {
 
-        protected String Name { get; set; }
-        protected String ItemRef { get; set; }
+        protected String name;
+        protected String itemRef;
 
         public Message()
         {
@@ -27,12 +32,32 @@ namespace org.activiti.bpmn.model
 
         public Message(String id, String name, String itemRef)
         {
-            Id = id;
-            Name = name;
-            ItemRef = itemRef;
+            this.id = id;
+            this.name = name;
+            this.itemRef = itemRef;
         }
 
-        public override object clone()
+        public String getName()
+        {
+            return name;
+        }
+
+        public void setName(String name)
+        {
+            this.name = name;
+        }
+
+        public String getItemRef()
+        {
+            return itemRef;
+        }
+
+        public void setItemRef(String itemRef)
+        {
+            this.itemRef = itemRef;
+        }
+
+        public override Object clone()
         {
             Message clone = new Message();
             clone.setValues(this);
@@ -42,8 +67,8 @@ namespace org.activiti.bpmn.model
         public void setValues(Message otherElement)
         {
             base.setValues(otherElement);
-            Name=otherElement.Name;
-            ItemRef=otherElement.ItemRef;
+            setName(otherElement.getName());
+            setItemRef(otherElement.getItemRef());
         }
     }
 }

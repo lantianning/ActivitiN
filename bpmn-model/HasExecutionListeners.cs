@@ -16,9 +16,20 @@ using System.Collections.Generic;
 namespace org.activiti.bpmn.model
 {
 
+
+
+
+/**
+ * Interface indicating an element has execution-listeners
+ * 
+ * //@author Frederik Heremans
+ */
+
     public interface HasExecutionListeners
     {
 
-        List<ActivitiListener> ExecutionListeners { get; set; }
+        List<ActivitiListener> getExecutionListeners();
+
+        void setExecutionListeners(List<ActivitiListener> executionListeners);
     }
 }

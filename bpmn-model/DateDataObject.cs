@@ -1,16 +1,27 @@
 using System;
 
-namespace org.activiti.bpmn.model{
-public class DateDataObject : ValuedDataObject {
+namespace org.activiti.bpmn.model
+{
 
-  public override void setValue(Object value) {
-    Value = (DateTime) value;
-  }
 
-  public override object clone() {
-    DateDataObject clone = new DateDataObject();
-    clone.setValues(this);
-    return clone;
-  }
-}
+
+/**
+ * //@author Lori Small
+ */
+
+    public class DateDataObject : ValuedDataObject
+    {
+
+        public override void setValue(Object value)
+        {
+            this.value = (DateTime) value;
+        }
+
+        public override Object clone()
+        {
+            DateDataObject clone = new DateDataObject();
+            clone.setValues(this);
+            return clone;
+        }
+    }
 }

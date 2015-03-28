@@ -16,18 +16,82 @@ using System;
 namespace org.activiti.bpmn.model
 {
 
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public class MultiInstanceLoopCharacteristics : BaseElement
     {
 
-        public String InputDataItem { get; set; }
-        public String LoopCardinality { get; set; }
-        public String CompletionCondition { get; set; }
-        public String ElementVariable { get; set; }
-        public String ElementIndexVariable { get; set; }
-        public bool IsSequential { get; set; }
+        protected String inputDataItem;
+        protected String loopCardinality;
+        protected String completionCondition;
+        protected String elementVariable;
+        protected String elementIndexVariable;
+        protected Boolean sequential;
 
+        public String getInputDataItem()
+        {
+            return inputDataItem;
+        }
 
-        public override object clone()
+        public void setInputDataItem(String inputDataItem)
+        {
+            this.inputDataItem = inputDataItem;
+        }
+
+        public String getLoopCardinality()
+        {
+            return loopCardinality;
+        }
+
+        public void setLoopCardinality(String loopCardinality)
+        {
+            this.loopCardinality = loopCardinality;
+        }
+
+        public String getCompletionCondition()
+        {
+            return completionCondition;
+        }
+
+        public void setCompletionCondition(String completionCondition)
+        {
+            this.completionCondition = completionCondition;
+        }
+
+        public String getElementVariable()
+        {
+            return elementVariable;
+        }
+
+        public void setElementVariable(String elementVariable)
+        {
+            this.elementVariable = elementVariable;
+        }
+
+        public String getElementIndexVariable()
+        {
+            return elementIndexVariable;
+        }
+
+        public void setElementIndexVariable(String elementIndexVariable)
+        {
+            this.elementIndexVariable = elementIndexVariable;
+        }
+
+        public Boolean isSequential()
+        {
+            return sequential;
+        }
+
+        public void setSequential(Boolean sequential)
+        {
+            this.sequential = sequential;
+        }
+
+        public override Object clone()
         {
             MultiInstanceLoopCharacteristics clone = new MultiInstanceLoopCharacteristics();
             clone.setValues(this);
@@ -36,12 +100,12 @@ namespace org.activiti.bpmn.model
 
         public void setValues(MultiInstanceLoopCharacteristics otherLoopCharacteristics)
         {
-            InputDataItem = otherLoopCharacteristics.InputDataItem;
-            LoopCardinality = otherLoopCharacteristics.LoopCardinality;
-            CompletionCondition = otherLoopCharacteristics.CompletionCondition;
-            ElementVariable = otherLoopCharacteristics.ElementVariable;
-            ElementIndexVariable = otherLoopCharacteristics.ElementIndexVariable;
-            IsSequential = otherLoopCharacteristics.IsSequential;
+            setInputDataItem(otherLoopCharacteristics.getInputDataItem());
+            setLoopCardinality(otherLoopCharacteristics.getLoopCardinality());
+            setCompletionCondition(otherLoopCharacteristics.getCompletionCondition());
+            setElementVariable(otherLoopCharacteristics.getElementVariable());
+            setElementIndexVariable(otherLoopCharacteristics.getElementIndexVariable());
+            setSequential(otherLoopCharacteristics.isSequential());
         }
     }
 }

@@ -24,7 +24,7 @@ namespace org.activiti.bpmn.model
     {
 
         protected String signalRef;
-        protected bool async;
+        protected Boolean async;
 
         public String getSignalRef()
         {
@@ -36,17 +36,17 @@ namespace org.activiti.bpmn.model
             this.signalRef = signalRef;
         }
 
-        public bool isAsync()
+        public Boolean isAsync()
         {
             return async;
         }
 
-        public void setAsync(bool async)
+        public void setAsync(Boolean async)
         {
             this.async = async;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             SignalEventDefinition clone = new SignalEventDefinition();
             clone.setValues(this);

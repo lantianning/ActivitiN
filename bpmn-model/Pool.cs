@@ -15,32 +15,49 @@ using System;
 
 namespace org.activiti.bpmn.model
 {
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public class Pool : BaseElement
     {
 
         protected String name;
         protected String processRef;
-        protected bool executable = true;
+        protected Boolean executable = true;
 
-        public string Name
+        public String getName()
         {
-            get { return name; }
-            set { name = value; }
+            return name;
         }
 
-        public string ProcessRef
+        public void setName(String name)
         {
-            get { return processRef; }
-            set { processRef = value; }
+            this.name = name;
         }
 
-        public bool Executable
+        public String getProcessRef()
         {
-            get { return executable; }
-            set { executable = value; }
+            return processRef;
         }
 
-        public override object clone()
+        public void setProcessRef(String processRef)
+        {
+            this.processRef = processRef;
+        }
+
+        public Boolean isExecutable()
+        {
+            return this.executable;
+        }
+
+        public void setExecutable(Boolean executable)
+        {
+            this.executable = executable;
+        }
+
+        public override Object clone()
         {
             Pool clone = new Pool();
             clone.setValues(this);
@@ -50,9 +67,9 @@ namespace org.activiti.bpmn.model
         public void setValues(Pool otherElement)
         {
             base.setValues(otherElement);
-            Name = otherElement.Name;
-            ProcessRef = otherElement.ProcessRef;
-            Executable = otherElement.Executable;
+            setName(otherElement.getName());
+            setProcessRef(otherElement.getProcessRef());
+            setExecutable(otherElement.isExecutable());
         }
     }
 }

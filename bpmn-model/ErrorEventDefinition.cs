@@ -35,7 +35,7 @@ namespace org.activiti.bpmn.model
             this.errorCode = errorCode;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             ErrorEventDefinition clone = new ErrorEventDefinition();
             clone.setValues(this);

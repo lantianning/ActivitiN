@@ -105,8 +105,8 @@ public class BpmnXMLUtil implements BpmnXMLConstants {
     }
     childParsers.putAll(genericChildParserMap);
     
-    boolean inExtensionElements = false;
-    boolean readyWithChildElements = false;
+    bool inExtensionElements = false;
+    bool readyWithChildElements = false;
     while (readyWithChildElements == false && xtr.hasNext()) {
       xtr.next();
       if (xtr.isStartElement()) {
@@ -152,7 +152,7 @@ public class BpmnXMLUtil implements BpmnXMLConstants {
       extensionElement.addAttribute(extensionAttribute);
     }
     
-    boolean readyWithExtensionElement = false;
+    bool readyWithExtensionElement = false;
     while (readyWithExtensionElement == false && xtr.hasNext()) {
       xtr.next();
       if (xtr.isCharacters() || XMLStreamReader.CDATA == xtr.getEventType()) {
@@ -181,11 +181,11 @@ public class BpmnXMLUtil implements BpmnXMLConstants {
     }
   }
   
-  public static boolean writeExtensionElements(BaseElement baseElement, boolean didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
+  public static bool writeExtensionElements(BaseElement baseElement, bool didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
     return didWriteExtensionStartElement = writeExtensionElements(baseElement, didWriteExtensionStartElement, null, xtw);
   }
  
-  public static boolean writeExtensionElements(BaseElement baseElement, boolean didWriteExtensionStartElement, Map<String, String> namespaceMap, XMLStreamWriter xtw) throws Exception {
+  public static bool writeExtensionElements(BaseElement baseElement, bool didWriteExtensionStartElement, Map<String, String> namespaceMap, XMLStreamWriter xtw) throws Exception {
     if (!baseElement.getExtensionElements().isEmpty()) {
       if (didWriteExtensionStartElement == false) {
         xtw.writeStartElement(ELEMENT_EXTENSIONS);
@@ -276,7 +276,7 @@ public class BpmnXMLUtil implements BpmnXMLConstants {
       char c = iterator.first();
 
       StringBuilder strb = new StringBuilder();
-      boolean insideExpression = false;
+      bool insideExpression = false;
 
       while (c != StringCharacterIterator.DONE) {
         if (c == '{' || c == '$') {
@@ -378,7 +378,7 @@ public class BpmnXMLUtil implements BpmnXMLConstants {
     }
   }
 
-  public static boolean isBlacklisted(ExtensionAttribute attribute, List<ExtensionAttribute>... blackLists) {
+  public static bool isBlacklisted(ExtensionAttribute attribute, List<ExtensionAttribute>... blackLists) {
     if (blackLists != null) {
       for (List<ExtensionAttribute> blackList : blackLists) {
         for (ExtensionAttribute blackAttribute : blackList) {

@@ -40,7 +40,7 @@ public class ExtensionElementsParser implements BpmnXMLConstants {
       parentElement = activeProcess;
     }
     
-    boolean readyWithChildElements = false;
+    bool readyWithChildElements = false;
     while (readyWithChildElements == false && xtr.hasNext()) {
       xtr.next();
       if (xtr.isStartElement()) {

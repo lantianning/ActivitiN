@@ -10,6 +10,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+
 namespace org.activiti.bpmn.model
 {
 
@@ -17,10 +20,10 @@ namespace org.activiti.bpmn.model
  * //@author Tijs Rademakers
  */
 
-    public class ManualTask : ActivityTask
+    public class ManualTask : TaskActivity
     {
 
-        public override object clone()
+        public override Object clone()
         {
             ManualTask clone = new ManualTask();
             clone.setValues(this);

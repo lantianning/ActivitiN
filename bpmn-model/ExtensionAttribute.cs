@@ -1,53 +1,103 @@
 using System;
 using System.Text;
 
-namespace org.activiti.bpmn.model{}
+namespace org.activiti.bpmn.model
+{
 
 
 
-public class ExtensionAttribute {
+    public class ExtensionAttribute
+    {
 
-  public String Name { get; set; }
-  public String Value { get; set; }
-  public String NamespacePrefix { get; set; }
-  public String Namespace { get; set; }
+        protected String name;
+        protected String value;
+        protected String NamespacePrefix;
+        protected String Namespace;
 
-  public ExtensionAttribute() {
-  }
+        public ExtensionAttribute()
+        {
+        }
 
-  public ExtensionAttribute( String name) {
-    Name = name;
-  }
+        public ExtensionAttribute(String name)
+        {
+            this.name = name;
+        }
 
-  public ExtensionAttribute(String Namespace, String name) {
-    this.Namespace = Namespace;
-    Name = name;
-  }
+        public ExtensionAttribute(String Namespace, String name)
+        {
+            this.Namespace = Namespace;
+            this.name = name;
+        }
 
+        public String getName()
+        {
+            return name;
+        }
 
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    if (NamespacePrefix != null) {
-      sb.Append(NamespacePrefix);
-      if (Name != null)
-        sb.Append(":").Append(Name);
-    } else
-      sb.Append(Name);
-    if (Value != null)
-      sb.Append("=").Append(Value);
-    return sb.ToString();
-  }
-  
-  public object clone() {
-    ExtensionAttribute clone = new ExtensionAttribute();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(ExtensionAttribute otherAttribute) {
-    Name = otherAttribute.Name;
-    Value = otherAttribute.Value;
-    NamespacePrefix = otherAttribute.NamespacePrefix;
-    Namespace = otherAttribute.Namespace;
-  }
+        public void setName(String name)
+        {
+            this.name = name;
+        }
+
+        public String getValue()
+        {
+            return value;
+        }
+
+        public void setValue(String value)
+        {
+            this.value = value;
+        }
+
+        public String getNamespacePrefix()
+        {
+            return NamespacePrefix;
+        }
+
+        public void setNamespacePrefix(String NamespacePrefix)
+        {
+            this.NamespacePrefix = NamespacePrefix;
+        }
+
+        public String getNamespace()
+        {
+            return Namespace;
+        }
+
+        public void setNamespace(String Namespace)
+        {
+            this.Namespace = Namespace;
+        }
+
+        public String ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            if (NamespacePrefix != null)
+            {
+                sb.Append(NamespacePrefix);
+                if (name != null)
+                    sb.Append(":").Append(name);
+            }
+            else
+                sb.Append(name);
+            if (value != null)
+                sb.Append("=").Append(value);
+            return sb.ToString();
+        }
+
+        public Object clone()
+        {
+            ExtensionAttribute clone = new ExtensionAttribute();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(ExtensionAttribute otherAttribute)
+        {
+            setName(otherAttribute.getName());
+            setValue(otherAttribute.getValue());
+            setNamespacePrefix(otherAttribute.getNamespacePrefix());
+            setNamespace(otherAttribute.getNamespace());
+        }
+    }
 }

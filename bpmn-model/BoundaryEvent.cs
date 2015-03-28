@@ -15,14 +15,52 @@ using System;
 
 namespace org.activiti.bpmn.model
 {
+
+
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public class BoundaryEvent : Event
     {
-        public Activity AttachedToRef { get; set; }
-        public String AttachedToRefId { get; set; }
-        protected bool _cancelActivity = true;
-        public bool CancelActivity { get { return _cancelActivity; } set { _cancelActivity = value; } }
 
-        public override object clone()
+        //@JsonIgnore
+        protected Activity attachedToRef;
+        protected String attachedToRefId;
+        protected Boolean cancelActivity = true;
+
+        public Activity getAttachedToRef()
+        {
+            return attachedToRef;
+        }
+
+        public void setAttachedToRef(Activity attachedToRef)
+        {
+            this.attachedToRef = attachedToRef;
+        }
+
+        public String getAttachedToRefId()
+        {
+            return attachedToRefId;
+        }
+
+        public void setAttachedToRefId(String attachedToRefId)
+        {
+            this.attachedToRefId = attachedToRefId;
+        }
+
+        public Boolean isCancelActivity()
+        {
+            return cancelActivity;
+        }
+
+        public void setCancelActivity(Boolean cancelActivity)
+        {
+            this.cancelActivity = cancelActivity;
+        }
+
+        public override Object clone()
         {
             BoundaryEvent clone = new BoundaryEvent();
             clone.setValues(this);
@@ -32,9 +70,9 @@ namespace org.activiti.bpmn.model
         public void setValues(BoundaryEvent otherEvent)
         {
             base.setValues(otherEvent);
-            AttachedToRefId=otherEvent.AttachedToRefId;
-            AttachedToRef=otherEvent.AttachedToRef;
-            CancelActivity=otherEvent.CancelActivity;
+            setAttachedToRefId(otherEvent.getAttachedToRefId());
+            setAttachedToRef(otherEvent.getAttachedToRef());
+            setCancelActivity(otherEvent.isCancelActivity());
         }
     }
 }

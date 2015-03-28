@@ -16,13 +16,27 @@ using System;
 namespace org.activiti.bpmn.model
 {
 
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public class FormValue : BaseElement
     {
 
-        protected String Name { get; set; }
+        protected String name;
 
+        public String getName()
+        {
+            return name;
+        }
 
-        public override object clone()
+        public void setName(String name)
+        {
+            this.name = name;
+        }
+
+        public override Object clone()
         {
             FormValue clone = new FormValue();
             clone.setValues(this);
@@ -32,7 +46,7 @@ namespace org.activiti.bpmn.model
         public void setValues(FormValue otherValue)
         {
             base.setValues(otherValue);
-            Name=otherValue.Name;
+            setName(otherValue.getName());
         }
     }
 }

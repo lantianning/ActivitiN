@@ -18,6 +18,20 @@ using System.Linq;
 
 namespace org.activiti.bpmn.model
 {
+
+
+
+
+
+
+
+
+
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public class BpmnModel
     {
 
@@ -44,135 +58,21 @@ namespace org.activiti.bpmn.model
         protected List<String> startEventFormTypes;
         protected int nextFlowIdCounter = 1;
 
-        public Dictionary<string, List<ExtensionAttribute>> DefinitionsAttributes
-        {
-            get { return definitionsAttributes; }
-            set { definitionsAttributes = value; }
-        }
 
-        public List<Process> Processes
+        public Dictionary<String, List<ExtensionAttribute>> getDefinitionsAttributes()
         {
-            get { return processes; }
-            set { processes = value; }
-        }
-
-        public Dictionary<string, GraphicInfo> LocationMap
-        {
-            get { return locationMap; }
-            set { locationMap = value; }
-        }
-
-        public Dictionary<string, GraphicInfo> LabelLocationMap
-        {
-            get { return labelLocationMap; }
-            set { labelLocationMap = value; }
-        }
-
-        public Dictionary<string, List<GraphicInfo>> FlowLocationMap
-        {
-            get { return flowLocationMap; }
-            set { flowLocationMap = value; }
-        }
-
-        public List<Signal> Signals
-        {
-            get { return signals; }
-            set { signals = value; }
-        }
-
-        public Dictionary<string, MessageFlow> MessageFlowMap
-        {
-            get { return messageFlowMap; }
-            set { messageFlowMap = value; }
-        }
-
-        public Dictionary<string, Message> MessageMap
-        {
-            get { return messageMap; }
-            set { messageMap = value; }
-        }
-
-        public Dictionary<string, string> ErrorMap
-        {
-            get { return errorMap; }
-            set { errorMap = value; }
-        }
-
-        public Dictionary<string, ItemDefinition> ItemDefinitionMap
-        {
-            get { return itemDefinitionMap; }
-            set { itemDefinitionMap = value; }
-        }
-
-        public Dictionary<string, DataStore> DataStoreMap
-        {
-            get { return dataStoreMap; }
-            set { dataStoreMap = value; }
-        }
-
-        public List<Pool> Pools
-        {
-            get { return pools; }
-            set { pools = value; }
-        }
-
-        public List<Import> Imports
-        {
-            get { return imports; }
-            set { imports = value; }
-        }
-
-        public List<Interface> Interfaces
-        {
-            get { return interfaces; }
-            set { interfaces = value; }
-        }
-
-        public List<Artifact> GlobalArtifacts
-        {
-            get { return globalArtifacts; }
-            set { globalArtifacts = value; }
-        }
-
-        public Dictionary<string, string> NamespaceMap1
-        {
-            get { return NamespaceMap; }
-            set { NamespaceMap = value; }
-        }
-
-        public string TargetNamespace
-        {
-            get { return targetNamespace; }
-            set { targetNamespace = value; }
-        }
-
-        public List<string> UserTaskFormTypes
-        {
-            get { return userTaskFormTypes; }
-            set { userTaskFormTypes = value; }
-        }
-
-        public List<string> StartEventFormTypes
-        {
-            get { return startEventFormTypes; }
-            set { startEventFormTypes = value; }
-        }
-
-        public int NextFlowIdCounter
-        {
-            get { return nextFlowIdCounter; }
-            set { nextFlowIdCounter = value; }
+            return definitionsAttributes;
         }
 
         public String getDefinitionsAttributeValue(String Namespace, String name)
         {
-            List<ExtensionAttribute> attributes = DefinitionsAttributes[name];
+            List<ExtensionAttribute> attributes = getDefinitionsAttributes()[name];
             if (attributes != null && attributes.Any())
             {
-                foreach (ExtensionAttribute attribute  in  attributes)
+                foreach (ExtensionAttribute attribute in attributes)
                 {
-                    if (Namespace.Equals(attribute.Namespace))
-                        return attribute.Value;
+                    if (Namespace.Equals(attribute.getNamespace()))
+                        return attribute.getValue();
                 }
             }
             return null;
@@ -180,23 +80,28 @@ namespace org.activiti.bpmn.model
 
         public void addDefinitionsAttribute(ExtensionAttribute attribute)
         {
-            if (attribute != null && !String.IsNullOrWhiteSpace(attribute.Name))
+            if (attribute != null && !String.IsNullOrWhiteSpace(attribute.getName()))
             {
                 List<ExtensionAttribute> attributeList = null;
-                if (this.definitionsAttributes.ContainsKey(attribute.Name) == false)
+                if (this.definitionsAttributes.ContainsKey(attribute.getName()) == false)
                 {
                     attributeList = new List<ExtensionAttribute>();
-                    this.definitionsAttributes.Add(attribute.Name, attributeList);
+                    this.definitionsAttributes.Add(attribute.getName(), attributeList);
                 }
-                this.definitionsAttributes[attribute.Name].Add(attribute);
+                this.definitionsAttributes[attribute.getName()].Add(attribute);
             }
+        }
+
+        public void setDefinitionsAttributes(Dictionary<String, List<ExtensionAttribute>> attributes)
+        {
+            this.definitionsAttributes = attributes;
         }
 
         public Process getMainProcess()
         {
-            if (Pools.Any())
+            if (getPools().Any())
             {
-                return getProcess(Pools[0].Id);
+                return getProcess(getPools()[0].getId());
             }
             else
             {
@@ -206,18 +111,18 @@ namespace org.activiti.bpmn.model
 
         public Process getProcess(String poolRef)
         {
-            foreach (Process process  in  processes)
+            foreach (Process process in processes)
             {
-                bool foundPool = false;
-                foreach (Pool pool  in  pools)
+                Boolean foundPool = false;
+                foreach (Pool pool in pools)
                 {
-                    if (!String.IsNullOrWhiteSpace(pool.ProcessRef) && 
-                        String.Equals(pool.ProcessRef, process.Id, StringComparison.CurrentCultureIgnoreCase))
+                    if (!String.IsNullOrWhiteSpace(pool.getProcessRef()) &&
+                        pool.getProcessRef().Equals(process.getId(), StringComparison.InvariantCultureIgnoreCase))
                     {
 
                         if (poolRef != null)
                         {
-                            if (String.Equals(pool.Id.ToLower(),poolRef.ToLower()))
+                            if (pool.getId().Equals(poolRef, StringComparison.InvariantCultureIgnoreCase))
                             {
                                 foundPool = true;
                             }
@@ -242,6 +147,11 @@ namespace org.activiti.bpmn.model
             return null;
         }
 
+        public List<Process> getProcesses()
+        {
+            return processes;
+        }
+
         public void addProcess(Process process)
         {
             processes.Add(process);
@@ -252,9 +162,9 @@ namespace org.activiti.bpmn.model
             Pool foundPool = null;
             if (!String.IsNullOrWhiteSpace(id))
             {
-                foreach (Pool pool  in  pools)
+                foreach (Pool pool in pools)
                 {
-                    if (id.Equals(pool.Id))
+                    if (id.Equals(pool.getId()))
                     {
                         foundPool = pool;
                         break;
@@ -269,11 +179,11 @@ namespace org.activiti.bpmn.model
             Lane foundLane = null;
             if (!String.IsNullOrWhiteSpace(id))
             {
-                foreach (Process process  in  processes)
+                foreach (Process process in processes)
                 {
-                    foreach (Lane lane  in  process.Lanes)
+                    foreach (Lane lane in process.getLanes())
                     {
-                        if (id.Equals(lane.Id))
+                        if (id.Equals(lane.getId()))
                         {
                             foundLane = lane;
                             break;
@@ -291,7 +201,7 @@ namespace org.activiti.bpmn.model
         public FlowElement getFlowElement(String id)
         {
             FlowElement foundFlowElement = null;
-            foreach (Process process  in  processes)
+            foreach (Process process in processes)
             {
                 foundFlowElement = process.getFlowElement(id);
                 if (foundFlowElement != null)
@@ -302,9 +212,9 @@ namespace org.activiti.bpmn.model
 
             if (foundFlowElement == null)
             {
-                foreach (Process process  in  processes)
+                foreach (Process process in processes)
                 {
-                    foreach (FlowElement flowElement  in  process.findFlowElementsOfType(typeof(SubProcess) ) )
+                    foreach (FlowElement flowElement in process.findFlowElementsOfType(typeof (SubProcess)))
                     {
                         foundFlowElement = getFlowElementInSubProcess(id, (SubProcess) flowElement);
                         if (foundFlowElement != null)
@@ -327,9 +237,9 @@ namespace org.activiti.bpmn.model
             FlowElement foundFlowElement = subProcess.getFlowElement(id);
             if (foundFlowElement == null)
             {
-                foreach (FlowElement flowElement  in  subProcess.FlowElements)
+                foreach (FlowElement flowElement in subProcess.getFlowElements())
                 {
-                    if ((flowElement as SubProcess) != null)
+                    if (flowElement as SubProcess != null)
                     {
                         foundFlowElement = getFlowElementInSubProcess(id, (SubProcess) flowElement);
                         if (foundFlowElement != null)
@@ -345,7 +255,7 @@ namespace org.activiti.bpmn.model
         public Artifact getArtifact(String id)
         {
             Artifact foundArtifact = null;
-            foreach (Process process  in  processes)
+            foreach (Process process in processes)
             {
                 foundArtifact = process.getArtifact(id);
                 if (foundArtifact != null)
@@ -356,9 +266,9 @@ namespace org.activiti.bpmn.model
 
             if (foundArtifact == null)
             {
-                foreach (Process process  in  processes)
+                foreach (Process process in processes)
                 {
-                    foreach (FlowElement flowElement in process.findFlowElementsOfType(typeof(SubProcess)))
+                    foreach (FlowElement flowElement in process.findFlowElementsOfType(typeof (SubProcess)))
                     {
                         foundArtifact = getArtifactInSubProcess(id, (SubProcess) flowElement);
                         if (foundArtifact != null)
@@ -381,9 +291,10 @@ namespace org.activiti.bpmn.model
             Artifact foundArtifact = subProcess.getArtifact(id);
             if (foundArtifact == null)
             {
-                foreach (FlowElement flowElement  in  subProcess.FlowElements)
+                foreach (FlowElement flowElement in subProcess.getFlowElements())
                 {
-                    if ((flowElement as SubProcess)!=null)
+                    if (flowElement
+                    as SubProcess != null)
                     {
                         foundArtifact = getArtifactInSubProcess(id, (SubProcess) flowElement);
                         if (foundArtifact != null)
@@ -421,6 +332,16 @@ namespace org.activiti.bpmn.model
             flowLocationMap.Remove(key);
         }
 
+        public Dictionary<String, GraphicInfo> getLocationMap()
+        {
+            return locationMap;
+        }
+
+        public Dictionary<String, List<GraphicInfo>> getFlowLocationMap()
+        {
+            return flowLocationMap;
+        }
+
         public GraphicInfo getLabelGraphicInfo(String key)
         {
             return labelLocationMap[key];
@@ -436,12 +357,22 @@ namespace org.activiti.bpmn.model
             labelLocationMap.Remove(key);
         }
 
+        public Dictionary<String, GraphicInfo> getLabelLocationMap()
+        {
+            return labelLocationMap;
+        }
+
         public void addFlowGraphicInfoList(String key, List<GraphicInfo> graphicInfoList)
         {
             flowLocationMap.Add(key, graphicInfoList);
         }
 
-        public void setSignals(Collection<Signal> signalList)
+        public IEnumerable<Signal> getSignals()
+        {
+            return signals;
+        }
+
+        public void setSignals(IEnumerable<Signal> signalList)
         {
             if (signalList != null)
             {
@@ -458,16 +389,16 @@ namespace org.activiti.bpmn.model
             }
         }
 
-        public bool containsSignalId(String signalId)
+        public Boolean containsSignalId(String signalId)
         {
             return getSignal(signalId) != null;
         }
 
         public Signal getSignal(String id)
         {
-            foreach (Signal signal  in  signals)
+            foreach (Signal signal in signals)
             {
-                if (id.Equals(signal.Id))
+                if (id.Equals(signal.getId()))
                 {
                     return signal;
                 }
@@ -475,11 +406,21 @@ namespace org.activiti.bpmn.model
             return null;
         }
 
+        public Dictionary<String, MessageFlow> getMessageFlows()
+        {
+            return messageFlowMap;
+        }
+
+        public void setMessageFlows(Dictionary<String, MessageFlow> messageFlows)
+        {
+            this.messageFlowMap = messageFlows;
+        }
+
         public void addMessageFlow(MessageFlow messageFlow)
         {
-            if (messageFlow != null && !String.IsNullOrWhiteSpace(messageFlow.Id))
+            if (messageFlow != null && !String.IsNullOrWhiteSpace(messageFlow.getId()))
             {
-                messageFlowMap.Add(messageFlow.Id, messageFlow);
+                messageFlowMap.Add(messageFlow.getId(), messageFlow);
             }
         }
 
@@ -488,17 +429,22 @@ namespace org.activiti.bpmn.model
             return messageFlowMap[id];
         }
 
-        public bool containsMessageFlowId(String messageFlowId)
+        public Boolean containsMessageFlowId(String messageFlowId)
         {
             return messageFlowMap.ContainsKey(messageFlowId);
         }
 
-        public void setMessages(Collection<Message> messageList)
+        public IEnumerable<Message> getMessages()
+        {
+            return messageMap.Values;
+        }
+
+        public void setMessages(IEnumerable<Message> messageList)
         {
             if (messageList != null)
             {
                 messageMap.Clear();
-                foreach (Message message  in  messageList)
+                foreach (Message message in messageList)
                 {
                     addMessage(message);
                 }
@@ -507,9 +453,9 @@ namespace org.activiti.bpmn.model
 
         public void addMessage(Message message)
         {
-            if (message != null && !String.IsNullOrWhiteSpace(message.Id))
+            if (message != null && !String.IsNullOrWhiteSpace(message.getId()))
             {
-                messageMap.Add(message.Id, message);
+                messageMap.Add(message.getId(), message);
             }
         }
 
@@ -518,9 +464,19 @@ namespace org.activiti.bpmn.model
             return messageMap[id];
         }
 
-        public bool containsMessageId(String messageId)
+        public Boolean containsMessageId(String messageId)
         {
             return messageMap.ContainsKey(messageId);
+        }
+
+        public Dictionary<String, String> getErrors()
+        {
+            return errorMap;
+        }
+
+        public void setErrors(Dictionary<String, String> errorMap)
+        {
+            this.errorMap = errorMap;
         }
 
         public void addError(String errorRef, String errorCode)
@@ -531,9 +487,19 @@ namespace org.activiti.bpmn.model
             }
         }
 
-        public bool containsErrorRef(String errorRef)
+        public Boolean containsErrorRef(String errorRef)
         {
             return errorMap.ContainsKey(errorRef);
+        }
+
+        public Dictionary<String, ItemDefinition> getItemDefinitions()
+        {
+            return itemDefinitionMap;
+        }
+
+        public void setItemDefinitions(Dictionary<String, ItemDefinition> itemDefinitionMap)
+        {
+            this.itemDefinitionMap = itemDefinitionMap;
         }
 
         public void addItemDefinition(String id, ItemDefinition item)
@@ -544,9 +510,19 @@ namespace org.activiti.bpmn.model
             }
         }
 
-        public bool containsItemDefinitionId(String id)
+        public Boolean containsItemDefinitionId(String id)
         {
             return itemDefinitionMap.ContainsKey(id);
+        }
+
+        public Dictionary<String, DataStore> getDataStores()
+        {
+            return dataStoreMap;
+        }
+
+        public void setDataStores(Dictionary<String, DataStore> dataStoreMap)
+        {
+            this.dataStoreMap = dataStoreMap;
         }
 
         public DataStore getDataStore(String id)
@@ -567,9 +543,49 @@ namespace org.activiti.bpmn.model
             }
         }
 
-        public bool containsDataStore(String id)
+        public Boolean containsDataStore(String id)
         {
             return dataStoreMap.ContainsKey(id);
+        }
+
+        public List<Pool> getPools()
+        {
+            return pools;
+        }
+
+        public void setPools(List<Pool> pools)
+        {
+            this.pools = pools;
+        }
+
+        public List<Import> getImports()
+        {
+            return imports;
+        }
+
+        public void setImports(List<Import> imports)
+        {
+            this.imports = imports;
+        }
+
+        public List<Interface> getInterfaces()
+        {
+            return interfaces;
+        }
+
+        public void setInterfaces(List<Interface> interfaces)
+        {
+            this.interfaces = interfaces;
+        }
+
+        public List<Artifact> getGlobalArtifacts()
+        {
+            return globalArtifacts;
+        }
+
+        public void setGlobalArtifacts(List<Artifact> globalArtifacts)
+        {
+            this.globalArtifacts = globalArtifacts;
         }
 
         public void addNamespace(String prefix, String uri)
@@ -577,7 +593,7 @@ namespace org.activiti.bpmn.model
             NamespaceMap.Add(prefix, uri);
         }
 
-        public bool containsNamespacePrefix(String prefix)
+        public Boolean containsNamespacePrefix(String prefix)
         {
             return NamespaceMap.ContainsKey(prefix);
         }
@@ -587,5 +603,39 @@ namespace org.activiti.bpmn.model
             return NamespaceMap[prefix];
         }
 
+        public Dictionary<String, String> getNamespaces()
+        {
+            return NamespaceMap;
+        }
+
+        public String getTargetNamespace()
+        {
+            return targetNamespace;
+        }
+
+        public void setTargetNamespace(String targetNamespace)
+        {
+            this.targetNamespace = targetNamespace;
+        }
+
+        public List<String> getUserTaskFormTypes()
+        {
+            return userTaskFormTypes;
+        }
+
+        public void setUserTaskFormTypes(List<String> userTaskFormTypes)
+        {
+            this.userTaskFormTypes = userTaskFormTypes;
+        }
+
+        public List<String> getStartEventFormTypes()
+        {
+            return startEventFormTypes;
+        }
+
+        public void setStartEventFormTypes(List<String> startEventFormTypes)
+        {
+            this.startEventFormTypes = startEventFormTypes;
+        }
     }
 }

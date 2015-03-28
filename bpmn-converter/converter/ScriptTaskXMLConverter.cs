@@ -58,7 +58,7 @@ public class ScriptTaskXMLConverter extends BaseBpmnXMLConverter {
     }
     String autoStoreVariables = xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_TASK_SCRIPT_AUTO_STORE_VARIABLE);
     if (StringUtils.isNotEmpty(autoStoreVariables)) {
-      scriptTask.setAutoStoreVariables(Boolean.valueOf(autoStoreVariables));
+      scriptTask.setAutoStoreVariables(bool.valueOf(autoStoreVariables));
     }
     parseChildElements(getXMLElementName(), scriptTask, childParserMap, model, xtr);
     return scriptTask;

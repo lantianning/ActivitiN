@@ -10,8 +10,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.model{
-public interface ComplexDataType {
+namespace org.activiti.bpmn.model
+{
 
-}
+/**
+ * //@author Tijs Rademakers
+ */
+
+    public interface ComplexDataType
+    {
+
+    }
 }

@@ -5,19 +5,58 @@ using System.Linq;
 namespace org.activiti.bpmn.model
 {
 
+
+
+
     public class IOSpecification : BaseElement
     {
 
-        protected List<DataSpec> _dataInputs = new List<DataSpec>();
-        protected List<DataSpec> _dataOutputs = new List<DataSpec>();
-        protected List<String> _dataInputRefs = new List<String>();
-        protected List<String> _dataOutputRefs = new List<String>();
-        public List<DataSpec> DataInputs {get { return _dataInputs; }set { _dataInputs = value; }}
-        public List<DataSpec> DataOutputs { get { return _dataOutputs; } set { _dataOutputs = value; } }
-        public List<String> DataInputRefs { get { return _dataInputRefs; } set { _dataInputRefs = value; } }
-        public List<String> DataOutputRefs { get { return _dataOutputRefs; } set { _dataOutputRefs = value; } }
+        protected List<DataSpec> dataInputs = new List<DataSpec>();
+        protected List<DataSpec> dataOutputs = new List<DataSpec>();
+        protected List<String> dataInputRefs = new List<String>();
+        protected List<String> dataOutputRefs = new List<String>();
 
-        public override object clone()
+        public List<DataSpec> getDataInputs()
+        {
+            return dataInputs;
+        }
+
+        public void setDataInputs(List<DataSpec> dataInputs)
+        {
+            this.dataInputs = dataInputs;
+        }
+
+        public List<DataSpec> getDataOutputs()
+        {
+            return dataOutputs;
+        }
+
+        public void setDataOutputs(List<DataSpec> dataOutputs)
+        {
+            this.dataOutputs = dataOutputs;
+        }
+
+        public List<String> getDataInputRefs()
+        {
+            return dataInputRefs;
+        }
+
+        public void setDataInputRefs(List<String> dataInputRefs)
+        {
+            this.dataInputRefs = dataInputRefs;
+        }
+
+        public List<String> getDataOutputRefs()
+        {
+            return dataOutputRefs;
+        }
+
+        public void setDataOutputRefs(List<String> dataOutputRefs)
+        {
+            this.dataOutputRefs = dataOutputRefs;
+        }
+
+        public override Object clone()
         {
             IOSpecification clone = new IOSpecification();
             clone.setValues(this);
@@ -26,28 +65,26 @@ namespace org.activiti.bpmn.model
 
         public void setValues(IOSpecification otherSpec)
         {
-            DataInputs = new List<DataSpec>();
-            if (otherSpec.DataInputs != null && otherSpec.DataInputs.Any())
+            dataInputs = new List<DataSpec>();
+            if (otherSpec.getDataInputs() != null && otherSpec.getDataInputs().Any())
             {
-                foreach (DataSpec dataSpec in
-                otherSpec.DataInputs)
+                foreach (DataSpec dataSpec in otherSpec.getDataInputs())
                 {
-                    DataInputs.Add((DataSpec)dataSpec.clone());
+                    dataInputs.Add((DataSpec)dataSpec.clone());
                 }
             }
 
-            DataOutputs = new List<DataSpec>();
-            if (otherSpec.DataOutputs != null && otherSpec.DataOutputs.Any())
+            dataOutputs = new List<DataSpec>();
+            if (otherSpec.getDataOutputs() != null && otherSpec.getDataOutputs().Any())
             {
-                foreach (DataSpec dataSpec in
-                otherSpec.DataOutputs)
+                foreach (DataSpec dataSpec in otherSpec.getDataOutputs())
                 {
-                    DataOutputs.Add((DataSpec)dataSpec.clone());
+                    dataOutputs.Add((DataSpec)dataSpec.clone());
                 }
             }
 
-            DataInputRefs = new List<String>(otherSpec.DataInputRefs);
-            DataOutputRefs = new List<String>(otherSpec.DataOutputRefs);
+            dataInputRefs = new List<String>(otherSpec.getDataInputRefs());
+            dataOutputRefs = new List<String>(otherSpec.getDataOutputRefs());
         }
     }
 }

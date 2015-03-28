@@ -5,20 +5,58 @@ using System.Linq;
 namespace org.activiti.bpmn.model
 {
 
+
+
+
     public class DataAssociation : BaseElement
     {
 
-        public String SourceRef { get; set; }
-        public String TargetRef { get; set; }
-        public String Transformation { get; set; }
-        protected List<Assignment> _assignments = new List<Assignment>();
+        protected String sourceRef;
+        protected String targetRef;
+        protected String transformation;
+        protected List<Assignment> assignments = new List<Assignment>();
 
-        public List<Assignment> Assignments
+        public String getSourceRef()
         {
-            get { return _assignments; }
-            set { _assignments = value; }
+            return sourceRef;
         }
-        public override object clone()
+
+        public void setSourceRef(String sourceRef)
+        {
+            this.sourceRef = sourceRef;
+        }
+
+        public String getTargetRef()
+        {
+            return targetRef;
+        }
+
+        public void setTargetRef(String targetRef)
+        {
+            this.targetRef = targetRef;
+        }
+
+        public String getTransformation()
+        {
+            return transformation;
+        }
+
+        public void setTransformation(String transformation)
+        {
+            this.transformation = transformation;
+        }
+
+        public List<Assignment> getAssignments()
+        {
+            return assignments;
+        }
+
+        public void setAssignments(List<Assignment> assignments)
+        {
+            this.assignments = assignments;
+        }
+
+        public override Object clone()
         {
             DataAssociation clone = new DataAssociation();
             clone.setValues(this);
@@ -27,17 +65,16 @@ namespace org.activiti.bpmn.model
 
         public void setValues(DataAssociation otherAssociation)
         {
-            SourceRef = otherAssociation.SourceRef;
-            TargetRef = otherAssociation.TargetRef;
-            Transformation = otherAssociation.Transformation;
+            setSourceRef(otherAssociation.getSourceRef());
+            setTargetRef(otherAssociation.getTargetRef());
+            setTransformation(otherAssociation.getTransformation());
 
-            _assignments = new List<Assignment>();
-            if (otherAssociation.Assignments != null && !otherAssociation.Assignments.Any())
+            assignments = new List<Assignment>();
+            if (otherAssociation.getAssignments() != null && otherAssociation.getAssignments().Any())
             {
-                foreach (Assignment assignment in
-                otherAssociation.Assignments)
+                foreach (Assignment assignment in otherAssociation.getAssignments())
                 {
-                    _assignments.Add((Assignment)assignment.clone());
+                    assignments.Add((Assignment)assignment.clone());
                 }
             }
         }

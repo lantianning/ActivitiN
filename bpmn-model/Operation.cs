@@ -4,6 +4,10 @@ using System.Linq;
 
 namespace org.activiti.bpmn.model
 {
+
+
+
+
     public class Operation : BaseElement
     {
 
@@ -13,37 +17,57 @@ namespace org.activiti.bpmn.model
         protected String outMessageRef;
         protected List<String> errorMessageRef = new List<String>();
 
-        public string Name
+        public String getName()
         {
-            get { return name; }
-            set { name = value; }
+            return name;
         }
 
-        public string ImplementationRef
+        public void setName(String name)
         {
-            get { return implementationRef; }
-            set { implementationRef = value; }
+            this.name = name;
         }
 
-        public string InMessageRef
+        public String getImplementationRef()
         {
-            get { return inMessageRef; }
-            set { inMessageRef = value; }
+            return implementationRef;
         }
 
-        public string OutMessageRef
+        public void setImplementationRef(String implementationRef)
         {
-            get { return outMessageRef; }
-            set { outMessageRef = value; }
+            this.implementationRef = implementationRef;
         }
 
-        public List<string> ErrorMessageRef
+        public String getInMessageRef()
         {
-            get { return errorMessageRef; }
-            set { errorMessageRef = value; }
+            return inMessageRef;
         }
 
-        public override object clone()
+        public void setInMessageRef(String inMessageRef)
+        {
+            this.inMessageRef = inMessageRef;
+        }
+
+        public String getOutMessageRef()
+        {
+            return outMessageRef;
+        }
+
+        public void setOutMessageRef(String outMessageRef)
+        {
+            this.outMessageRef = outMessageRef;
+        }
+
+        public List<String> getErrorMessageRef()
+        {
+            return errorMessageRef;
+        }
+
+        public void setErrorMessageRef(List<String> errorMessageRef)
+        {
+            this.errorMessageRef = errorMessageRef;
+        }
+
+        public override Object clone()
         {
             Operation clone = new Operation();
             clone.setValues(this);
@@ -53,15 +77,15 @@ namespace org.activiti.bpmn.model
         public void setValues(Operation otherElement)
         {
             base.setValues(otherElement);
-            Name = otherElement.Name;
-            ImplementationRef = otherElement.ImplementationRef;
-            InMessageRef = otherElement.InMessageRef;
-            OutMessageRef = otherElement.OutMessageRef;
+            setName(otherElement.getName());
+            setImplementationRef(otherElement.getImplementationRef());
+            setInMessageRef(otherElement.getInMessageRef());
+            setOutMessageRef(otherElement.getOutMessageRef());
 
             errorMessageRef = new List<String>();
-            if (otherElement.ErrorMessageRef != null && otherElement.ErrorMessageRef.Any())
+            if (otherElement.getErrorMessageRef() != null && otherElement.getErrorMessageRef().Any())
             {
-                errorMessageRef.AddRange(otherElement.ErrorMessageRef);
+                errorMessageRef.AddRange(otherElement.getErrorMessageRef());
             }
         }
     }

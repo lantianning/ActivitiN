@@ -13,7 +13,7 @@ namespace org.activiti.bpmn.model
 
         public override void setValue(Object value)
         {
-            Value = long.Parse(value.ToString()) ;
+            this.value = long.Parse(value.ToString());
         }
 
         public override object clone()

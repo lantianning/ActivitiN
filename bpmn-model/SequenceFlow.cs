@@ -12,18 +12,24 @@
  */
 
 using System;
-using org.activiti.bpmn.model;
 
 namespace org.activiti.bpmn.model
 {
 
+
+
+/**
+ * //@author Tijs Rademakers
+ * //@author Joram Barrez
+ */
+
     public class SequenceFlow : FlowElement
     {
 
-        public String ConditionExpression { get; set; }
-        public String SourceRef { get; set; }
-        public String TargetRef { get; set; }
-        public String SkipExpression { get; set; }
+        protected String conditionExpression;
+        protected String sourceRef;
+        protected String targetRef;
+        protected String skipExpression;
 
         public SequenceFlow()
         {
@@ -32,16 +38,56 @@ namespace org.activiti.bpmn.model
 
         public SequenceFlow(String sourceRef, String targetRef)
         {
-            SourceRef = sourceRef;
-            TargetRef = targetRef;
+            this.sourceRef = sourceRef;
+            this.targetRef = targetRef;
         }
 
-        public override String ToString()
+        public String getConditionExpression()
         {
-            return SourceRef + " --> " + TargetRef;
+            return conditionExpression;
         }
 
-        public override object clone()
+        public void setConditionExpression(String conditionExpression)
+        {
+            this.conditionExpression = conditionExpression;
+        }
+
+        public String getSourceRef()
+        {
+            return sourceRef;
+        }
+
+        public void setSourceRef(String sourceRef)
+        {
+            this.sourceRef = sourceRef;
+        }
+
+        public String getTargetRef()
+        {
+            return targetRef;
+        }
+
+        public void setTargetRef(String targetRef)
+        {
+            this.targetRef = targetRef;
+        }
+
+        public String getSkipExpression()
+        {
+            return skipExpression;
+        }
+
+        public void setSkipExpression(String skipExpression)
+        {
+            this.skipExpression = skipExpression;
+        }
+
+        public String ToString()
+        {
+            return sourceRef + " --> " + targetRef;
+        }
+
+        public override Object clone()
         {
             SequenceFlow clone = new SequenceFlow();
             clone.setValues(this);
@@ -51,9 +97,9 @@ namespace org.activiti.bpmn.model
         public void setValues(SequenceFlow otherFlow)
         {
             base.setValues(otherFlow);
-            ConditionExpression = otherFlow.ConditionExpression;
-            SourceRef = otherFlow.SourceRef;
-            TargetRef = otherFlow.TargetRef;
+            setConditionExpression(otherFlow.getConditionExpression());
+            setSourceRef(otherFlow.getSourceRef());
+            setTargetRef(otherFlow.getTargetRef());
         }
     }
 }

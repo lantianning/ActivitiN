@@ -20,6 +20,16 @@ namespace org.activiti.bpmn.model
 {
 
 
+
+
+
+
+
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public class SubProcess : Activity, FlowElementsContainer
     {
 
@@ -27,32 +37,14 @@ namespace org.activiti.bpmn.model
         protected List<Artifact> artifactList = new List<Artifact>();
         protected List<ValuedDataObject> dataObjects = new List<ValuedDataObject>();
 
-        public List<FlowElement> FlowElements
-        {
-            get { return flowElementList; }
-            set { flowElementList = value; }
-        }
-
-        public List<Artifact> Artifacts
-        {
-            get { return artifactList; }
-            set { artifactList = value; }
-        }
-
-        public List<ValuedDataObject> DataObjects
-        {
-            get { return dataObjects; }
-            set { dataObjects = value; }
-        }
-
         public FlowElement getFlowElement(String id)
         {
             FlowElement foundElement = null;
             if (!String.IsNullOrWhiteSpace(id))
             {
-                foreach (FlowElement element  in  flowElementList)
+                foreach (FlowElement element in flowElementList)
                 {
-                    if (id.Equals(element.Id))
+                    if (id.Equals(element.getId()))
                     {
                         foundElement = element;
                         break;
@@ -60,6 +52,11 @@ namespace org.activiti.bpmn.model
                 }
             }
             return foundElement;
+        }
+
+        public IEnumerable<FlowElement> getFlowElements()
+        {
+            return flowElementList;
         }
 
         public void addFlowElement(FlowElement element)
@@ -79,9 +76,9 @@ namespace org.activiti.bpmn.model
         public Artifact getArtifact(String id)
         {
             Artifact foundArtifact = null;
-            foreach (Artifact artifact  in  artifactList)
+            foreach (Artifact artifact in artifactList)
             {
-                if (id.Equals(artifact.Id))
+                if (id.Equals(artifact.getId()))
                 {
                     foundArtifact = artifact;
                     break;
@@ -90,7 +87,11 @@ namespace org.activiti.bpmn.model
             return foundArtifact;
         }
 
- 
+        public IEnumerable<Artifact> getArtifacts()
+        {
+            return artifactList;
+        }
+
         public void addArtifact(Artifact artifact)
         {
             artifactList.Add(artifact);
@@ -105,7 +106,7 @@ namespace org.activiti.bpmn.model
             }
         }
 
-        public override object clone()
+        public override Object clone()
         {
             SubProcess clone = new SubProcess();
             clone.setValues(this);
@@ -122,12 +123,12 @@ namespace org.activiti.bpmn.model
      *
      * Determine the differences between the 2 elements' data object
      */
-            foreach (ValuedDataObject thisObject  in DataObjects)
+            foreach (ValuedDataObject thisObject in getDataObjects())
             {
-                bool exists = false;
-                foreach (ValuedDataObject otherObject  in  otherElement.DataObjects)
+                Boolean exists = false;
+                foreach (ValuedDataObject otherObject in otherElement.getDataObjects())
                 {
-                    if (thisObject.Id.Equals(otherObject.Id))
+                    if (thisObject.getId().Equals(otherObject.getId()))
                     {
                         exists = true;
                     }
@@ -135,34 +136,34 @@ namespace org.activiti.bpmn.model
                 if (!exists)
                 {
                     // missing object
-                    removeFlowElement(thisObject.Id);
+                    removeFlowElement(thisObject.getId());
                 }
             }
 
             dataObjects = new List<ValuedDataObject>();
-            if (otherElement.DataObjects != null && otherElement.DataObjects.Any())
+            if (otherElement.getDataObjects() != null && otherElement.getDataObjects().Any())
             {
-                foreach (ValuedDataObject dataObject  in  otherElement.DataObjects)
+                foreach (ValuedDataObject dataObject in otherElement.getDataObjects())
                 {
-                    ValuedDataObject clone = (ValuedDataObject)dataObject.clone();
+                    ValuedDataObject clone = (ValuedDataObject) dataObject.clone();
                     dataObjects.Add(clone);
-                    // add it to the list of FlowElements
+                    // Add it to the list of FlowElements
                     // if it is already there, remove it first so order is same as data object list
-                    removeFlowElement(clone.Id);
+                    removeFlowElement(clone.getId());
                     addFlowElement(clone);
                 }
             }
 
             /*flowElementList = new List<FlowElement>();
     if (otherElement.getFlowElements() != null && otherElement.getFlowElements().size() > 0) {
-      for (FlowElement element : otherElement.getFlowElements()) {
+      foreach (FlowElement element in otherElement.getFlowElements()) {
         flowElementList.Add(element.clone());
       }
     }
     
     artifactList = new List<Artifact>();
     if (otherElement.getArtifacts() != null && otherElement.getArtifacts().size() > 0) {
-      for (Artifact artifact : otherElement.getArtifacts()) {
+      foreach (Artifact artifact in otherElement.getArtifacts()) {
         artifactList.Add(artifact.clone());
       }
     }*/

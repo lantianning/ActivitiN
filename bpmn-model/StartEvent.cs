@@ -62,7 +62,7 @@ namespace org.activiti.bpmn.model
             this.formProperties = formProperties;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             StartEvent clone = new StartEvent();
             clone.setValues(this);

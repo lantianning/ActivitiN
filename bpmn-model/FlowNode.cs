@@ -16,22 +16,39 @@ using System.Collections.Generic;
 namespace org.activiti.bpmn.model
 {
 
+
+
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public abstract class FlowNode : FlowElement
     {
 
         protected List<SequenceFlow> incomingFlows = new List<SequenceFlow>();
         protected List<SequenceFlow> outgoingFlows = new List<SequenceFlow>();
 
-        public List<SequenceFlow> IncomingFlows
+        public List<SequenceFlow> getIncomingFlows()
         {
-            get { return incomingFlows; }
-            set { incomingFlows = value; }
+            return incomingFlows;
         }
-        public List<SequenceFlow> OutgoingFlows
+
+        public void setIncomingFlows(List<SequenceFlow> incomingFlows)
         {
-            get { return outgoingFlows; }
-            set { outgoingFlows = value; }
+            this.incomingFlows = incomingFlows;
         }
+
+        public List<SequenceFlow> getOutgoingFlows()
+        {
+            return outgoingFlows;
+        }
+
+        public void setOutgoingFlows(List<SequenceFlow> outgoingFlows)
+        {
+            this.outgoingFlows = outgoingFlows;
+        }
+
         public void setValues(FlowNode otherNode)
         {
             base.setValues(otherNode);

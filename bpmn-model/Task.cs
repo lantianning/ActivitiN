@@ -13,7 +13,11 @@
 namespace org.activiti.bpmn.model
 {
 
-    public abstract class ActivityTask : Activity
+/**
+ * //@author Tijs Rademakers
+ */
+
+    public abstract class TaskActivity : Activity
     {
 
     }

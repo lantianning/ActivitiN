@@ -24,7 +24,7 @@ namespace org.activiti.bpmn.model
     {
 
         protected String activityRef;
-        protected bool waitForCompletion = true;
+        protected Boolean waitForCompletion = true;
 
         public String getActivityRef()
         {
@@ -36,17 +36,17 @@ namespace org.activiti.bpmn.model
             this.activityRef = activityRef;
         }
 
-        public bool isWaitForCompletion()
+        public Boolean isWaitForCompletion()
         {
             return waitForCompletion;
         }
 
-        public void setWaitForCompletion(bool waitForCompletion)
+        public void setWaitForCompletion(Boolean waitForCompletion)
         {
             this.waitForCompletion = waitForCompletion;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             CompensateEventDefinition clone = new CompensateEventDefinition();
             clone.setValues(this);

@@ -10,6 +10,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+
 namespace org.activiti.bpmn.model
 {
 
@@ -20,7 +23,7 @@ namespace org.activiti.bpmn.model
     public class CancelEventDefinition : EventDefinition
     {
 
-        public override object clone()
+        public override Object clone()
         {
             CancelEventDefinition clone = new CancelEventDefinition();
             clone.setValues(this);

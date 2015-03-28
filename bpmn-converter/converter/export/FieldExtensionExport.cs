@@ -23,8 +23,8 @@ import org.apache.commons.lang3.StringUtils;
 
 public class FieldExtensionExport implements BpmnXMLConstants {
 
-  public static boolean writeFieldExtensions(List<FieldExtension> fieldExtensionList, 
-      boolean didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
+  public static bool writeFieldExtensions(List<FieldExtension> fieldExtensionList, 
+      bool didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
     
     for (FieldExtension fieldExtension : fieldExtensionList) {
       

@@ -3,32 +3,49 @@ using System;
 namespace org.activiti.bpmn.model
 {
 
+/**
+ * //@author Lori Small
+ */
+
     public class DataObject : FlowElement
-{
+    {
 
-    protected ItemDefinition _itemSubjectRef;
+        protected ItemDefinition itemSubjectRef;
 
-        public ItemDefinition ItemSubjectRef
+        public String getName()
         {
-            get { return _itemSubjectRef; }
-            set { _itemSubjectRef = value; }
+            return name;
         }
 
+        public void setName(String name)
+        {
+            this.name = name;
+        }
 
-        public override object clone()
-    {
-        DataObject clone = new DataObject();
-        clone.setValues(this);
-        return clone;
+        public ItemDefinition getItemSubjectRef()
+        {
+            return itemSubjectRef;
+        }
+
+        public void setItemSubjectRef(ItemDefinition itemSubjectRef)
+        {
+            this.itemSubjectRef = itemSubjectRef;
+        }
+
+        public override Object clone()
+        {
+            DataObject clone = new DataObject();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(DataObject otherElement)
+        {
+            base.setValues(otherElement);
+
+            setId(otherElement.getId());
+            setName(otherElement.getName());
+            setItemSubjectRef(otherElement.getItemSubjectRef());
+        }
     }
-
-    public void setValues(DataObject otherElement)
-    {
-        base.setValues(otherElement);
-
-        Id = otherElement.Id;
-        Name = otherElement.Name;
-        ItemSubjectRef = otherElement.ItemSubjectRef;
-    }
-}
 }

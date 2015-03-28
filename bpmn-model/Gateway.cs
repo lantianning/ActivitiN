@@ -15,22 +15,57 @@ using System;
 
 namespace org.activiti.bpmn.model
 {
+
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public abstract class Gateway : FlowNode
     {
 
-        protected bool Asynchronous { get; set; }
-        protected bool NotExclusive { get; set; }
-        protected String DefaultFlow { get; set; }
+        protected Boolean asynchronous;
+        protected Boolean notExclusive;
+        protected String defaultFlow;
 
- 
-        public abstract override object clone();
+        public Boolean isAsynchronous()
+        {
+            return asynchronous;
+        }
+
+        public void setAsynchronous(Boolean asynchronous)
+        {
+            this.asynchronous = asynchronous;
+        }
+
+        public Boolean isNotExclusive()
+        {
+            return notExclusive;
+        }
+
+        public void setNotExclusive(Boolean notExclusive)
+        {
+            this.notExclusive = notExclusive;
+        }
+
+        public String getDefaultFlow()
+        {
+            return defaultFlow;
+        }
+
+        public void setDefaultFlow(String defaultFlow)
+        {
+            this.defaultFlow = defaultFlow;
+        }
+
+        public abstract override Object clone();
 
         public void setValues(Gateway otherElement)
         {
             base.setValues(otherElement);
-            Asynchronous = otherElement.Asynchronous;
-            NotExclusive = otherElement.NotExclusive;
-            DefaultFlow = otherElement.DefaultFlow;
+            setAsynchronous(otherElement.isAsynchronous());
+            setNotExclusive(otherElement.isNotExclusive());
+            setDefaultFlow(otherElement.getDefaultFlow());
         }
     }
 }

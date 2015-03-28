@@ -7,12 +7,41 @@ namespace org.activiti.bpmn.model
     public class DataSpec : BaseElement
     {
 
-        public String Name { get; set; }
-        public String ItemSubjectRef { get; set; }
-        public bool IsCollection { get; set; }
+        protected String name;
+        protected String itemSubjectRef;
+        protected Boolean _isCollection;
 
+        public String getName()
+        {
+            return name;
+        }
 
-        public override object clone()
+        public void setName(String name)
+        {
+            this.name = name;
+        }
+
+        public String getItemSubjectRef()
+        {
+            return itemSubjectRef;
+        }
+
+        public void setItemSubjectRef(String itemSubjectRef)
+        {
+            this.itemSubjectRef = itemSubjectRef;
+        }
+
+        public Boolean isCollection()
+        {
+            return _isCollection;
+        }
+
+        public void setCollection(Boolean isCollection)
+        {
+            this._isCollection = isCollection;
+        }
+
+        public override Object clone()
         {
             DataSpec clone = new DataSpec();
             clone.setValues(this);
@@ -21,9 +50,9 @@ namespace org.activiti.bpmn.model
 
         public void setValues(DataSpec otherDataSpec)
         {
-            Name=otherDataSpec.Name;
-            ItemSubjectRef=otherDataSpec.ItemSubjectRef;
-            IsCollection=otherDataSpec.IsCollection;
+            setName(otherDataSpec.getName());
+            setItemSubjectRef(otherDataSpec.getItemSubjectRef());
+            setCollection(otherDataSpec.isCollection());
         }
     }
 }

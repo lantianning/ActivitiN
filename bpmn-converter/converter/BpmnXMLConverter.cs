@@ -235,11 +235,11 @@ public class BpmnXMLConverter implements BpmnXMLConstants {
     return schema;
   }
   
-  public BpmnModel convertToBpmnModel(InputStreamProvider inputStreamProvider, boolean validateSchema, boolean enableSafeBpmnXml) {
+  public BpmnModel convertToBpmnModel(InputStreamProvider inputStreamProvider, bool validateSchema, bool enableSafeBpmnXml) {
     return convertToBpmnModel(inputStreamProvider, validateSchema, enableSafeBpmnXml, DEFAULT_ENCODING);
   }
   
-  public BpmnModel convertToBpmnModel(InputStreamProvider inputStreamProvider, boolean validateSchema, boolean enableSafeBpmnXml, String encoding) {
+  public BpmnModel convertToBpmnModel(InputStreamProvider inputStreamProvider, bool validateSchema, bool enableSafeBpmnXml, String encoding) {
     XMLInputFactory xif = XMLInputFactory.newInstance();
 
     if (xif.isPropertySupported(XMLInputFactory.IS_REPLACING_ENTITY_REFERENCES)) {
@@ -564,7 +564,7 @@ public class BpmnXMLConverter implements BpmnXMLConstants {
         xtw.writeEndElement();
       }
       
-      boolean didWriteExtensionStartElement = ActivitiListenerExport.writeListeners(subProcess, false, xtw);
+      bool didWriteExtensionStartElement = ActivitiListenerExport.writeListeners(subProcess, false, xtw);
       
       didWriteExtensionStartElement = BpmnXMLUtil.writeExtensionElements(subProcess, didWriteExtensionStartElement, model.getNamespaces(), xtw);
       if (didWriteExtensionStartElement) {

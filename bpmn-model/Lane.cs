@@ -18,20 +18,54 @@ using System.Linq;
 namespace org.activiti.bpmn.model
 {
 
+
+
+
+
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public class Lane : BaseElement
     {
 
-        protected String Name { get; set; }
-        protected Process ParentProcess { get; set; }
+        protected String name;
+        protected Process parentProcess;
         protected List<String> flowReferences = new List<String>();
 
-        public List<string> FlowReferences
+        public String getName()
         {
-            get { return flowReferences; }
-            set { flowReferences = value; }
+            return name;
         }
 
-        public override object clone()
+        public void setName(String name)
+        {
+            this.name = name;
+        }
+
+        //@JsonBackReference
+        public Process getParentProcess()
+        {
+            return parentProcess;
+        }
+
+        public void setParentProcess(Process parentProcess)
+        {
+            this.parentProcess = parentProcess;
+        }
+
+        public List<String> getFlowReferences()
+        {
+            return flowReferences;
+        }
+
+        public void setFlowReferences(List<String> flowReferences)
+        {
+            this.flowReferences = flowReferences;
+        }
+
+        public override Object clone()
         {
             Lane clone = new Lane();
             clone.setValues(this);
@@ -41,13 +75,13 @@ namespace org.activiti.bpmn.model
         public void setValues(Lane otherElement)
         {
             base.setValues(otherElement);
-            Name = otherElement.Name;
-            ParentProcess = otherElement.ParentProcess;
+            setName(otherElement.getName());
+            setParentProcess(otherElement.getParentProcess());
 
             flowReferences = new List<String>();
-            if (otherElement.FlowReferences != null && otherElement.FlowReferences.Any())
+            if (otherElement.getFlowReferences() != null && otherElement.getFlowReferences().Any())
             {
-                flowReferences.AddRange(otherElement.FlowReferences);
+                flowReferences.AddRange(otherElement.getFlowReferences());
             }
         }
     }

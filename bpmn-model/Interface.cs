@@ -4,6 +4,10 @@ using System.Linq;
 
 namespace org.activiti.bpmn.model
 {
+
+
+
+
     public class Interface : BaseElement
     {
 
@@ -11,25 +15,37 @@ namespace org.activiti.bpmn.model
         protected String implementationRef;
         protected List<Operation> operations = new List<Operation>();
 
-        public string Name
+        public String getName()
         {
-            get { return name; }
-            set { name = value; }
+            return name;
         }
 
-        public string ImplementationRef
+        public void setName(String name)
         {
-            get { return implementationRef; }
-            set { implementationRef = value; }
+            this.name = name;
         }
 
-        public List<Operation> Operations
+        public String getImplementationRef()
         {
-            get { return operations; }
-            set { operations = value; }
+            return implementationRef;
         }
 
-        public override object clone()
+        public void setImplementationRef(String implementationRef)
+        {
+            this.implementationRef = implementationRef;
+        }
+
+        public List<Operation> getOperations()
+        {
+            return operations;
+        }
+
+        public void setOperations(List<Operation> operations)
+        {
+            this.operations = operations;
+        }
+
+        public override Object clone()
         {
             Interface clone = new Interface();
             clone.setValues(this);
@@ -39,15 +55,15 @@ namespace org.activiti.bpmn.model
         public void setValues(Interface otherElement)
         {
             base.setValues(otherElement);
-            Name = otherElement.Name;
-            ImplementationRef = otherElement.ImplementationRef;
+            setName(otherElement.getName());
+            setImplementationRef(otherElement.getImplementationRef());
 
             operations = new List<Operation>();
-            if (otherElement.Operations != null && otherElement.Operations.Any())
+            if (otherElement.getOperations() != null && otherElement.getOperations().Any())
             {
-                foreach (Operation operation in otherElement.Operations)
+                foreach (Operation operation in otherElement.getOperations())
                 {
-                    operations.Add((Operation) operation.clone());
+                    operations.Add((Operation)operation.clone());
                 }
             }
         }

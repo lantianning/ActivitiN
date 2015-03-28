@@ -17,84 +17,169 @@ using System.Linq;
 
 namespace org.activiti.bpmn.model
 {
+
+
+
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public abstract class Activity : FlowNode
     {
 
-        public bool Asynchronous { get; set; }
-        public bool NotExclusive { get; set; }
-        public String DefaultFlow { get; set; }
-        public bool ForCompensation { get; set; }
-        public MultiInstanceLoopCharacteristics LoopCharacteristics { get; set; }
-        public IOSpecification IoSpecification { get; set; }
-        protected List<DataAssociation> _dataInputAssociations = new List<DataAssociation>();
-        protected List<DataAssociation> _dataOutputAssociations = new List<DataAssociation>();
-        protected List<BoundaryEvent> _boundaryEvents = new List<BoundaryEvent>();
-        public String FailedJobRetryTimeCycleValue { get; set; }
+        protected Boolean asynchronous;
+        protected Boolean notExclusive;
+        protected String defaultFlow;
+        protected Boolean forCompensation;
+        protected MultiInstanceLoopCharacteristics loopCharacteristics;
+        protected IOSpecification ioSpecification;
+        protected List<DataAssociation> dataInputAssociations = new List<DataAssociation>();
+        protected List<DataAssociation> dataOutputAssociations = new List<DataAssociation>();
+        protected List<BoundaryEvent> boundaryEvents = new List<BoundaryEvent>();
+        protected String failedJobRetryTimeCycleValue;
 
+        public Boolean isAsynchronous()
+        {
+            return asynchronous;
+        }
 
+        public void setAsynchronous(Boolean asynchronous)
+        {
+            this.asynchronous = asynchronous;
+        }
 
-        public List<BoundaryEvent> BoundaryEvents
+        public String getFailedJobRetryTimeCycleValue()
         {
-            get{return _boundaryEvents;}
-            set { _boundaryEvents = value; }           
+            return failedJobRetryTimeCycleValue;
         }
-        public List<DataAssociation> DataInputAssociations
+
+        public void setFailedJobRetryTimeCycleValue(String failedJobRetryTimeCycleValue)
         {
-            get{return _dataInputAssociations;}
-            set {_dataInputAssociations = value; }
-            
+            this.failedJobRetryTimeCycleValue = failedJobRetryTimeCycleValue;
         }
-        public List<DataAssociation> DataOutputAssociations
+
+        public Boolean isNotExclusive()
         {
-            get{return _dataOutputAssociations;}
-            set {_dataOutputAssociations = value; }
-            
+            return notExclusive;
         }
+
+        public void setNotExclusive(Boolean notExclusive)
+        {
+            this.notExclusive = notExclusive;
+        }
+
+        public Boolean isForCompensation()
+        {
+            return forCompensation;
+        }
+
+        public void setForCompensation(Boolean forCompensation)
+        {
+            this.forCompensation = forCompensation;
+        }
+
+        public List<BoundaryEvent> getBoundaryEvents()
+        {
+            return boundaryEvents;
+        }
+
+        public void setBoundaryEvents(List<BoundaryEvent> boundaryEvents)
+        {
+            this.boundaryEvents = boundaryEvents;
+        }
+
+        public String getDefaultFlow()
+        {
+            return defaultFlow;
+        }
+
+        public void setDefaultFlow(String defaultFlow)
+        {
+            this.defaultFlow = defaultFlow;
+        }
+
+        public MultiInstanceLoopCharacteristics getLoopCharacteristics()
+        {
+            return loopCharacteristics;
+        }
+
+        public void setLoopCharacteristics(MultiInstanceLoopCharacteristics loopCharacteristics)
+        {
+            this.loopCharacteristics = loopCharacteristics;
+        }
+
+        public IOSpecification getIoSpecification()
+        {
+            return ioSpecification;
+        }
+
+        public void setIoSpecification(IOSpecification ioSpecification)
+        {
+            this.ioSpecification = ioSpecification;
+        }
+
+        public List<DataAssociation> getDataInputAssociations()
+        {
+            return dataInputAssociations;
+        }
+
+        public void setDataInputAssociations(List<DataAssociation> dataInputAssociations)
+        {
+            this.dataInputAssociations = dataInputAssociations;
+        }
+
+        public List<DataAssociation> getDataOutputAssociations()
+        {
+            return dataOutputAssociations;
+        }
+
+        public void setDataOutputAssociations(List<DataAssociation> dataOutputAssociations)
+        {
+            this.dataOutputAssociations = dataOutputAssociations;
+        }
+
         public void setValues(Activity otherActivity)
         {
             base.setValues(otherActivity);
-            Asynchronous = otherActivity.Asynchronous;
-            FailedJobRetryTimeCycleValue = otherActivity.FailedJobRetryTimeCycleValue;
-            NotExclusive = otherActivity.NotExclusive;
-            DefaultFlow = otherActivity.DefaultFlow;
-            ForCompensation = otherActivity.ForCompensation;
-            if (otherActivity.LoopCharacteristics != null)
+            setAsynchronous(otherActivity.isAsynchronous());
+            setFailedJobRetryTimeCycleValue(otherActivity.getFailedJobRetryTimeCycleValue());
+            setNotExclusive(otherActivity.isNotExclusive());
+            setDefaultFlow(otherActivity.getDefaultFlow());
+            setForCompensation(otherActivity.isForCompensation());
+            if (otherActivity.getLoopCharacteristics() != null)
             {
-                LoopCharacteristics = otherActivity.LoopCharacteristics.clone() as MultiInstanceLoopCharacteristics;
+                setLoopCharacteristics((MultiInstanceLoopCharacteristics) otherActivity.getLoopCharacteristics().clone());
             }
-            if (otherActivity.IoSpecification != null)
+            if (otherActivity.getIoSpecification() != null)
             {
-                IoSpecification = otherActivity.IoSpecification.clone() as IOSpecification;
+                setIoSpecification((IOSpecification) otherActivity.getIoSpecification().clone());
             }
 
-            _dataInputAssociations = new List<DataAssociation>();
-            if (otherActivity.DataInputAssociations != null && otherActivity.DataInputAssociations.Any())
+            dataInputAssociations = new List<DataAssociation>();
+            if (otherActivity.getDataInputAssociations() != null && otherActivity.getDataInputAssociations().Any())
             {
-                foreach (DataAssociation association in
-                otherActivity.DataInputAssociations)
+                foreach (DataAssociation association in otherActivity.getDataInputAssociations())
                 {
-                    _dataInputAssociations.Add((DataAssociation)association.clone());
+                    dataInputAssociations.Add((DataAssociation) association.clone());
                 }
             }
 
-            _dataOutputAssociations = new List<DataAssociation>();
-            if (otherActivity.DataOutputAssociations != null &&
-                otherActivity.DataOutputAssociations.Any())
+            dataOutputAssociations = new List<DataAssociation>();
+            if (otherActivity.getDataOutputAssociations() != null && otherActivity.getDataOutputAssociations().Any())
             {
-                foreach (DataAssociation association in
-                otherActivity.DataOutputAssociations)
+                foreach (DataAssociation association in otherActivity.getDataOutputAssociations())
                 {
-                    _dataOutputAssociations.Add((DataAssociation)association.clone());
+                    dataOutputAssociations.Add((DataAssociation) association.clone());
                 }
             }
 
-            _boundaryEvents = new List<BoundaryEvent>();
-            if (otherActivity.BoundaryEvents != null && otherActivity.BoundaryEvents.Any())
+            boundaryEvents = new List<BoundaryEvent>();
+            if (otherActivity.getBoundaryEvents() != null && otherActivity.getBoundaryEvents().Any())
             {
-                foreach (BoundaryEvent Event in otherActivity.BoundaryEvents)
+                foreach (BoundaryEvent Event in otherActivity.getBoundaryEvents())
                 {
-                    _boundaryEvents.Add((BoundaryEvent)Event.clone())
-                    ;
+                    boundaryEvents.Add((BoundaryEvent) Event.clone());
                 }
             }
         }

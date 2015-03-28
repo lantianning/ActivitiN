@@ -120,7 +120,7 @@
     <Compile Include="StartEvent.cs" />
     <Compile Include="StringDataObject.cs" />
     <Compile Include="SubProcess.cs" />
-    <Compile Include="ActivityTask.cs" />
+    <Compile Include="Task.cs" />
     <Compile Include="TerminateEventDefinition.cs" />
     <Compile Include="TextAnnotation.cs" />
     <Compile Include="ThrowEvent.cs" />

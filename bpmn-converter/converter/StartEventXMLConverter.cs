@@ -65,7 +65,7 @@ public class StartEventXMLConverter extends BaseBpmnXMLConverter {
   }
   
   @Override
-  protected boolean writeExtensionChildElements(BaseElement element, boolean didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
+  protected bool writeExtensionChildElements(BaseElement element, bool didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
     StartEvent startEvent = (StartEvent) element;
     didWriteExtensionStartElement = writeFormProperties(startEvent, didWriteExtensionStartElement, xtw);
     return didWriteExtensionStartElement;

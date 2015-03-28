@@ -57,7 +57,7 @@ namespace org.activiti.bpmn.model
             this.timeCycle = timeCycle;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             TimerEventDefinition clone = new TimerEventDefinition();
             clone.setValues(this);

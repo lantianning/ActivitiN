@@ -11,6 +11,7 @@
  * limitations under the License.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,38 +25,38 @@ namespace org.activiti.bpmn.model
  * //@author Tijs Rademakers
  */
 
-    public class DataGrid : ComplexDataType
+    public class DataGrid: ComplexDataType
+{
+
+    protected List<DataGridRow> rows = new List<DataGridRow>();
+
+    public List<DataGridRow> getRows()
     {
+        return rows;
+    }
 
-        protected List<DataGridRow> rows = new List<DataGridRow>();
+    public void setRows(List<DataGridRow> rows)
+    {
+        this.rows = rows;
+    }
 
-        public List<DataGridRow> getRows()
+    public Object clone()
+    {
+        DataGrid clone = new DataGrid();
+        clone.setValues(this);
+        return clone;
+    }
+
+    public void setValues(DataGrid otherGrid)
+    {
+        rows = new List<DataGridRow>();
+        if (otherGrid.getRows() != null && otherGrid.getRows().Any())
         {
-            return rows;
-        }
-
-        public void setRows(List<DataGridRow> rows)
-        {
-            this.rows = rows;
-        }
-
-        public object clone()
-        {
-            DataGrid clone = new DataGrid();
-            clone.setValues(this);
-            return clone;
-        }
-
-        public void setValues(DataGrid otherGrid)
-        {
-            rows = new List<DataGridRow>();
-            if (otherGrid.getRows() != null && otherGrid.getRows().Any())
+            foreach (DataGridRow row in otherGrid.getRows())
             {
-                foreach (DataGridRow row in otherGrid.getRows())
-                {
-                    rows.Add((DataGridRow) row.clone());
-                }
+                rows.Add((DataGridRow)row.clone());
             }
         }
     }
+}
 }

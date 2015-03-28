@@ -12,6 +12,11 @@
  */
 namespace org.activiti.bpmn.model
 {
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public class EventSubProcess : SubProcess
     {
 

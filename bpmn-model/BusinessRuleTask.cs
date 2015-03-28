@@ -24,21 +24,21 @@ namespace org.activiti.bpmn.model
  * //@author Tijs Rademakers
  */
 
-    public class BusinessRuleTask : ActivityTask
+    public class BusinessRuleTask : TaskActivity
     {
 
         protected String resultVariableName;
-        protected bool exclude;
+        protected Boolean exclude;
         protected List<String> ruleNames = new List<String>();
         protected List<String> inputVariables = new List<String>();
         protected String className;
 
-        public bool isExclude()
+        public Boolean isExclude()
         {
             return exclude;
         }
 
-        public void setExclude(bool exclude)
+        public void setExclude(Boolean exclude)
         {
             this.exclude = exclude;
         }
@@ -83,7 +83,7 @@ namespace org.activiti.bpmn.model
             this.className = className;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             BusinessRuleTask clone = new BusinessRuleTask();
             clone.setValues(this);

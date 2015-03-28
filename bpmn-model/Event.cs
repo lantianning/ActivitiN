@@ -17,16 +17,26 @@ using System.Linq;
 namespace org.activiti.bpmn.model
 {
 
+
+
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public abstract class Event : FlowNode
     {
 
         protected List<EventDefinition> eventDefinitions = new List<EventDefinition>();
 
-        public List<EventDefinition> EventDefinitions
+        public List<EventDefinition> getEventDefinitions()
         {
-            get{return eventDefinitions;}
-            set{this.eventDefinitions = value;}
-            
+            return eventDefinitions;
+        }
+
+        public void setEventDefinitions(List<EventDefinition> eventDefinitions)
+        {
+            this.eventDefinitions = eventDefinitions;
         }
 
         public void addEventDefinition(EventDefinition eventDefinition)
@@ -38,12 +48,12 @@ namespace org.activiti.bpmn.model
         {
             base.setValues(otherEvent);
 
-            EventDefinitions = new List<EventDefinition>();
-            if (otherEvent.EventDefinitions != null && otherEvent.EventDefinitions.Any())
+            eventDefinitions = new List<EventDefinition>();
+            if (otherEvent.getEventDefinitions() != null && otherEvent.getEventDefinitions().Any())
             {
-                foreach (EventDefinition eventDef in otherEvent.EventDefinitions)
+                foreach (EventDefinition eventDef in otherEvent.getEventDefinitions())
                 {
-                    EventDefinitions.Add((EventDefinition)eventDef.clone());
+                    eventDefinitions.Add((EventDefinition)eventDef.clone());
                 }
             }
         }

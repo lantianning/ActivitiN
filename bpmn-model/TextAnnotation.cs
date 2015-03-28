@@ -46,7 +46,7 @@ namespace org.activiti.bpmn.model
             this.textFormat = textFormat;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             TextAnnotation clone = new TextAnnotation();
             clone.setValues(this);

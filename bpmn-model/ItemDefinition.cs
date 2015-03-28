@@ -6,22 +6,30 @@ namespace org.activiti.bpmn.model
     public class ItemDefinition : BaseElement
     {
 
-        protected String _structureRef;
-        protected String _itemKind;
+        protected String structureRef;
+        protected String itemKind;
 
-        public string StructureRef
+        public String getStructureRef()
         {
-            get { return _structureRef; }
-            set { _structureRef = value; }
+            return structureRef;
         }
 
-        public string ItemKind
+        public void setStructureRef(String structureRef)
         {
-            get { return _itemKind; }
-            set { _itemKind = value; }
+            this.structureRef = structureRef;
         }
 
-        public override object clone()
+        public String getItemKind()
+        {
+            return itemKind;
+        }
+
+        public void setItemKind(String itemKind)
+        {
+            this.itemKind = itemKind;
+        }
+
+        public override Object clone()
         {
             ItemDefinition clone = new ItemDefinition();
             clone.setValues(this);
@@ -31,8 +39,8 @@ namespace org.activiti.bpmn.model
         public void setValues(ItemDefinition otherElement)
         {
             base.setValues(otherElement);
-            StructureRef = otherElement.StructureRef;
-            ItemKind = otherElement.ItemKind;
+            setStructureRef(otherElement.getStructureRef());
+            setItemKind(otherElement.getItemKind());
         }
     }
 }

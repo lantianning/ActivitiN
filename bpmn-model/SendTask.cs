@@ -25,7 +25,7 @@ namespace org.activiti.bpmn.model
  * //@author Tijs Rademakers
  */
 
-    public class SendTask : ActivityTask
+    public class SendTask : TaskActivity
     {
 
         protected String type;
@@ -73,7 +73,7 @@ namespace org.activiti.bpmn.model
             this.fieldExtensions = fieldExtensions;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             SendTask clone = new SendTask();
             clone.setValues(this);

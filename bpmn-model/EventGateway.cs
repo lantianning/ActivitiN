@@ -10,17 +10,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.model{
-public class EventGateway : Gateway {
 
-  public override object clone() {
-    EventGateway clone = new EventGateway();
-    clone.setValues(this);
-    return clone;
-  }
-  
-  public void setValues(EventGateway otherElement) {
-    base.setValues(otherElement);
-  }
-}
+using System;
+
+namespace org.activiti.bpmn.model
+{
+
+/**
+ * //@author Tijs Rademakers
+ */
+
+    public class EventGateway : Gateway
+    {
+
+        public override Object clone()
+        {
+            EventGateway clone = new EventGateway();
+            clone.setValues(this);
+            return clone;
+        }
+
+        public void setValues(EventGateway otherElement)
+        {
+            base.setValues(otherElement);
+        }
+    }
 }

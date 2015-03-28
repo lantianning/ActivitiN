@@ -93,7 +93,7 @@ public class BPMNDIExport implements BpmnXMLConstants {
           messageFlow = model.getMessageFlow(elementId);
         }
         
-        boolean hasName = false;
+        bool hasName = false;
         if (flowElement != null && StringUtils.isNotEmpty(flowElement.getName())) {
           hasName = true;
         

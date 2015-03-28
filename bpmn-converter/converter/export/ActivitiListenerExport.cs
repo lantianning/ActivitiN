@@ -29,7 +29,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class ActivitiListenerExport implements BpmnXMLConstants {
 
-  public static boolean writeListeners(BaseElement element, boolean didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
+  public static bool writeListeners(BaseElement element, bool didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
     if (element instanceof HasExecutionListeners) {
       didWriteExtensionStartElement = writeListeners(ELEMENT_EXECUTION_LISTENER, ((HasExecutionListeners) element).getExecutionListeners(), didWriteExtensionStartElement, xtw);
     }
@@ -46,8 +46,8 @@ public class ActivitiListenerExport implements BpmnXMLConstants {
     return didWriteExtensionStartElement;
   }
   
-  protected static boolean writeEventListeners(List<EventListener> eventListeners,
-      boolean didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
+  protected static bool writeEventListeners(List<EventListener> eventListeners,
+      bool didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
   	
   	if(eventListeners != null && !eventListeners.isEmpty()) {
   		for(EventListener eventListener : eventListeners) {
@@ -85,7 +85,7 @@ public class ActivitiListenerExport implements BpmnXMLConstants {
 	  return didWriteExtensionStartElement;
   }
 
-	private static boolean writeListeners(String xmlElementName, List<ActivitiListener> listenerList, boolean didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
+	private static bool writeListeners(String xmlElementName, List<ActivitiListener> listenerList, bool didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
     if (listenerList != null) {
       
       for (ActivitiListener listener : listenerList) {

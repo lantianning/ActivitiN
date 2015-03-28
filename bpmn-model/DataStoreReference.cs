@@ -40,7 +40,7 @@ namespace org.activiti.bpmn.model
             this.dataStoreRef = dataStoreRef;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             DataStoreReference clone = new DataStoreReference();
             clone.setValues(this);

@@ -103,7 +103,7 @@ public class ServiceTaskXMLConverter extends BaseBpmnXMLConverter {
   }
   
   @Override
-  protected boolean writeExtensionChildElements(BaseElement element, boolean didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
+  protected bool writeExtensionChildElements(BaseElement element, bool didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
     ServiceTask serviceTask = (ServiceTask) element;
     
     if (!serviceTask.getCustomProperties().isEmpty()) {

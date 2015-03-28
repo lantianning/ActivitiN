@@ -48,7 +48,7 @@ public class FieldExtensionParser extends BaseChildElementParser {
       extension.setExpression(xtr.getAttributeValue(null, ATTRIBUTE_FIELD_EXPRESSION));
 
     } else {
-      boolean readyWithFieldExtension = false;
+      bool readyWithFieldExtension = false;
       try {
         while (readyWithFieldExtension == false && xtr.hasNext()) {
           xtr.next();

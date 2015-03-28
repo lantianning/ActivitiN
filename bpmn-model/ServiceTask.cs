@@ -14,7 +14,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace org.activiti.bpmn.model
 {
@@ -26,7 +25,7 @@ namespace org.activiti.bpmn.model
  * //@author Tijs Rademakers
  */
 
-    public class ServiceTask : ActivityTask
+    public class ServiceTask : TaskActivity
     {
 
         public static String MAIL_TASK = "mail";
@@ -121,7 +120,7 @@ namespace org.activiti.bpmn.model
             this.extensionId = extensionId;
         }
 
-        public bool isExtended()
+        public Boolean isExtended()
         {
             return extensionId != null && extensionId.Any();
         }
@@ -136,7 +135,7 @@ namespace org.activiti.bpmn.model
             this.skipExpression = skipExpression;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             ServiceTask clone = new ServiceTask();
             clone.setValues(this);

@@ -68,7 +68,7 @@ namespace org.activiti.bpmn.model
             this.targetExpression = targetExpression;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             IOParameter clone = new IOParameter();
             clone.setValues(this);

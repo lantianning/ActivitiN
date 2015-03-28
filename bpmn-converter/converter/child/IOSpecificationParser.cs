@@ -38,7 +38,7 @@ public class IOSpecificationParser extends BaseChildElementParser {
     
     IOSpecification ioSpecification = new IOSpecification();
     BpmnXMLUtil.addXMLLocation(ioSpecification, xtr);
-    boolean readyWithIOSpecification = false;
+    bool readyWithIOSpecification = false;
     try {
       while (readyWithIOSpecification == false && xtr.hasNext()) {
         xtr.next();

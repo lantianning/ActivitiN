@@ -58,7 +58,7 @@ namespace org.activiti.bpmn.model
             this.complexValue = complexValue;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             CustomProperty clone = new CustomProperty();
             clone.setValues(this);
@@ -70,7 +70,8 @@ namespace org.activiti.bpmn.model
             setName(otherProperty.getName());
             setSimpleValue(otherProperty.getSimpleValue());
 
-            if (otherProperty.getComplexValue() != null && (otherProperty.getComplexValue() as DataGrid) != null)
+            if (otherProperty.getComplexValue() != null && otherProperty.getComplexValue()
+            as DataGrid != null)
             {
                 setComplexValue((ComplexDataType)((DataGrid)otherProperty.getComplexValue()).clone());
             }

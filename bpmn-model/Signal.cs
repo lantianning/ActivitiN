@@ -15,14 +15,20 @@ using System;
 
 namespace org.activiti.bpmn.model
 {
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public class Signal : BaseElement
     {
 
-        public static String SCOPE_GLOBAL = "global";
-        public static String SCOPE_PROCESS_INSTANCE = "processInstance";
+        public static  String SCOPE_GLOBAL = "global";
+        public static  String SCOPE_PROCESS_INSTANCE = "processInstance";
 
-        protected String Name { get; set; }
-        protected String Scope { get; set; }
+        protected String name;
+
+        protected String scope;
 
         public Signal()
         {
@@ -30,12 +36,31 @@ namespace org.activiti.bpmn.model
 
         public Signal(String id, String name)
         {
-            this.Id = id;
-            this.Name = name;
+            this.id = id;
+            this.name = name;
         }
 
+        public String getName()
+        {
+            return name;
+        }
 
-        public override object clone()
+        public void setName(String name)
+        {
+            this.name = name;
+        }
+
+        public String getScope()
+        {
+            return scope;
+        }
+
+        public void setScope(String scope)
+        {
+            this.scope = scope;
+        }
+
+        public override Object clone()
         {
             Signal clone = new Signal();
             clone.setValues(this);
@@ -45,8 +70,8 @@ namespace org.activiti.bpmn.model
         public void setValues(Signal otherElement)
         {
             base.setValues(otherElement);
-            Name = otherElement.Name;
-            Scope = otherElement.Scope;
+            setName(otherElement.getName());
+            setScope(otherElement.getScope());
         }
     }
 }

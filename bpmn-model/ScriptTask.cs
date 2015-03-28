@@ -22,13 +22,13 @@ namespace org.activiti.bpmn.model
  * //@author Joram Barrez
  */
 
-    public class ScriptTask : ActivityTask
+    public class ScriptTask : TaskActivity
     {
 
         protected String scriptFormat;
         protected String script;
         protected String resultVariable;
-        protected bool autoStoreVariables = false; // see http://jira.codehaus.org/browse/ACT-1626
+        protected Boolean autoStoreVariables = false; // see http://jira.codehaus.org/browse/ACT-1626
 
         public String getScriptFormat()
         {
@@ -60,17 +60,17 @@ namespace org.activiti.bpmn.model
             this.resultVariable = resultVariable;
         }
 
-        public bool isAutoStoreVariables()
+        public Boolean isAutoStoreVariables()
         {
             return autoStoreVariables;
         }
 
-        public void setAutoStoreVariables(bool autoStoreVariables)
+        public void setAutoStoreVariables(Boolean autoStoreVariables)
         {
             this.autoStoreVariables = autoStoreVariables;
         }
 
-        public override object clone()
+        public override Object clone()
         {
             ScriptTask clone = new ScriptTask();
             clone.setValues(this);

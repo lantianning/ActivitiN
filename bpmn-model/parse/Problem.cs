@@ -1,7 +1,13 @@
 using System;
+using System.Xml.Linq;
 
 namespace org.activiti.bpmn.model.parse
 {
+
+
+
+
+
 
     public class Problem
     {
@@ -11,30 +17,30 @@ namespace org.activiti.bpmn.model.parse
         protected int line;
         protected int column;
 
-        //public Problem(String errorMessage, XMLStreamReader xtr)
+        //public Problem(String errorMessage, XElement xtr)
         //{
         //    this.errorMessage = errorMessage;
-        //    this.resource = xtr.LocalName;
-        //    this.line = xtr.Location.getLineNumber();
-        //    this.column = xtr.Location.getColumnNumber();
+        //    this.resource = xtr.getLocalName();
+        //    this.line = xtr.getLocation().getLineNumber();
+        //    this.column = xtr.getLocation().getColumnNumber();
         //}
 
         public Problem(String errorMessage, BaseElement element)
         {
             this.errorMessage = errorMessage;
-            this.resource = element.Id;
-            line = element.XmlRowNumber;
-            column = element.XmlColumnNumber;
+            this.resource = element.getId();
+            line = element.getXmlRowNumber();
+            column = element.getXmlColumnNumber();
         }
 
         public Problem(String errorMessage, GraphicInfo graphicInfo)
         {
             this.errorMessage = errorMessage;
-            line = graphicInfo.XmlRowNumber;
-            column = graphicInfo.XmlColumnNumber;
+            line = graphicInfo.getXmlRowNumber();
+            column = graphicInfo.getXmlColumnNumber();
         }
 
-        public String toString()
+        public String ToString()
         {
             return errorMessage + (resource != null ? " | " + resource : "") + " | line " + line + " | column " + column;
         }

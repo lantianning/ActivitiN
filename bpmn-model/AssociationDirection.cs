@@ -10,27 +10,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-using System;
-
 namespace org.activiti.bpmn.model{
 
-
-public enum AssociationDirection
-{
-    None,
-    One,
-    Both,
-  
-  //String value;
-  
-  //AssociationDirection(String value)
-  //{
-  //  this.value = value;
-  //}
-  
-  //public String getValue() {
-  //  return value;
-  //}
-}
+/**
+ * //@author Tijs Rademakers
+ */
+    public enum AssociationDirection
+    {
+        None,
+        One,
+        Both,
+    }
 }

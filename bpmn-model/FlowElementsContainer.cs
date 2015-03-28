@@ -17,16 +17,23 @@ using System.Collections.ObjectModel;
 
 namespace org.activiti.bpmn.model
 {
+
+
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public interface FlowElementsContainer
     {
 
         FlowElement getFlowElement(String id);
-        List<FlowElement> FlowElements { get; }
+        IEnumerable<FlowElement> getFlowElements();
         void addFlowElement(FlowElement element);
         void removeFlowElement(String elementId);
 
         Artifact getArtifact(String id);
-        List<Artifact> Artifacts { get; }
+        IEnumerable<Artifact> getArtifacts();
         void addArtifact(Artifact artifact);
         void removeArtifact(String artifactId);
     }

@@ -45,7 +45,7 @@ public class ProcessExport implements BpmnXMLConstants {
       xtw.writeAttribute(ATTRIBUTE_NAME, process.getName());
     }
 
-    xtw.writeAttribute(ATTRIBUTE_PROCESS_EXECUTABLE, Boolean.toString(process.isExecutable()));
+    xtw.writeAttribute(ATTRIBUTE_PROCESS_EXECUTABLE, bool.toString(process.isExecutable()));
 
     if (!process.getCandidateStarterUsers().isEmpty()) {
       xtw.writeAttribute(ACTIVITI_EXTENSIONS_PREFIX, ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_PROCESS_CANDIDATE_USERS,
@@ -67,7 +67,7 @@ public class ProcessExport implements BpmnXMLConstants {
       xtw.writeEndElement();
     }
     
-    boolean didWriteExtensionStartElement = ActivitiListenerExport.writeListeners(process, false, xtw);
+    bool didWriteExtensionStartElement = ActivitiListenerExport.writeListeners(process, false, xtw);
     didWriteExtensionStartElement = BpmnXMLUtil.writeExtensionElements(process, didWriteExtensionStartElement, xtw);
     
     if (didWriteExtensionStartElement) {

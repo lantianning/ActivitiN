@@ -14,119 +14,174 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 
 namespace org.activiti.bpmn.model
 {
+
+
+
+
+
+
+
+
+/**
+ * //@author Tijs Rademakers
+ */
+
     public abstract class BaseElement : HasExtensionAttributes
     {
 
-        public String Id { get; set; }
-        public int XmlRowNumber { get; set; }
-        public int XmlColumnNumber { get; set; }
+        protected String id;
+        protected int xmlRowNumber;
+        protected int xmlColumnNumber;
 
-        protected Dictionary<String, List<ExtensionElement>> _extensionElements =
+        protected Dictionary<String, List<ExtensionElement>> extensionElements =
             new Dictionary<String, List<ExtensionElement>>();
 
-        protected Dictionary<String, List<ExtensionAttribute>> _attributes =
+        /** extension attributes could be part of each element */
+
+        protected Dictionary<String, List<ExtensionAttribute>> attributes =
             new Dictionary<String, List<ExtensionAttribute>>();
 
-        public Dictionary<String, List<ExtensionElement>> ExtensionElements
+        public String getId()
         {
-            get { return _extensionElements; }
-            set { _extensionElements = value; }
+            return id;
         }
 
-        public Dictionary<String, List<ExtensionAttribute>> Attributes
+        public void setId(String id)
         {
-            get { return _attributes; }
-            set { _attributes = value; }
+            this.id = id;
+        }
+
+        public int getXmlRowNumber()
+        {
+            return xmlRowNumber;
+        }
+
+        public void setXmlRowNumber(int xmlRowNumber)
+        {
+            this.xmlRowNumber = xmlRowNumber;
+        }
+
+        public int getXmlColumnNumber()
+        {
+            return xmlColumnNumber;
+        }
+
+        public void setXmlColumnNumber(int xmlColumnNumber)
+        {
+            this.xmlColumnNumber = xmlColumnNumber;
+        }
+
+        public Dictionary<String, List<ExtensionElement>> getExtensionElements()
+        {
+            return extensionElements;
         }
 
         public void addExtensionElement(ExtensionElement extensionElement)
         {
-            if (extensionElement != null && !String.IsNullOrWhiteSpace(extensionElement.Name))
+            if (extensionElement != null && !String.IsNullOrWhiteSpace(extensionElement.getName()))
             {
                 List<ExtensionElement> elementList = null;
-                if (ExtensionElements.ContainsKey(extensionElement.Name) == false)
+                if (this.extensionElements.ContainsKey(extensionElement.getName()) == false)
                 {
                     elementList = new List<ExtensionElement>();
-                    ExtensionElements.Add(extensionElement.Name, elementList);
+                    this.extensionElements.Add(extensionElement.getName(), elementList);
                 }
-                ExtensionElements[extensionElement.Name].Add(extensionElement);
+                this.extensionElements[extensionElement.getName()].Add(extensionElement);
             }
         }
 
+        public void setExtensionElements(Dictionary<String, List<ExtensionElement>> extensionElements)
+        {
+            this.extensionElements = extensionElements;
+        }
+
+
+        public Dictionary<String, List<ExtensionAttribute>> getAttributes()
+        {
+            return attributes;
+        }
+
+
         public String getAttributeValue(String Namespace, String name)
         {
-            List<ExtensionAttribute> attributes = Attributes[name];
+            List<ExtensionAttribute> attributes = getAttributes()[name];
             if (attributes != null && attributes.Any())
             {
                 foreach (ExtensionAttribute attribute in attributes)
                 {
-                    if ((Namespace == null && attribute.Namespace == null)
-                        || Namespace == attribute.Namespace)
-                        return attribute.Value;
+                    if ((Namespace == null && attribute.getNamespace() == null)
+                        || Namespace.Equals(attribute.getNamespace()))
+                        return attribute.getValue();
                 }
             }
             return null;
         }
 
+
         public void addAttribute(ExtensionAttribute attribute)
         {
-            if (attribute != null && !String.IsNullOrWhiteSpace(attribute.Name))
+            if (attribute != null && !String.IsNullOrWhiteSpace(attribute.getName()))
             {
                 List<ExtensionAttribute> attributeList = null;
-                if (Attributes.ContainsKey(attribute.Name) == false)
+                if (this.attributes.ContainsKey(attribute.getName()) == false)
                 {
                     attributeList = new List<ExtensionAttribute>();
-                    Attributes.Add(attribute.Name, attributeList);
+                    this.attributes.Add(attribute.getName(), attributeList);
                 }
-                Attributes[attribute.Name].Add(attribute);
+                this.attributes[attribute.getName()].Add(attribute);
             }
+        }
+
+
+        public void setAttributes(Dictionary<String, List<ExtensionAttribute>> attributes)
+        {
+            this.attributes = attributes;
         }
 
         public void setValues(BaseElement otherElement)
         {
-            Id = otherElement.Id;
+            setId(otherElement.getId());
 
-            ExtensionElements = new Dictionary<String, List<ExtensionElement>>();
-            if (otherElement.ExtensionElements != null && otherElement.ExtensionElements.Any())
+            extensionElements = new Dictionary<String, List<ExtensionElement>>();
+            if (otherElement.getExtensionElements() != null && otherElement.getExtensionElements().Any())
             {
-                foreach (String key in otherElement.ExtensionElements.Keys)
+                foreach (String key in otherElement.getExtensionElements().Keys)
                 {
-                    List<ExtensionElement> otherElementList = otherElement.ExtensionElements[key];
+                    List<ExtensionElement> otherElementList = otherElement.getExtensionElements()[key];
                     if (otherElementList != null && otherElementList.Any())
                     {
                         List<ExtensionElement> elementList = new List<ExtensionElement>();
                         foreach (ExtensionElement extensionElement in otherElementList)
                         {
-                            elementList.Add((ExtensionElement)extensionElement.clone());
+                            elementList.Add((ExtensionElement) extensionElement.clone());
                         }
-                        ExtensionElements.Add(key, elementList);
+                        extensionElements.Add(key, elementList);
                     }
                 }
             }
 
-            Attributes = new Dictionary<String, List<ExtensionAttribute>>();
-            if (otherElement.Attributes != null && otherElement.Attributes.Any())
+            attributes = new Dictionary<String, List<ExtensionAttribute>>();
+            if (otherElement.getAttributes() != null && otherElement.getAttributes().Any())
             {
-                foreach (String key in otherElement.Attributes.Keys)
+                foreach (String key in otherElement.getAttributes().Keys)
                 {
-                    List<ExtensionAttribute> otherAttributeList = otherElement.Attributes[key];
+                    List<ExtensionAttribute> otherAttributeList = otherElement.getAttributes()[key];
                     if (otherAttributeList != null && otherAttributeList.Any())
                     {
                         List<ExtensionAttribute> attributeList = new List<ExtensionAttribute>();
                         foreach (ExtensionAttribute extensionAttribute in otherAttributeList)
                         {
-                            attributeList.Add((ExtensionAttribute)extensionAttribute.clone());
+                            attributeList.Add((ExtensionAttribute) extensionAttribute.clone());
                         }
-                        Attributes.Add(key, attributeList);
+                        attributes.Add(key, attributeList);
                     }
                 }
             }
         }
 
-        public abstract object clone();
+        public abstract Object clone();
     }
 }
