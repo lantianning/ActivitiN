@@ -10,25 +10,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter;
+namespace org.activiti.bpmn.converter{
 
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.XMLStreamWriter;
 
-import org.activiti.bpmn.converter.util.BpmnXMLUtil;
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.BoundaryEvent;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.bpmn.model.ErrorEventDefinition;
-import org.activiti.bpmn.model.EventDefinition;
-import org.apache.commons.lang3.StringUtils;
+
+
+
+
+
+
+
+
+
 
 /**
  * @author Tijs Rademakers
  */
-public class BoundaryEventXMLConverter extends BaseBpmnXMLConverter {
+public class BoundaryEventXMLConverter : BaseBpmnXMLConverter {
   
-  public Class<? extends BaseElement> getBpmnElementType() {
+  public Class<BaseElement> getBpmnElementType() {
     return BoundaryEvent.class;
   }
   

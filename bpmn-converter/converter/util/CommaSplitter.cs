@@ -10,10 +10,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter.util;
+namespace org.activiti.bpmn.converter.util{
 
-import java.util.ArrayList;
-import java.util.List;
+
+
 
 /**
  * @author Saeid Mirzaei, Tijs Rademakers

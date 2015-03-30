@@ -10,24 +10,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter.parser;
+namespace org.activiti.bpmn.converter.parser{
 
-import java.util.List;
 
-import javax.xml.stream.XMLStreamReader;
 
-import org.activiti.bpmn.constants.BpmnXMLConstants;
-import org.activiti.bpmn.converter.util.BpmnXMLUtil;
-import org.activiti.bpmn.model.EventSubProcess;
-import org.activiti.bpmn.model.Process;
-import org.activiti.bpmn.model.SubProcess;
-import org.activiti.bpmn.model.Transaction;
-import org.apache.commons.lang3.StringUtils;
+
+
+
+
+
+
+
+
+
 
 /**
  * @author Tijs Rademakers
  */
-public class SubProcessParser implements BpmnXMLConstants {
+public class SubProcessParser : BpmnXMLConstants {
   
   public void parse(XMLStreamReader xtr, List<SubProcess> activeSubProcessList, Process activeProcess) {
   	SubProcess subProcess = null;

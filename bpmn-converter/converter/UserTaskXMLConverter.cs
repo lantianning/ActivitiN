@@ -10,33 +10,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter;
+namespace org.activiti.bpmn.converter{
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.XMLStreamWriter;
 
-import org.activiti.bpmn.converter.child.BaseChildElementParser;
-import org.activiti.bpmn.converter.util.BpmnXMLUtil;
-import org.activiti.bpmn.converter.util.CommaSplitter;
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.bpmn.model.ExtensionAttribute;
-import org.activiti.bpmn.model.UserTask;
-import org.activiti.bpmn.model.alfresco.AlfrescoUserTask;
-import org.apache.commons.lang3.StringUtils;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * @author Tijs Rademakers, Saeid Mirzaei
  */
-public class UserTaskXMLConverter extends BaseBpmnXMLConverter {
+public class UserTaskXMLConverter : BaseBpmnXMLConverter {
   
   protected Map<String, BaseChildElementParser> childParserMap = new HashMap<String, BaseChildElementParser>();
 
@@ -61,7 +61,7 @@ public class UserTaskXMLConverter extends BaseBpmnXMLConverter {
     childParserMap.put(customIdentityLinkParser.getElementName(), customIdentityLinkParser);
   }
   
-  public Class<? extends BaseElement> getBpmnElementType() {
+  public Class<BaseElement> getBpmnElementType() {
     return UserTask.class;
   }
   
@@ -197,7 +197,7 @@ public class UserTaskXMLConverter extends BaseBpmnXMLConverter {
   protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
   }
   
-  public class HumanPerformerParser extends BaseChildElementParser {
+  public class HumanPerformerParser : BaseChildElementParser {
 
     public String getElementName() {
       return "humanPerformer";
@@ -216,7 +216,7 @@ public class UserTaskXMLConverter extends BaseBpmnXMLConverter {
 
  
 
-  public class PotentialOwnerParser extends BaseChildElementParser {
+  public class PotentialOwnerParser : BaseChildElementParser {
 
     public String getElementName() {
       return "potentialOwner";
@@ -260,7 +260,7 @@ public class UserTaskXMLConverter extends BaseBpmnXMLConverter {
     }
   }
   
-  public class CustomIdentityLinkParser extends BaseChildElementParser {
+  public class CustomIdentityLinkParser : BaseChildElementParser {
 
     public String getElementName() {
       return ELEMENT_CUSTOM_RESOURCE;

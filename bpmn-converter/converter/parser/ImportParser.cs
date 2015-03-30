@@ -10,22 +10,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter.parser;
+namespace org.activiti.bpmn.converter.parser{
 
-import javax.xml.stream.XMLStreamReader;
 
-import org.activiti.bpmn.constants.BpmnXMLConstants;
-import org.activiti.bpmn.converter.util.BpmnXMLUtil;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.bpmn.model.Import;
+
+
+
+
+
 
 /**
  * @author Tijs Rademakers
  */
-public class ImportParser implements BpmnXMLConstants {
+public class ImportParser : BpmnXMLConstants {
   
   public void parse(XMLStreamReader xtr, BpmnModel model) throws Exception {
-    Import importObject = new Import();
+    
     BpmnXMLUtil.addXMLLocation(importObject, xtr);
     importObject.setImportType(xtr.getAttributeValue(null, ATTRIBUTE_IMPORT_TYPE));
     importObject.setNamespace(xtr.getAttributeValue(null, ATTRIBUTE_NAMESPACE));

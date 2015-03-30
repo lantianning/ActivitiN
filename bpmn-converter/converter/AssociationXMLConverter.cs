@@ -1,4 +1,4 @@
-/* Licensed under the Apache License, Version 2.0 (the "License");
+/* Licensed under the Apache License, Version 2.0 (the "License");<(.*) extends (.*)>
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
@@ -10,22 +10,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter;
+namespace org.activiti.bpmn.converter{
 
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.XMLStreamWriter;
 
-import org.activiti.bpmn.converter.util.BpmnXMLUtil;
-import org.activiti.bpmn.model.Association;
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.BpmnModel;
+
+
+
+
+
+
 
 /**
  * @author Tijs Rademakers
  */
-public class AssociationXMLConverter extends BaseBpmnXMLConverter {
+public class AssociationXMLConverter : BaseBpmnXMLConverter {
   
-  public Class<? extends BaseElement> getBpmnElementType() {
+  public Class<BaseElement> getBpmnElementType() {
     return Association.class;
   }
   

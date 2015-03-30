@@ -10,23 +10,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter.child;
+namespace org.activiti.bpmn.converter.child{
 
-import javax.xml.stream.XMLStreamReader;
 
-import org.activiti.bpmn.converter.util.BpmnXMLUtil;
-import org.activiti.bpmn.model.ActivitiListener;
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.bpmn.model.FieldExtension;
-import org.activiti.bpmn.model.SendTask;
-import org.activiti.bpmn.model.ServiceTask;
-import org.apache.commons.lang3.StringUtils;
+
+
+
+
+
+
+
+
+
 
 /**
  * @author Tijs Rademakers
  */
-public class FieldExtensionParser extends BaseChildElementParser {
+public class FieldExtensionParser : BaseChildElementParser {
 
   public String getElementName() {
     return ELEMENT_FIELD;

@@ -10,26 +10,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter.parser;
+namespace org.activiti.bpmn.converter.parser{
 
-import java.util.List;
 
-import javax.xml.stream.XMLStreamReader;
 
-import org.activiti.bpmn.constants.BpmnXMLConstants;
-import org.activiti.bpmn.converter.child.ActivitiEventListenerParser;
-import org.activiti.bpmn.converter.child.ExecutionListenerParser;
-import org.activiti.bpmn.converter.util.BpmnXMLUtil;
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.bpmn.model.ExtensionElement;
-import org.activiti.bpmn.model.Process;
-import org.activiti.bpmn.model.SubProcess;
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * @author Tijs Rademakers
  */
-public class ExtensionElementsParser implements BpmnXMLConstants {
+public class ExtensionElementsParser : BpmnXMLConstants {
   
   public void parse(XMLStreamReader xtr, List<SubProcess> activeSubProcessList, Process activeProcess, BpmnModel model) throws Exception {
     BaseElement parentElement = null;

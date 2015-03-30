@@ -10,21 +10,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter.parser;
+namespace org.activiti.bpmn.converter.parser{
 
-import javax.xml.stream.XMLStreamReader;
 
-import org.activiti.bpmn.constants.BpmnXMLConstants;
-import org.activiti.bpmn.converter.util.BpmnXMLUtil;
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.bpmn.model.GraphicInfo;
+
+
+
+
+
+
 
 /**
  * @author Tijs Rademakers
  * @author Joram Barrez
  */
-public class BpmnShapeParser implements BpmnXMLConstants {
+public class BpmnShapeParser : BpmnXMLConstants {
   
   public void parse(XMLStreamReader xtr, BpmnModel model) throws Exception {
     

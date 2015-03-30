@@ -1,37 +1,37 @@
-package org.activiti.bpmn.converter;
+namespace org.activiti.bpmn.converter{
 
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.regex.Pattern;
 
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.XMLStreamWriter;
 
-import org.activiti.bpmn.converter.util.BpmnXMLUtil;
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.BooleanDataObject;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.bpmn.model.DateDataObject;
-import org.activiti.bpmn.model.DoubleDataObject;
-import org.activiti.bpmn.model.ExtensionElement;
-import org.activiti.bpmn.model.IntegerDataObject;
-import org.activiti.bpmn.model.ItemDefinition;
-import org.activiti.bpmn.model.LongDataObject;
-import org.activiti.bpmn.model.StringDataObject;
-import org.activiti.bpmn.model.ValuedDataObject;
-import org.apache.commons.lang3.StringUtils;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * @author Lori Small
  * @author Tijs Rademakers
  */
-public class ValuedDataObjectXMLConverter extends BaseBpmnXMLConverter {
+public class ValuedDataObjectXMLConverter : BaseBpmnXMLConverter {
   
   private final Pattern xmlChars = Pattern.compile("[<>&]");
   private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
   protected bool didWriteExtensionStartElement = false;
   
-  public Class<? extends BaseElement> getBpmnElementType() {
+  public Class<BaseElement> getBpmnElementType() {
     return ValuedDataObject.class;
   }
   

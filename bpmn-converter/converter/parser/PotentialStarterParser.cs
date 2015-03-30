@@ -10,23 +10,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter.parser;
+namespace org.activiti.bpmn.converter.parser{
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-import javax.xml.stream.XMLStreamReader;
 
-import org.activiti.bpmn.constants.BpmnXMLConstants;
-import org.activiti.bpmn.converter.XMLStreamReaderUtil;
-import org.activiti.bpmn.model.Process;
-import org.apache.commons.lang3.StringUtils;
+
+
+
+
+
+
+
+
 
 /**
  * @author Tijs Rademakers
  */
-public class PotentialStarterParser implements BpmnXMLConstants {
+public class PotentialStarterParser : BpmnXMLConstants {
   
   public void parse(XMLStreamReader xtr, Process activeProcess) throws Exception {
     String resourceElement = XMLStreamReaderUtil.moveDown(xtr);

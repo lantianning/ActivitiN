@@ -1,28 +1,28 @@
-package org.activiti.bpmn.converter.export;
+namespace org.activiti.bpmn.converter.export{
 
-import javax.xml.stream.XMLStreamWriter;
 
-import org.activiti.bpmn.constants.BpmnXMLConstants;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.bpmn.model.Event;
-import org.activiti.bpmn.model.EventDefinition;
-import org.activiti.bpmn.model.FlowElement;
-import org.activiti.bpmn.model.Message;
-import org.activiti.bpmn.model.MessageEventDefinition;
-import org.activiti.bpmn.model.Process;
-import org.activiti.bpmn.model.Signal;
-import org.activiti.bpmn.model.SignalEventDefinition;
-import org.apache.commons.lang3.StringUtils;
 
-public class SignalAndMessageDefinitionExport implements BpmnXMLConstants {
+
+
+
+
+
+
+
+
+
+
+
+
+public class SignalAndMessageDefinitionExport : BpmnXMLConstants {
 
   public static void writeSignalsAndMessages(BpmnModel model, XMLStreamWriter xtw) throws Exception {
     
     for (Process process : model.getProcesses()) {
       for (FlowElement flowElement : process.findFlowElementsOfType(Event.class)) {
-        Event event = (Event) flowElement;
-        if (!event.getEventDefinitions().isEmpty()) {
-          EventDefinition eventDefinition = event.getEventDefinitions().get(0);
+        Event Event = (Event) flowElement;
+        if (!Event.getEventDefinitions().isEmpty()) {
+          EventDefinition eventDefinition = Event.getEventDefinitions().get(0);
           if (eventDefinition instanceof SignalEventDefinition) {
             SignalEventDefinition signalEvent = (SignalEventDefinition) eventDefinition;
             if (model.containsSignalId(signalEvent.getSignalRef()) == false) {
@@ -60,8 +60,8 @@ public class SignalAndMessageDefinitionExport implements BpmnXMLConstants {
         messageId = messageId.replaceFirst(":", "");
       } else {
         for (String prefix : model.getNamespaces().keySet()) {
-          String namespace = model.getNamespace(prefix);
-          if (messageId.startsWith(namespace)) {
+          String Namespace = model.getNamespace(prefix);
+          if (messageId.startsWith(Namespace)) {
             messageId = messageId.replace(model.getTargetNamespace(), "");
             messageId = prefix + messageId;
           }
@@ -75,12 +75,12 @@ public class SignalAndMessageDefinitionExport implements BpmnXMLConstants {
         // replace the namespace by the right prefix
         String itemRef = message.getItemRef();
         for (String prefix : model.getNamespaces().keySet()) {
-            String namespace = model.getNamespace(prefix);
-            if (itemRef.startsWith(namespace)) {
+            String Namespace = model.getNamespace(prefix);
+            if (itemRef.startsWith(Namespace)) {
                 if (prefix.isEmpty()) {
-                    itemRef = itemRef.replace(namespace + ":", "");
+                    itemRef = itemRef.replace(Namespace + ":", "");
                 } else {
-                    itemRef = itemRef.replace(namespace, prefix);
+                    itemRef = itemRef.replace(Namespace, prefix);
                 }
                 break;
             }

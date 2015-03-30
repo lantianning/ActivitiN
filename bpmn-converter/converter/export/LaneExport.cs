@@ -10,16 +10,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter.export;
+namespace org.activiti.bpmn.converter.export{
 
-import javax.xml.stream.XMLStreamWriter;
 
-import org.activiti.bpmn.constants.BpmnXMLConstants;
-import org.activiti.bpmn.model.Lane;
-import org.activiti.bpmn.model.Process;
-import org.apache.commons.lang3.StringUtils;
 
-public class LaneExport implements BpmnXMLConstants {
+
+
+
+
+
+public class LaneExport : BpmnXMLConstants {
 
   public static void writeLanes(Process process, XMLStreamWriter xtw) throws Exception {
     if (!process.getLanes().isEmpty()) {

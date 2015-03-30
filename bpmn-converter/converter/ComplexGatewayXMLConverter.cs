@@ -10,23 +10,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter;
+namespace org.activiti.bpmn.converter{
 
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.XMLStreamWriter;
 
-import org.activiti.bpmn.converter.util.BpmnXMLUtil;
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.bpmn.model.ComplexGateway;
-import org.activiti.bpmn.model.ExclusiveGateway;
+
+
+
+
+
+
+
 
 /**
  * @author Tijs Rademakers
  */
-public class ComplexGatewayXMLConverter extends BaseBpmnXMLConverter {
+public class ComplexGatewayXMLConverter : BaseBpmnXMLConverter {
   
-  public Class<? extends BaseElement> getBpmnElementType() {
+  public Class<BaseElement> getBpmnElementType() {
     // complex gateway is not supported so transform it to exclusive gateway
     return ComplexGateway.class;
   }

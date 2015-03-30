@@ -10,26 +10,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter;
+namespace org.activiti.bpmn.converter{
 
-import java.util.HashMap;
-import java.util.Map;
 
-import javax.xml.stream.XMLStreamReader;
-import javax.xml.stream.XMLStreamWriter;
 
-import org.activiti.bpmn.converter.child.BaseChildElementParser;
-import org.activiti.bpmn.converter.child.ScriptTextParser;
-import org.activiti.bpmn.converter.util.BpmnXMLUtil;
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.bpmn.model.ScriptTask;
-import org.apache.commons.lang3.StringUtils;
+
+
+
+
+
+
+
+
+
+
+
 
 /**
  * @author Tijs Rademakers
  */
-public class ScriptTaskXMLConverter extends BaseBpmnXMLConverter {
+public class ScriptTaskXMLConverter : BaseBpmnXMLConverter {
   
   protected Map<String, BaseChildElementParser> childParserMap = new HashMap<String, BaseChildElementParser>();
   
@@ -38,7 +38,7 @@ public class ScriptTaskXMLConverter extends BaseBpmnXMLConverter {
 		childParserMap.put(scriptTextParser.getElementName(), scriptTextParser);
 	}
 	
-  public Class<? extends BaseElement> getBpmnElementType() {
+  public Class<BaseElement> getBpmnElementType() {
     return ScriptTask.class;
   }
   

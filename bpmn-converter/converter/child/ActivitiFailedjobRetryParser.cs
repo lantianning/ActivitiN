@@ -1,12 +1,12 @@
-package org.activiti.bpmn.converter.child;
+namespace org.activiti.bpmn.converter.child{
 
-import javax.xml.stream.XMLStreamReader;
 
-import org.activiti.bpmn.model.Activity;
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.BpmnModel;
 
-public class ActivitiFailedjobRetryParser extends BaseChildElementParser {
+
+
+
+
+public class ActivitiFailedjobRetryParser : BaseChildElementParser {
 
 	@Override
 	public String getElementName() {

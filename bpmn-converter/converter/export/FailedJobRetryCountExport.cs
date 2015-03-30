@@ -10,15 +10,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter.export;
+namespace org.activiti.bpmn.converter.export{
 
-import javax.xml.stream.XMLStreamWriter;
 
-import org.activiti.bpmn.constants.BpmnXMLConstants;
-import org.activiti.bpmn.model.Activity;
-import org.apache.commons.lang3.StringUtils;
 
-public class FailedJobRetryCountExport implements BpmnXMLConstants{
+
+
+
+
+public class FailedJobRetryCountExport : BpmnXMLConstants{
   
   public static void writeFailedJobRetryCount(Activity activity, XMLStreamWriter xtw) throws Exception {
     String failedJobRetryCycle = activity.getFailedJobRetryTimeCycleValue();

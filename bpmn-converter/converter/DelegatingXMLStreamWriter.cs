@@ -10,17 +10,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter;
+namespace org.activiti.bpmn.converter{
 
-import javax.xml.namespace.NamespaceContext;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
+
+
+
 
 
 /**
  * @author Tijs Rademakers
  */
-abstract class DelegatingXMLStreamWriter implements XMLStreamWriter {
+abstract class DelegatingXMLStreamWriter : XMLStreamWriter {
   
    private final XMLStreamWriter writer;
 

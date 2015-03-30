@@ -180,7 +180,7 @@ public abstract class BaseBpmnXMLConverter : BpmnXMLConstants {
 	xtw.writeEndElement();
   }
   
-  protected abstract Class<? extends BaseElement> getBpmnElementType();
+  protected abstract Class<BaseElement> getBpmnElementType();
   
   protected abstract BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception;
   
@@ -422,8 +422,8 @@ public abstract class BaseBpmnXMLConverter : BpmnXMLConstants {
 		messageRef = messageRef.replaceFirst(":", "");
 	  } else {
 		for (String prefix : model.getNamespaces().keySet()) {
-		  String namespace = model.getNamespace(prefix);
-		  if (messageRef.startsWith(namespace)) {
+		  String Namespace = model.getNamespace(prefix);
+		  if (messageRef.startsWith(Namespace)) {
 			messageRef = messageRef.replace(model.getTargetNamespace(), "");
 			messageRef = prefix + messageRef;
 		  }

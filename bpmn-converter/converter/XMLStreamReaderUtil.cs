@@ -10,13 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter;
+namespace org.activiti.bpmn.converter{
 
-import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamReader;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+
+
+
 
 /**
  * @author Tijs Rademakers
@@ -28,8 +28,8 @@ public class XMLStreamReaderUtil {
   public static String moveDown(XMLStreamReader xtr) {
     try {
       while (xtr.hasNext()) {
-        int event = xtr.next();
-        switch ( event ) {
+        int Event = xtr.next();
+        switch ( Event ) {
           case XMLStreamConstants.END_DOCUMENT:
             return null;
           case XMLStreamConstants.START_ELEMENT:
@@ -47,8 +47,8 @@ public class XMLStreamReaderUtil {
   public static bool moveToEndOfElement(XMLStreamReader xtr, String elementName ) {
     try {
       while (xtr.hasNext() ) {
-        int event = xtr.next();
-        switch ( event ) {
+        int Event = xtr.next();
+        switch ( Event ) {
           case XMLStreamConstants.END_DOCUMENT:
             return false;
           case XMLStreamConstants.END_ELEMENT:

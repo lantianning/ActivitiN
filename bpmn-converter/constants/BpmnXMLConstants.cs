@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.constants;
+namespace org.activiti.bpmn.constants{
 
 /**
  * @author Tijs Rademakers
@@ -94,7 +94,7 @@ public interface BpmnXMLConstants {
   public static final String ATTRIBUTE_ACTIVITY_EXCLUSIVE = "exclusive";
   public static final String ATTRIBUTE_ACTIVITY_ISFORCOMPENSATION = "isForCompensation";
   
-  public static final String ELEMENT_IMPORT = "import";
+  public static final String ELEMENT_
   public static final String ATTRIBUTE_IMPORT_TYPE = "importType";
   public static final String ATTRIBUTE_LOCATION = "location";
   public static final String ATTRIBUTE_NAMESPACE = "namespace";

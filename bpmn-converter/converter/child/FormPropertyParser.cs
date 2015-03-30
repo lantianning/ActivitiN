@@ -10,23 +10,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter.child;
+namespace org.activiti.bpmn.converter.child{
 
-import javax.xml.stream.XMLStreamReader;
 
-import org.activiti.bpmn.converter.util.BpmnXMLUtil;
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.bpmn.model.FormProperty;
-import org.activiti.bpmn.model.FormValue;
-import org.activiti.bpmn.model.StartEvent;
-import org.activiti.bpmn.model.UserTask;
-import org.apache.commons.lang3.StringUtils;
+
+
+
+
+
+
+
+
+
 
 /**
  * @author Tijs Rademakers
  */
-public class FormPropertyParser extends BaseChildElementParser {
+public class FormPropertyParser : BaseChildElementParser {
 
   public String getElementName() {
     return ELEMENT_FORMPROPERTY;

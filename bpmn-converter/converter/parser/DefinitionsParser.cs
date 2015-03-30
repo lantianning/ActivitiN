@@ -10,23 +10,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter.parser;
+namespace org.activiti.bpmn.converter.parser{
 
-import java.util.Arrays;
-import java.util.List;
 
-import javax.xml.stream.XMLStreamReader;
 
-import org.activiti.bpmn.constants.BpmnXMLConstants;
-import org.activiti.bpmn.converter.util.BpmnXMLUtil;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.bpmn.model.ExtensionAttribute;
-import org.apache.commons.lang3.StringUtils;
+
+
+
+
+
+
+
+
 
 /**
  * @author Tijs Rademakers
  */
-public class DefinitionsParser implements BpmnXMLConstants {
+public class DefinitionsParser : BpmnXMLConstants {
   
   protected static final List<ExtensionAttribute> defaultAttributes = Arrays.asList(
       new ExtensionAttribute(TYPE_LANGUAGE_ATTRIBUTE), 

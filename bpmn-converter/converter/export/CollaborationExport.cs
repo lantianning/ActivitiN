@@ -10,17 +10,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter.export;
+namespace org.activiti.bpmn.converter.export{
 
-import javax.xml.stream.XMLStreamWriter;
 
-import org.activiti.bpmn.constants.BpmnXMLConstants;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.bpmn.model.MessageFlow;
-import org.activiti.bpmn.model.Pool;
-import org.apache.commons.lang3.StringUtils;
 
-public class CollaborationExport implements BpmnXMLConstants {
+
+
+
+
+
+
+public class CollaborationExport : BpmnXMLConstants {
 
   public static void writePools(BpmnModel model, XMLStreamWriter xtw) throws Exception {
     if (!model.getPools().isEmpty()) {

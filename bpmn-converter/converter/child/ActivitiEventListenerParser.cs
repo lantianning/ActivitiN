@@ -10,22 +10,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter.child;
+namespace org.activiti.bpmn.converter.child{
 
-import javax.xml.stream.XMLStreamReader;
 
-import org.activiti.bpmn.converter.util.BpmnXMLUtil;
-import org.activiti.bpmn.model.EventListener;
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.bpmn.model.ImplementationType;
-import org.activiti.bpmn.model.Process;
-import org.apache.commons.lang3.StringUtils;
+
+
+
+
+
+
+
+
 
 /**
  * @author Frederik Heremans
  */
-public class ActivitiEventListenerParser extends BaseChildElementParser {
+public class ActivitiEventListenerParser : BaseChildElementParser {
   
   public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
     EventListener listener = new EventListener();

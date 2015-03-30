@@ -10,16 +10,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.activiti.bpmn.converter.child;
+namespace org.activiti.bpmn.converter.child{
 
-import org.activiti.bpmn.model.ActivitiListener;
-import org.activiti.bpmn.model.BaseElement;
-import org.activiti.bpmn.model.UserTask;
+
+
+
 
 /**
  * @author Tijs Rademakers
  */
-public class TaskListenerParser extends ActivitiListenerParser {
+public class TaskListenerParser : ActivitiListenerParser {
 
   public String getElementName() {
   	return ELEMENT_TASK_LISTENER;
