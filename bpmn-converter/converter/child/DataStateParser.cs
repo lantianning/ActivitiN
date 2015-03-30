@@ -10,30 +10,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
 
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.model;
 
+namespace org.activiti.bpmn.converter.child
+{
 
+    public class DataStateParser : BaseChildElementParser
+    {
 
+        public override String getElementName()
+        {
+            return ELEMENT_DATA_STATE;
+        }
 
+        public override void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model)
+        {
+            if (parentElement as DataStore != null)
+            {
+                ((DataStore) parentElement).setDataState(xtr.getElementText());
 
-
-
-/**
- * @author Tijs Rademakers
- */
-public class DataStateParser : BaseChildElementParser {
-
-  public String getElementName() {
-    return ELEMENT_DATA_STATE;
-  }
-  
-  public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
-    if (parentElement instanceof DataStore) {
-      ((DataStore) parentElement).setDataState(xtr.getElementText());
-    
-    } else if (parentElement instanceof DataStoreReference) {
-      ((DataStoreReference) parentElement).setDataState(xtr.getElementText());
+            }
+            else if (parentElement as DataStoreReference != null)
+            {
+                ((DataStoreReference) parentElement).setDataState(xtr.getElementText());
+            }
+        }
     }
-  }
 }

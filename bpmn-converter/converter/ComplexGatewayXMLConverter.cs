@@ -10,7 +10,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter{
+
+using System;
+using bpmn_converter.converter;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
+namespace org.activiti.bpmn.converter
+{
 
 
 
@@ -22,34 +30,46 @@ namespace org.activiti.bpmn.converter{
 
 
 /**
- * @author Tijs Rademakers
- */
-public class ComplexGatewayXMLConverter : BaseBpmnXMLConverter {
-  
-  public Class<BaseElement> getBpmnElementType() {
-    // complex gateway is not supported so transform it to exclusive gateway
-    return ComplexGateway.class;
-  }
-  
-  @Override
-  protected String getXMLElementName() {
-    return ELEMENT_GATEWAY_COMPLEX;
-  }
-  
-  @Override
-  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
-    ExclusiveGateway gateway = new ExclusiveGateway();
-    BpmnXMLUtil.addXMLLocation(gateway, xtr);
-    parseChildElements(getXMLElementName(), gateway, model, xtr);
-    return gateway;
-  }
+ * //@author Tijs Rademakers
 
-  @Override
-  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
-  }
-  
-  @Override
-  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
-    
-  }
+ */
+
+    public class ComplexGatewayXMLConverter : BaseBpmnXMLConverter
+    {
+        protected override Type getBpmnElementType()
+        {
+            // complex gateway is not supported so transform it to exclusive gateway
+            return typeof (ComplexGateway);
+        }
+
+        //@Override
+
+        protected override String getXMLElementName()
+        {
+            return ELEMENT_GATEWAY_COMPLEX;
+        }
+
+        //@Override
+
+        protected override BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model)
+        {
+            ExclusiveGateway gateway = new ExclusiveGateway();
+            BpmnXMLUtil.addXMLLocation(gateway, xtr);
+            parseChildElements(getXMLElementName(), gateway, model, xtr);
+            return gateway;
+        }
+
+        //@Override
+
+        protected override void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw)
+        {
+        }
+
+        //@Override
+
+        protected override void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw)
+        {
+
+        }
+    }
 }

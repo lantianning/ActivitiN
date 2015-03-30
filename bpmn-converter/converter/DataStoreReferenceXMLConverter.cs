@@ -10,6 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using bpmn_converter.converter;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter{
 
 
@@ -22,43 +29,48 @@ namespace org.activiti.bpmn.converter{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class DataStoreReferenceXMLConverter : BaseBpmnXMLConverter {
 
-  public Class<BaseElement> getBpmnElementType() {
-    return DataStoreReference.class;
+  public Type getBpmnElementType() {
+    return typeof(DataStoreReference);
   }
   
-  @Override
+  //@Override
+
   protected String getXMLElementName() {
     return ELEMENT_DATA_STORE_REFERENCE;
   }
   
-  @Override
-  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  //@Override
+
+  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) {
     DataStoreReference dataStoreRef = new DataStoreReference();
     BpmnXMLUtil.addXMLLocation(dataStoreRef, xtr);
     parseChildElements(getXMLElementName(), dataStoreRef, model, xtr);
     return dataStoreRef;
   }
 
-  @Override
-  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) {
     DataStoreReference dataStoreRef = (DataStoreReference) element;
-    if (StringUtils.isNotEmpty(dataStoreRef.getDataStoreRef())) {
+    if (!String.IsNullOrWhiteSpace(dataStoreRef.getDataStoreRef())) {
       xtw.writeAttribute(ATTRIBUTE_DATA_STORE_REF, dataStoreRef.getDataStoreRef());
     }
     
-    if (StringUtils.isNotEmpty(dataStoreRef.getItemSubjectRef())) {
+    if (!String.IsNullOrWhiteSpace(dataStoreRef.getItemSubjectRef())) {
       xtw.writeAttribute(ATTRIBUTE_ITEM_SUBJECT_REF, dataStoreRef.getItemSubjectRef());
     }
   }
   
-  @Override
-  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) {
     DataStoreReference dataStoreRef = (DataStoreReference) element;
-    if (StringUtils.isNotEmpty(dataStoreRef.getDataState())) {
+    if (!String.IsNullOrWhiteSpace(dataStoreRef.getDataState())) {
       xtw.writeStartElement(ELEMENT_DATA_STATE);
       xtw.writeCharacters(dataStoreRef.getDataState());
       xtw.writeEndElement();

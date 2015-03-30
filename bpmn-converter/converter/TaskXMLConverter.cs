@@ -10,6 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using bpmn_converter.converter;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter{
 
 
@@ -22,33 +29,38 @@ namespace org.activiti.bpmn.converter{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class TaskXMLConverter : BaseBpmnXMLConverter {
 
-  public Class<BaseElement> getBpmnElementType() {
-    return Task.class;
+  public Type getBpmnElementType() {
+    return typeof(TaskActivity);
   }
   
-  @Override
+  //@Override
+
   protected String getXMLElementName() {
     return ELEMENT_TASK;
   }
   
-  @Override
-  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  //@Override
+
+  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) {
     ManualTask manualTask = new ManualTask();
     BpmnXMLUtil.addXMLLocation(manualTask, xtr);
     parseChildElements(getXMLElementName(), manualTask, model, xtr);
     return manualTask;
   }
 
-  @Override
-  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) {
   }
   
-  @Override
-  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) {
     
   }
 }

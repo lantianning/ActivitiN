@@ -10,6 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter.parser{
 
 
@@ -20,11 +27,12 @@ namespace org.activiti.bpmn.converter.parser{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class SignalParser : BpmnXMLConstants {
   
-  public void parse(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  public void parse(XMLStreamReader xtr, BpmnModel model) {
     String signalId = xtr.getAttributeValue(null, ATTRIBUTE_ID);
     String signalName = xtr.getAttributeValue(null, ATTRIBUTE_NAME);
     

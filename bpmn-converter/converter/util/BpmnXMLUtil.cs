@@ -1,3 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using bpmn_converter.converter;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.converter.child;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter.util{
 
 
@@ -48,7 +59,7 @@ namespace org.activiti.bpmn.converter.util{
 
 public class BpmnXMLUtil : BpmnXMLConstants {
   
-  private static Map<String, BaseChildElementParser> genericChildParserMap = new HashMap<String, BaseChildElementParser>();
+  private static Dictionary<String, BaseChildElementParser> genericChildParserMap = new Dictionary<String, BaseChildElementParser>();
   
   static {
     addGenericParser(new ActivitiEventListenerParser());
@@ -78,7 +89,7 @@ public class BpmnXMLUtil : BpmnXMLConstants {
   }
   
   private static void addGenericParser(BaseChildElementParser parser) {
-    genericChildParserMap.put(parser.getElementName(), parser);
+    genericChildParserMap.Add(parser.getElementName(), parser);
   }
 
   public static void addXMLLocation(BaseElement element, XMLStreamReader xtr) {
@@ -93,15 +104,15 @@ public class BpmnXMLUtil : BpmnXMLConstants {
     graphicInfo.setXmlColumnNumber(location.getColumnNumber());
   }
   
-  public static void parseChildElements(String elementName, BaseElement parentElement, XMLStreamReader xtr, BpmnModel model) throws Exception {
+  public static void parseChildElements(String elementName, BaseElement parentElement, XMLStreamReader xtr, BpmnModel model) {
     parseChildElements(elementName, parentElement, xtr, null, model); 
   }
   
   public static void parseChildElements(String elementName, BaseElement parentElement, XMLStreamReader xtr, 
-      Map<String, BaseChildElementParser> childParsers, BpmnModel model) throws Exception {
+      Dictionary<String, BaseChildElementParser> childParsers, BpmnModel model) {
     
     if (childParsers == null) {
-      childParsers = new HashMap<String, BaseChildElementParser>();
+      childParsers = new Dictionary<String, BaseChildElementParser>();
     }
     childParsers.putAll(genericChildParserMap);
     
@@ -110,7 +121,7 @@ public class BpmnXMLUtil : BpmnXMLConstants {
     while (readyWithChildElements == false && xtr.hasNext()) {
       xtr.next();
       if (xtr.isStartElement()) {
-        if (ELEMENT_EXTENSIONS.equals(xtr.getLocalName())) {
+        if (ELEMENT_EXTENSIONS.Equals(xtr.getLocalName())) {
           inExtensionElements = true;
         } else if (childParsers.containsKey(xtr.getLocalName())) {
           childParsers.get(xtr.getLocalName()).parseChildElement(xtr, parentElement, model);
@@ -120,7 +131,7 @@ public class BpmnXMLUtil : BpmnXMLConstants {
         }
 
       } else if (xtr.isEndElement()) {
-        if (ELEMENT_EXTENSIONS.equals(xtr.getLocalName())) {
+        if (ELEMENT_EXTENSIONS.Equals(xtr.getLocalName())) {
           inExtensionElements = false;
         } else if (elementName.equalsIgnoreCase(xtr.getLocalName())) {
           readyWithChildElements = true;
@@ -129,13 +140,13 @@ public class BpmnXMLUtil : BpmnXMLConstants {
     }
   }
   
-  public static ExtensionElement parseExtensionElement(XMLStreamReader xtr) throws Exception {
+  public static ExtensionElement parseExtensionElement(XMLStreamReader xtr) {
     ExtensionElement extensionElement = new ExtensionElement();
     extensionElement.setName(xtr.getLocalName());
-    if (StringUtils.isNotEmpty(xtr.getNamespaceURI())) {
+    if (!String.IsNullOrWhiteSpace(xtr.getNamespaceURI())) {
       extensionElement.setNamespace(xtr.getNamespaceURI());
     }
-    if (StringUtils.isNotEmpty(xtr.getPrefix())) {
+    if (!String.IsNullOrWhiteSpace(xtr.getPrefix())) {
       extensionElement.setNamespacePrefix(xtr.getPrefix());
     }
     
@@ -143,10 +154,10 @@ public class BpmnXMLUtil : BpmnXMLConstants {
       ExtensionAttribute extensionAttribute = new ExtensionAttribute();
       extensionAttribute.setName(xtr.getAttributeLocalName(i));
       extensionAttribute.setValue(xtr.getAttributeValue(i));
-      if (StringUtils.isNotEmpty(xtr.getAttributeNamespace(i))) {
+      if (!String.IsNullOrWhiteSpace(xtr.getAttributeNamespace(i))) {
         extensionAttribute.setNamespace(xtr.getAttributeNamespace(i));
       }
-      if (StringUtils.isNotEmpty(xtr.getAttributePrefix(i))) {
+      if (!String.IsNullOrWhiteSpace(xtr.getAttributePrefix(i))) {
         extensionAttribute.setNamespacePrefix(xtr.getAttributePrefix(i));
       }
       extensionElement.addAttribute(extensionAttribute);
@@ -156,8 +167,8 @@ public class BpmnXMLUtil : BpmnXMLConstants {
     while (readyWithExtensionElement == false && xtr.hasNext()) {
       xtr.next();
       if (xtr.isCharacters() || XMLStreamReader.CDATA == xtr.getEventType()) {
-        if (StringUtils.isNotEmpty(xtr.getText().trim())) {
-          extensionElement.setElementText(xtr.getText().trim());
+        if (!String.IsNullOrWhiteSpace(xtr.getText().Trim())) {
+          extensionElement.setElementText(xtr.getText().Trim());
         }
       } else if (xtr.isStartElement()) {
         ExtensionElement childExtensionElement = parseExtensionElement(xtr);
@@ -169,35 +180,35 @@ public class BpmnXMLUtil : BpmnXMLConstants {
     return extensionElement;
   }
   
-  public static void writeDefaultAttribute(String attributeName, String value, XMLStreamWriter xtw) throws Exception {
-    if (StringUtils.isNotEmpty(value) && "null".equalsIgnoreCase(value) == false) {
+  public static void writeDefaultAttribute(String attributeName, String value, XMLStreamWriter xtw) {
+    if (!String.IsNullOrWhiteSpace(value) && "null".equalsIgnoreCase(value) == false) {
       xtw.writeAttribute(attributeName, value);
     }
   }
   
-  public static void writeQualifiedAttribute(String attributeName, String value, XMLStreamWriter xtw) throws Exception {
-    if (StringUtils.isNotEmpty(value)) {
+  public static void writeQualifiedAttribute(String attributeName, String value, XMLStreamWriter xtw) {
+    if (!String.IsNullOrWhiteSpace(value)) {
       xtw.writeAttribute(ACTIVITI_EXTENSIONS_PREFIX, ACTIVITI_EXTENSIONS_NAMESPACE, attributeName, value);
     }
   }
   
-  public static bool writeExtensionElements(BaseElement baseElement, bool didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
+  public static bool writeExtensionElements(BaseElement baseElement, bool didWriteExtensionStartElement, XMLStreamWriter xtw) {
     return didWriteExtensionStartElement = writeExtensionElements(baseElement, didWriteExtensionStartElement, null, xtw);
   }
  
-  public static bool writeExtensionElements(BaseElement baseElement, bool didWriteExtensionStartElement, Map<String, String> namespaceMap, XMLStreamWriter xtw) throws Exception {
-    if (!baseElement.getExtensionElements().isEmpty()) {
+  public static bool writeExtensionElements(BaseElement baseElement, bool didWriteExtensionStartElement, Dictionary<String, String> namespaceMap, XMLStreamWriter xtw) {
+    if (baseElement.getExtensionElements().Any()) {
       if (didWriteExtensionStartElement == false) {
         xtw.writeStartElement(ELEMENT_EXTENSIONS);
         didWriteExtensionStartElement = true;
       }
       
       if (namespaceMap == null) {
-        namespaceMap = new HashMap<String, String>();
+        namespaceMap = new Dictionary<String, String>();
       }
       
-      for (List<ExtensionElement> extensionElements : baseElement.getExtensionElements().values()) {
-        for (ExtensionElement extensionElement : extensionElements) {
+      foreach (List<ExtensionElement> extensionElements  in baseElement.getExtensionElements().Values) {
+        foreach (ExtensionElement extensionElement  in extensionElements) {
           writeExtensionElement(extensionElement, namespaceMap, xtw);
         }
       }
@@ -205,19 +216,19 @@ public class BpmnXMLUtil : BpmnXMLConstants {
     return didWriteExtensionStartElement;
   }
   
-  protected static void writeExtensionElement(ExtensionElement extensionElement, Map<String, String> namespaceMap, XMLStreamWriter xtw) throws Exception {
-    if (StringUtils.isNotEmpty(extensionElement.getName())) {
-      Map<String, String> localNamespaceMap = new HashMap<String, String>();
-      if (StringUtils.isNotEmpty(extensionElement.getNamespace())) {
-        if (StringUtils.isNotEmpty(extensionElement.getNamespacePrefix())) {
+  protected static void writeExtensionElement(ExtensionElement extensionElement, Dictionary<String, String> namespaceMap, XMLStreamWriter xtw) {
+    if (!String.IsNullOrWhiteSpace(extensionElement.getName())) {
+      Dictionary<String, String> localNamespaceMap = new Dictionary<String, String>();
+      if (!String.IsNullOrWhiteSpace(extensionElement.getNamespace())) {
+        if (!String.IsNullOrWhiteSpace(extensionElement.getNamespacePrefix())) {
           xtw.writeStartElement(extensionElement.getNamespacePrefix(), extensionElement.getName(), extensionElement.getNamespace());
           
           if (namespaceMap.containsKey(extensionElement.getNamespacePrefix()) == false ||
-              namespaceMap.get(extensionElement.getNamespacePrefix()).equals(extensionElement.getNamespace()) == false) {
+              namespaceMap.get(extensionElement.getNamespacePrefix()).Equals(extensionElement.getNamespace()) == false) {
             
             xtw.writeNamespace(extensionElement.getNamespacePrefix(), extensionElement.getNamespace());
-            namespaceMap.put(extensionElement.getNamespacePrefix(), extensionElement.getNamespace());
-            localNamespaceMap.put(extensionElement.getNamespacePrefix(), extensionElement.getNamespace());
+            namespaceMap.Add(extensionElement.getNamespacePrefix(), extensionElement.getNamespace());
+            localNamespaceMap.Add(extensionElement.getNamespacePrefix(), extensionElement.getNamespace());
           }
         } else {
           xtw.writeStartElement(extensionElement.getNamespace(), extensionElement.getName());
@@ -226,17 +237,17 @@ public class BpmnXMLUtil : BpmnXMLConstants {
         xtw.writeStartElement(extensionElement.getName());
       }
       
-      for (List<ExtensionAttribute> attributes : extensionElement.getAttributes().values()) {
-        for (ExtensionAttribute attribute : attributes) {
-          if (StringUtils.isNotEmpty(attribute.getName()) && attribute.getValue() != null) {
-            if (StringUtils.isNotEmpty(attribute.getNamespace())) {
-              if (StringUtils.isNotEmpty(attribute.getNamespacePrefix())) {
+      foreach (List<ExtensionAttribute> attributes  in extensionElement.getAttributes().Values) {
+        foreach (ExtensionAttribute attribute  in attributes) {
+          if (!String.IsNullOrWhiteSpace(attribute.getName()) && attribute.getValue() != null) {
+            if (!String.IsNullOrWhiteSpace(attribute.getNamespace())) {
+              if (!String.IsNullOrWhiteSpace(attribute.getNamespacePrefix())) {
                 
                 if (namespaceMap.containsKey(attribute.getNamespacePrefix()) == false ||
-                    namespaceMap.get(attribute.getNamespacePrefix()).equals(attribute.getNamespace()) == false) {
+                    namespaceMap.get(attribute.getNamespacePrefix()).Equals(attribute.getNamespace()) == false) {
                   
                   xtw.writeNamespace(attribute.getNamespacePrefix(), attribute.getNamespace());
-                  namespaceMap.put(attribute.getNamespacePrefix(), attribute.getNamespace());
+                  namespaceMap.Add(attribute.getNamespacePrefix(), attribute.getNamespace());
                 }
                 
                 xtw.writeAttribute(attribute.getNamespacePrefix(), attribute.getNamespace(), attribute.getName(), attribute.getValue());
@@ -253,14 +264,14 @@ public class BpmnXMLUtil : BpmnXMLConstants {
       if (extensionElement.getElementText() != null) {
         xtw.writeCharacters(extensionElement.getElementText());
       } else {
-        for (List<ExtensionElement> childElements : extensionElement.getChildElements().values()) {
-          for (ExtensionElement childElement : childElements) {
+        foreach (List<ExtensionElement> childElements  in extensionElement.getChildElements().Values) {
+          foreach (ExtensionElement childElement  in childElements) {
             writeExtensionElement(childElement, namespaceMap, xtw);
           }
         }
       }
       
-      for (String prefix : localNamespaceMap.keySet()) {
+      foreach (String prefix  in localNamespaceMap.Keys) {
         namespaceMap.remove(prefix);
       }
       
@@ -269,8 +280,8 @@ public class BpmnXMLUtil : BpmnXMLConstants {
   }
   
   public static List<String> parseDelimitedList(String s) {
-    List<String> result = new ArrayList<String>();
-    if (StringUtils.isNotEmpty(s)) {
+    List<String> result = new List<String>();
+    if (!String.IsNullOrWhiteSpace(s)) {
 
       StringCharacterIterator iterator = new StringCharacterIterator(s);
       char c = iterator.first();
@@ -284,7 +295,7 @@ public class BpmnXMLUtil : BpmnXMLConstants {
         } else if (c == '}') {
           insideExpression = false;
         } else if (c == ',' && !insideExpression) {
-          result.add(strb.toString().trim());
+          result.Add(strb.ToString().Trim());
           strb.delete(0, strb.length());
         }
 
@@ -296,7 +307,7 @@ public class BpmnXMLUtil : BpmnXMLConstants {
       }
 
       if (strb.length() > 0) {
-        result.add(strb.toString().trim());
+        result.Add(strb.ToString().Trim());
       }
 
     }
@@ -307,32 +318,35 @@ public class BpmnXMLUtil : BpmnXMLConstants {
     StringBuilder resultString = new StringBuilder();
     
     if(stringList != null) {
-    	for (String result : stringList) {
+    	foreach (String result  in stringList) {
     		if (resultString.length() > 0) {
     			resultString.append(",");
     		}
     		resultString.append(result);
     	}
     }
-    return resultString.toString();
+    return resultString.ToString();
   }
 
   /**
    * add all attributes from XML to element extensionAttributes (except blackListed).
    *
-   * @param xtr
-   * @param element
-   * @param blackList
+   * //@param xtr
+
+   * //@param element
+
+   * //@param blackList
+
    */
   public static void addCustomAttributes(XMLStreamReader xtr, BaseElement element, List<ExtensionAttribute>... blackLists) {
     for (int i = 0; i < xtr.getAttributeCount(); i++) {
       ExtensionAttribute extensionAttribute = new ExtensionAttribute();
       extensionAttribute.setName(xtr.getAttributeLocalName(i));
       extensionAttribute.setValue(xtr.getAttributeValue(i));
-      if (StringUtils.isNotEmpty(xtr.getAttributeNamespace(i))) {
+      if (!String.IsNullOrWhiteSpace(xtr.getAttributeNamespace(i))) {
         extensionAttribute.setNamespace(xtr.getAttributeNamespace(i));
       }
-      if (StringUtils.isNotEmpty(xtr.getAttributePrefix(i))) {
+      if (!String.IsNullOrWhiteSpace(xtr.getAttributePrefix(i))) {
         extensionAttribute.setNamespacePrefix(xtr.getAttributePrefix(i));
       }
       if (!isBlacklisted(extensionAttribute, blackLists)) {
@@ -341,22 +355,25 @@ public class BpmnXMLUtil : BpmnXMLConstants {
     }
   }
 
-  public static void writeCustomAttributes(Collection<List<ExtensionAttribute>> attributes, XMLStreamWriter xtw, List<ExtensionAttribute>... blackLists) throws XMLStreamException {
+  public static void writeCustomAttributes(Collection<List<ExtensionAttribute>> attributes, XMLStreamWriter xtw, List<ExtensionAttribute>... blackLists) {
     writeCustomAttributes(attributes, xtw, new LinkedHashMap<String, String>(), blackLists);
   }
   
   /**
    * write attributes to xtw (except blacklisted)
-   * @param attributes
-   * @param xtw
-   * @param blackList
+   * //@param attributes
+
+   * //@param xtw
+
+   * //@param blackList
+
    */
-  public static void writeCustomAttributes(Collection<List<ExtensionAttribute>> attributes, XMLStreamWriter xtw, Map<String, String> namespaceMap,
-      List<ExtensionAttribute>... blackLists) throws XMLStreamException {
+  public static void writeCustomAttributes(Collection<List<ExtensionAttribute>> attributes, XMLStreamWriter xtw, Dictionary<String, String> namespaceMap,
+      List<ExtensionAttribute>... blackLists) {
     
-    for (List<ExtensionAttribute> attributeList : attributes) {
+    foreach (List<ExtensionAttribute> attributeList  in attributes) {
       if (attributeList != null && !attributeList.isEmpty()) {
-        for (ExtensionAttribute attribute : attributeList) {
+        foreach (ExtensionAttribute attribute  in attributeList) {
           if (!isBlacklisted(attribute, blackLists)) {
             if (attribute.getNamespacePrefix() == null) {
               if (attribute.getNamespace() == null)
@@ -366,7 +383,7 @@ public class BpmnXMLUtil : BpmnXMLConstants {
               }
             } else {
               if (!namespaceMap.containsKey(attribute.getNamespacePrefix())) {
-                namespaceMap.put(attribute.getNamespacePrefix(), attribute.getNamespace());
+                namespaceMap.Add(attribute.getNamespacePrefix(), attribute.getNamespace());
                 xtw.writeNamespace(attribute.getNamespacePrefix(), attribute.getNamespace());
               }
               xtw.writeAttribute(attribute.getNamespacePrefix(), attribute.getNamespace(),
@@ -380,11 +397,11 @@ public class BpmnXMLUtil : BpmnXMLConstants {
 
   public static bool isBlacklisted(ExtensionAttribute attribute, List<ExtensionAttribute>... blackLists) {
     if (blackLists != null) {
-      for (List<ExtensionAttribute> blackList : blackLists) {
-        for (ExtensionAttribute blackAttribute : blackList) {
-          if (blackAttribute.getName().equals(attribute.getName())) {
+      foreach (List<ExtensionAttribute> blackList  in blackLists) {
+        foreach (ExtensionAttribute blackAttribute  in blackList) {
+          if (blackAttribute.getName().Equals(attribute.getName())) {
             if ( blackAttribute.getNamespace() != null && attribute.getNamespace() != null
-                && blackAttribute.getNamespace().equals(attribute.getNamespace()))
+                && blackAttribute.getNamespace().Equals(attribute.getNamespace()))
               return true;
             if (blackAttribute.getNamespace() == null && attribute.getNamespace() == null)
               return true;

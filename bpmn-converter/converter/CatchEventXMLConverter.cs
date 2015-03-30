@@ -10,6 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using bpmn_converter.converter;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter{
 
 
@@ -21,34 +28,39 @@ namespace org.activiti.bpmn.converter{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class CatchEventXMLConverter : BaseBpmnXMLConverter {
   
-  public Class<BaseElement> getBpmnElementType() {
-    return IntermediateCatchEvent.class;
+  public Type getBpmnElementType() {
+    return typeof(IntermediateCatchEvent);
   }
   
-  @Override
+  //@Override
+
   protected String getXMLElementName() {
     return ELEMENT_EVENT_CATCH;
   }
   
-  @Override
-  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  //@Override
+
+  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) {
     IntermediateCatchEvent catchEvent = new IntermediateCatchEvent();
     BpmnXMLUtil.addXMLLocation(catchEvent, xtr);
     parseChildElements(getXMLElementName(), catchEvent, model, xtr);
     return catchEvent;
   }
 
-  @Override
-  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) {
     
   }
   
-  @Override
-  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) {
     IntermediateCatchEvent catchEvent = (IntermediateCatchEvent) element;
     writeEventDefinitions(catchEvent, catchEvent.getEventDefinitions(), model, xtw);
   }

@@ -10,6 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter.parser{
 
 
@@ -21,12 +28,14 @@ namespace org.activiti.bpmn.converter.parser{
 
 
 /**
- * @author Tijs Rademakers
- * @author Joram Barrez
+ * //@author Tijs Rademakers
+
+ * //@author Joram Barrez
+
  */
 public class BpmnShapeParser : BpmnXMLConstants {
   
-  public void parse(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  public void parse(XMLStreamReader xtr, BpmnModel model) {
     
   	String id = xtr.getAttributeValue(null, ATTRIBUTE_DI_BPMNELEMENT);
   	GraphicInfo graphicInfo = new GraphicInfo();
@@ -40,10 +49,10 @@ public class BpmnShapeParser : BpmnXMLConstants {
 		while (xtr.hasNext()) {
 			xtr.next();
 			if (xtr.isStartElement() && ELEMENT_DI_BOUNDS.equalsIgnoreCase(xtr.getLocalName())) {
-				graphicInfo.setX(Double.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_DI_X)));
-				graphicInfo.setY(Double.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_DI_Y)));
-				graphicInfo.setWidth(Double.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_DI_WIDTH)));
-				graphicInfo.setHeight(Double.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_DI_HEIGHT)));
+				graphicInfo.setX(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_X)));
+				graphicInfo.setY(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_Y)));
+				graphicInfo.setWidth(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_WIDTH)));
+				graphicInfo.setHeight(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_HEIGHT)));
 				
 				model.addGraphicInfo(id, graphicInfo);
 				break;

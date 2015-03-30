@@ -10,7 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
+
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.model;
+
+namespace org.activiti.bpmn.converter.child
+{
 
 
 
@@ -21,22 +27,32 @@ namespace org.activiti.bpmn.converter.child{
 
 
 /**
- * @author Tijs Rademakers
- */
-public class DocumentationParser : BaseChildElementParser {
+ * //@author Tijs Rademakers
 
-  public String getElementName() {
-    return "documentation";
-  }
-  
-  public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
-    String docText = xtr.getElementText();
-    if(StringUtils.isNotEmpty(docText)) {
-    	if (parentElement instanceof FlowElement) {
-    		((FlowElement) parentElement).setDocumentation(docText.trim());
-    	} else if (parentElement instanceof Process) {
-    		((Process) parentElement).setDocumentation(docText.trim());
-    	}
+ */
+
+    public class DocumentationParser : BaseChildElementParser
+    {
+
+        public override String getElementName()
+        {
+            return "documentation";
+        }
+
+        public override void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model)
+        {
+            String docText = xtr.getElementText();
+            if (!String.IsNullOrWhiteSpace(docText))
+            {
+                if (parentElement as FlowElement != null)
+                {
+                    ((FlowElement) parentElement).setDocumentation(docText.Trim());
+                }
+                else if (parentElement as Process != null)
+                {
+                    ((Process) parentElement).setDocumentation(docText.Trim());
+                }
+            }
+        }
     }
-  }
 }

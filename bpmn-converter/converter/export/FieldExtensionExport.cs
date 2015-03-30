@@ -10,7 +10,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.export{
+
+using System;
+using System.Collections.Generic;
+using bpmn_converter.converter;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
+namespace org.activiti.bpmn.converter.export
+{
 
 
 
@@ -21,37 +30,50 @@ namespace org.activiti.bpmn.converter.export{
 
 
 
-public class FieldExtensionExport : BpmnXMLConstants {
+    public class FieldExtensionExport : BpmnXMLConstants
+    {
 
-  public static bool writeFieldExtensions(List<FieldExtension> fieldExtensionList, 
-      bool didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
-    
-    for (FieldExtension fieldExtension : fieldExtensionList) {
-      
-      if (StringUtils.isNotEmpty(fieldExtension.getFieldName())) {
-        
-        if (StringUtils.isNotEmpty(fieldExtension.getStringValue()) || StringUtils.isNotEmpty(fieldExtension.getExpression())) {
-          
-          if (didWriteExtensionStartElement == false) { 
-            xtw.writeStartElement(ELEMENT_EXTENSIONS);
-            didWriteExtensionStartElement = true;
-          }
-          
-          xtw.writeStartElement(ACTIVITI_EXTENSIONS_PREFIX, ELEMENT_FIELD, ACTIVITI_EXTENSIONS_NAMESPACE);
-          BpmnXMLUtil.writeDefaultAttribute(ATTRIBUTE_FIELD_NAME, fieldExtension.getFieldName(), xtw);
-          
-          if (StringUtils.isNotEmpty(fieldExtension.getStringValue())) {
-            xtw.writeStartElement(ACTIVITI_EXTENSIONS_PREFIX, ELEMENT_FIELD_STRING, ACTIVITI_EXTENSIONS_NAMESPACE);
-            xtw.writeCData(fieldExtension.getStringValue());
-          } else {
-            xtw.writeStartElement(ACTIVITI_EXTENSIONS_PREFIX, ATTRIBUTE_FIELD_EXPRESSION, ACTIVITI_EXTENSIONS_NAMESPACE);
-            xtw.writeCharacters(fieldExtension.getExpression());
-          }
-          xtw.writeEndElement();
-          xtw.writeEndElement(); 
+        public static bool writeFieldExtensions(List<FieldExtension> fieldExtensionList,
+            bool didWriteExtensionStartElement, XMLStreamWriter xtw)
+        {
+
+            foreach (FieldExtension fieldExtension  in fieldExtensionList)
+            {
+
+                if (!String.IsNullOrWhiteSpace(fieldExtension.getFieldName()))
+                {
+
+                    if (!String.IsNullOrWhiteSpace(fieldExtension.getStringValue()) ||
+                        !String.IsNullOrWhiteSpace(fieldExtension.getExpression()))
+                    {
+
+                        if (didWriteExtensionStartElement == false)
+                        {
+                            xtw.writeStartElement(ELEMENT_EXTENSIONS);
+                            didWriteExtensionStartElement = true;
+                        }
+
+                        xtw.writeStartElement(ACTIVITI_EXTENSIONS_PREFIX, ELEMENT_FIELD, ACTIVITI_EXTENSIONS_NAMESPACE);
+                        BpmnXMLUtil.writeDefaultAttribute(ATTRIBUTE_FIELD_NAME, fieldExtension.getFieldName(), xtw);
+
+                        if (!String.IsNullOrWhiteSpace(fieldExtension.getStringValue()))
+                        {
+                            xtw.writeStartElement(ACTIVITI_EXTENSIONS_PREFIX, ELEMENT_FIELD_STRING,
+                                ACTIVITI_EXTENSIONS_NAMESPACE);
+                            xtw.writeCData(fieldExtension.getStringValue());
+                        }
+                        else
+                        {
+                            xtw.writeStartElement(ACTIVITI_EXTENSIONS_PREFIX, ATTRIBUTE_FIELD_EXPRESSION,
+                                ACTIVITI_EXTENSIONS_NAMESPACE);
+                            xtw.writeCharacters(fieldExtension.getExpression());
+                        }
+                        xtw.writeEndElement();
+                        xtw.writeEndElement();
+                    }
+                }
+            }
+            return didWriteExtensionStartElement;
         }
-      }
     }
-    return didWriteExtensionStartElement;
-  }
 }

@@ -10,6 +10,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using bpmn_converter.converter.util;
+
 namespace org.activiti.bpmn.converter{
 
 
@@ -19,11 +23,12 @@ namespace org.activiti.bpmn.converter{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class XMLStreamReaderUtil {
   
-  protected static final Logger LOGGER = LoggerFactory.getLogger(XMLStreamReaderUtil.class);
+  protected static  ILog LOGGER = LogManager.GetLogger(typeof(XMLStreamReaderUtil));
 
   public static String moveDown(XMLStreamReader xtr) {
     try {
@@ -52,7 +57,7 @@ public class XMLStreamReaderUtil {
           case XMLStreamConstants.END_DOCUMENT:
             return false;
           case XMLStreamConstants.END_ELEMENT:
-            if (xtr.getLocalName().equals(elementName))
+            if (xtr.getLocalName().Equals(elementName))
               return true;
           break;
         }

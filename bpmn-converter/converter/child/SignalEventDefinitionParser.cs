@@ -10,38 +10,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
 
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
 
+namespace org.activiti.bpmn.converter.child
+{
 
+    public class SignalEventDefinitionParser : BaseChildElementParser
+    {
 
+        public override String getElementName()
+        {
+            return ELEMENT_EVENT_SIGNALDEFINITION;
+        }
 
+        public override void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model)
+        {
+            if (parentElement as Event == null) return;
 
+            SignalEventDefinition eventDefinition = new SignalEventDefinition();
+            BpmnXMLUtil.addXMLLocation(eventDefinition, xtr);
+            eventDefinition.setSignalRef(xtr.getAttributeValue(null, ATTRIBUTE_SIGNAL_REF));
+            if (
+                !String.IsNullOrWhiteSpace(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE,
+                    ATTRIBUTE_ACTIVITY_ASYNCHRONOUS)))
+            {
+                eventDefinition.setAsync(
+                    bool.Parse(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_ACTIVITY_ASYNCHRONOUS)));
+            }
 
+            BpmnXMLUtil.parseChildElements(ELEMENT_EVENT_SIGNALDEFINITION, eventDefinition, xtr, model);
 
-
-
-/**
- * @author Tijs Rademakers
- */
-public class SignalEventDefinitionParser : BaseChildElementParser {
-
-  public String getElementName() {
-    return ELEMENT_EVENT_SIGNALDEFINITION;
-  }
-  
-  public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
-    if (parentElement instanceof Event == false) return;
-    
-    SignalEventDefinition eventDefinition = new SignalEventDefinition();
-    BpmnXMLUtil.addXMLLocation(eventDefinition, xtr);
-    eventDefinition.setSignalRef(xtr.getAttributeValue(null, ATTRIBUTE_SIGNAL_REF));
-    if (StringUtils.isNotEmpty(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_ACTIVITY_ASYNCHRONOUS))) {
-      eventDefinition.setAsync(bool.parseBoolean(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_ACTIVITY_ASYNCHRONOUS)));
+            ((Event) parentElement).getEventDefinitions().Add(eventDefinition);
+        }
     }
-    
-    BpmnXMLUtil.parseChildElements(ELEMENT_EVENT_SIGNALDEFINITION, eventDefinition, xtr, model);
-    
-    ((Event) parentElement).getEventDefinitions().add(eventDefinition);
-  }
 }

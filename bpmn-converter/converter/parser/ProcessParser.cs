@@ -10,6 +10,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using System.Collections.Generic;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.converter.export;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter.parser{
 
 
@@ -24,35 +33,36 @@ namespace org.activiti.bpmn.converter.parser{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class ProcessParser : BpmnXMLConstants {
 
-  public Process parse(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  public Process parse(XMLStreamReader xtr, BpmnModel model) {
     Process process = null;
-    if (StringUtils.isNotEmpty(xtr.getAttributeValue(null, ATTRIBUTE_ID))) {
+    if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_ID))) {
       String processId = xtr.getAttributeValue(null, ATTRIBUTE_ID);
       process = new Process();
       process.setId(processId);
       BpmnXMLUtil.addXMLLocation(process, xtr);
       process.setName(xtr.getAttributeValue(null, ATTRIBUTE_NAME));
-      if (StringUtils.isNotEmpty(xtr.getAttributeValue(null, ATTRIBUTE_PROCESS_EXECUTABLE))) {
+      if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_PROCESS_EXECUTABLE))) {
         process.setExecutable(bool.parseBoolean(xtr.getAttributeValue(null, ATTRIBUTE_PROCESS_EXECUTABLE)));
       }
       String candidateUsersString = xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_PROCESS_CANDIDATE_USERS);
-      if (StringUtils.isNotEmpty(candidateUsersString)) {
+      if (!String.IsNullOrWhiteSpace(candidateUsersString)) {
         List<String> candidateUsers = BpmnXMLUtil.parseDelimitedList(candidateUsersString);
         process.setCandidateStarterUsers(candidateUsers);
       }
       String candidateGroupsString = xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_PROCESS_CANDIDATE_GROUPS);
-      if (StringUtils.isNotEmpty(candidateGroupsString)) {
+      if (!String.IsNullOrWhiteSpace(candidateGroupsString)) {
         List<String> candidateGroups = BpmnXMLUtil.parseDelimitedList(candidateGroupsString);
         process.setCandidateStarterGroups(candidateGroups);
       }
 
       BpmnXMLUtil.addCustomAttributes(xtr, process, ProcessExport.defaultProcessAttributes);
 
-      model.getProcesses().add(process);
+      model.getProcesses().Add(process);
 
     }
     return process;

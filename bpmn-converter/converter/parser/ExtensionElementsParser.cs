@@ -10,6 +10,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System.Collections.Generic;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.converter.child;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter.parser{
 
 
@@ -27,11 +35,12 @@ namespace org.activiti.bpmn.converter.parser{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class ExtensionElementsParser : BpmnXMLConstants {
   
-  public void parse(XMLStreamReader xtr, List<SubProcess> activeSubProcessList, Process activeProcess, BpmnModel model) throws Exception {
+  public void parse(XMLStreamReader xtr, List<SubProcess> activeSubProcessList, Process activeProcess, BpmnModel model) {
     BaseElement parentElement = null;
     if (!activeSubProcessList.isEmpty()) {
       parentElement = activeSubProcessList.get(activeSubProcessList.size() - 1);
@@ -44,11 +53,11 @@ public class ExtensionElementsParser : BpmnXMLConstants {
     while (readyWithChildElements == false && xtr.hasNext()) {
       xtr.next();
       if (xtr.isStartElement()) {
-        if (ELEMENT_EXECUTION_LISTENER.equals(xtr.getLocalName())) {
+        if (ELEMENT_EXECUTION_LISTENER.Equals(xtr.getLocalName())) {
           new ExecutionListenerParser().parseChildElement(xtr, parentElement, model);
-        } else if (ELEMENT_EVENT_LISTENER.equals(xtr.getLocalName())){
+        } else if (ELEMENT_EVENT_LISTENER.Equals(xtr.getLocalName())){
         	new ActivitiEventListenerParser().parseChildElement(xtr, parentElement, model);
-        } else if (ELEMENT_POTENTIAL_STARTER.equals(xtr.getLocalName())){
+        } else if (ELEMENT_POTENTIAL_STARTER.Equals(xtr.getLocalName())){
           new PotentialStarterParser().parse(xtr, activeProcess);
         } else {
           ExtensionElement extensionElement = BpmnXMLUtil.parseExtensionElement(xtr);
@@ -56,7 +65,7 @@ public class ExtensionElementsParser : BpmnXMLConstants {
         }
 
       } else if (xtr.isEndElement()) {
-        if (ELEMENT_EXTENSIONS.equals(xtr.getLocalName())) {
+        if (ELEMENT_EXTENSIONS.Equals(xtr.getLocalName())) {
           readyWithChildElements = true;
         }
       }

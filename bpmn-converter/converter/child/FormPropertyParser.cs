@@ -10,74 +10,84 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
 
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
 
+namespace org.activiti.bpmn.converter.child
+{
 
+    public class FormPropertyParser : BaseChildElementParser
+    {
 
-
-
-
-
-
-
-
-
-/**
- * @author Tijs Rademakers
- */
-public class FormPropertyParser : BaseChildElementParser {
-
-  public String getElementName() {
-    return ELEMENT_FORMPROPERTY;
-  }
-  
-  public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
-    
-    if (parentElement instanceof UserTask == false && parentElement instanceof StartEvent == false) return;
-    
-    FormProperty property = new FormProperty();
-    BpmnXMLUtil.addXMLLocation(property, xtr);
-    property.setId(xtr.getAttributeValue(null, ATTRIBUTE_FORM_ID));
-    property.setName(xtr.getAttributeValue(null, ATTRIBUTE_FORM_NAME));
-    property.setType(xtr.getAttributeValue(null, ATTRIBUTE_FORM_TYPE));
-    property.setVariable(xtr.getAttributeValue(null, ATTRIBUTE_FORM_VARIABLE));
-    property.setExpression(xtr.getAttributeValue(null, ATTRIBUTE_FORM_EXPRESSION));
-    property.setDefaultExpression(xtr.getAttributeValue(null, ATTRIBUTE_FORM_DEFAULT));
-    property.setDatePattern(xtr.getAttributeValue(null, ATTRIBUTE_FORM_DATEPATTERN));
-    if (StringUtils.isNotEmpty(xtr.getAttributeValue(null, ATTRIBUTE_FORM_REQUIRED))) {
-      property.setRequired(bool.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_FORM_REQUIRED)));
-    }
-    if (StringUtils.isNotEmpty(xtr.getAttributeValue(null, ATTRIBUTE_FORM_READABLE))) {
-      property.setReadable(bool.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_FORM_READABLE)));
-    }
-    if (StringUtils.isNotEmpty(xtr.getAttributeValue(null, ATTRIBUTE_FORM_WRITABLE))) {
-      property.setWriteable(bool.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_FORM_WRITABLE)));
-    }
-    
-    bool readyWithFormProperty = false;
-    try {
-      while (readyWithFormProperty == false && xtr.hasNext()) {
-        xtr.next();
-        if (xtr.isStartElement() && ELEMENT_VALUE.equalsIgnoreCase(xtr.getLocalName())) {
-          FormValue value = new FormValue();
-          BpmnXMLUtil.addXMLLocation(value, xtr);
-          value.setId(xtr.getAttributeValue(null, ATTRIBUTE_ID));
-          value.setName(xtr.getAttributeValue(null, ATTRIBUTE_NAME));
-          property.getFormValues().add(value);
-
-        } else if (xtr.isEndElement() && getElementName().equalsIgnoreCase(xtr.getLocalName())) {
-          readyWithFormProperty = true;
+        public override String getElementName()
+        {
+            return ELEMENT_FORMPROPERTY;
         }
-      }
-    } catch (Exception e) {
-      LOGGER.warn("Error parsing form properties child elements", e);
+
+        public override void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model)
+        {
+
+            if (parentElement as UserTask == null && parentElement as StartEvent == null) return;
+
+            FormProperty property = new FormProperty();
+            BpmnXMLUtil.addXMLLocation(property, xtr);
+            property.setId(xtr.getAttributeValue(null, ATTRIBUTE_FORM_ID));
+            property.setName(xtr.getAttributeValue(null, ATTRIBUTE_FORM_NAME));
+            property.setType(xtr.getAttributeValue(null, ATTRIBUTE_FORM_TYPE));
+            property.setVariable(xtr.getAttributeValue(null, ATTRIBUTE_FORM_VARIABLE));
+            property.setExpression(xtr.getAttributeValue(null, ATTRIBUTE_FORM_EXPRESSION));
+            property.setDefaultExpression(xtr.getAttributeValue(null, ATTRIBUTE_FORM_DEFAULT));
+            property.setDatePattern(xtr.getAttributeValue(null, ATTRIBUTE_FORM_DATEPATTERN));
+            if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_FORM_REQUIRED)))
+            {
+                property.setRequired(bool.Parse(xtr.getAttributeValue(null, ATTRIBUTE_FORM_REQUIRED)));
+            }
+            if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_FORM_READABLE)))
+            {
+                property.setReadable(bool.Parse(xtr.getAttributeValue(null, ATTRIBUTE_FORM_READABLE)));
+            }
+            if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_FORM_WRITABLE)))
+            {
+                property.setWriteable(bool.Parse(xtr.getAttributeValue(null, ATTRIBUTE_FORM_WRITABLE)));
+            }
+
+            bool readyWithFormProperty = false;
+            try
+            {
+                while (readyWithFormProperty == false && xtr.hasNext())
+                {
+                    xtr.next();
+                    if (xtr.isStartElement() && ELEMENT_VALUE.equalsIgnoreCase(xtr.getLocalName()))
+                    {
+                        FormValue value = new FormValue();
+                        BpmnXMLUtil.addXMLLocation(value, xtr);
+                        value.setId(xtr.getAttributeValue(null, ATTRIBUTE_ID));
+                        value.setName(xtr.getAttributeValue(null, ATTRIBUTE_NAME));
+                        property.getFormValues().Add(value);
+
+                    }
+                    else if (xtr.isEndElement() && getElementName().equalsIgnoreCase(xtr.getLocalName()))
+                    {
+                        readyWithFormProperty = true;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                LOGGER.Warn("Error parsing form properties child elements", e);
+            }
+
+            if (parentElement as UserTask != null)
+            {
+                ((UserTask) parentElement).getFormProperties().Add(property);
+            }
+            else
+            {
+                ((StartEvent) parentElement).getFormProperties().Add(property);
+            }
+        }
     }
-    
-    if (parentElement instanceof UserTask) {
-      ((UserTask) parentElement).getFormProperties().add(property);
-    } else {
-      ((StartEvent) parentElement).getFormProperties().add(property);
-    }
-  }
 }

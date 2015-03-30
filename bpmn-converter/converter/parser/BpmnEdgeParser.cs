@@ -10,6 +10,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using System.Collections.Generic;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter.parser{
 
 
@@ -24,14 +32,15 @@ namespace org.activiti.bpmn.converter.parser{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class BpmnEdgeParser : BpmnXMLConstants {
   
-  public void parse(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  public void parse(XMLStreamReader xtr, BpmnModel model) {
     
   	String id = xtr.getAttributeValue(null, ATTRIBUTE_DI_BPMNELEMENT);
-		List<GraphicInfo> wayPointList = new ArrayList<GraphicInfo>();
+		List<GraphicInfo> wayPointList = new List<GraphicInfo>();
 		while (xtr.hasNext()) {
 			xtr.next();
 			if (xtr.isStartElement() && ELEMENT_DI_LABEL.equalsIgnoreCase(xtr.getLocalName())) {
@@ -40,10 +49,10 @@ public class BpmnEdgeParser : BpmnXMLConstants {
           if (xtr.isStartElement() && ELEMENT_DI_BOUNDS.equalsIgnoreCase(xtr.getLocalName())) {
 					  GraphicInfo graphicInfo = new GraphicInfo();
 					  BpmnXMLUtil.addXMLLocation(graphicInfo, xtr);
-            graphicInfo.setX(Double.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_DI_X)).intValue());
-            graphicInfo.setY(Double.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_DI_Y)).intValue());
-            graphicInfo.setWidth(Double.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_DI_WIDTH)).intValue());
-            graphicInfo.setHeight(Double.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_DI_HEIGHT)).intValue());
+            graphicInfo.setX(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_X)).intValue());
+            graphicInfo.setY(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_Y)).intValue());
+            graphicInfo.setWidth(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_WIDTH)).intValue());
+            graphicInfo.setHeight(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_HEIGHT)).intValue());
 					  model.addLabelGraphicInfo(id, graphicInfo);
 					  break;
           } else if(xtr.isEndElement() && ELEMENT_DI_LABEL.equalsIgnoreCase(xtr.getLocalName())) {
@@ -54,9 +63,9 @@ public class BpmnEdgeParser : BpmnXMLConstants {
 			} else if (xtr.isStartElement() && ELEMENT_DI_WAYPOINT.equalsIgnoreCase(xtr.getLocalName())) {
 				GraphicInfo graphicInfo = new GraphicInfo();
 				BpmnXMLUtil.addXMLLocation(graphicInfo, xtr);
-				graphicInfo.setX(Double.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_DI_X)).intValue());
-				graphicInfo.setY(Double.valueOf(xtr.getAttributeValue(null, ATTRIBUTE_DI_Y)).intValue());
-				wayPointList.add(graphicInfo);
+				graphicInfo.setX(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_X)).intValue());
+				graphicInfo.setY(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_Y)).intValue());
+				wayPointList.Add(graphicInfo);
 				
 			} else if(xtr.isEndElement() && ELEMENT_DI_EDGE.equalsIgnoreCase(xtr.getLocalName())) {
 				break;

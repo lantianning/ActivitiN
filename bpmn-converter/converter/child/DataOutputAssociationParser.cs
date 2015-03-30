@@ -10,33 +10,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
 
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
 
+namespace org.activiti.bpmn.converter.child
+{
 
+    public class DataOutputAssociationParser : BaseChildElementParser
+    {
 
+        public override String getElementName()
+        {
+            return ELEMENT_OUTPUT_ASSOCIATION;
+        }
 
+        public override void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model)
+        {
 
+            if (parentElement as Activity == null) return;
 
+            DataAssociation dataAssociation = new DataAssociation();
+            BpmnXMLUtil.addXMLLocation(dataAssociation, xtr);
+            DataAssociationParser.parseDataAssociation(dataAssociation, getElementName(), xtr);
 
-
-/**
- * @author Tijs Rademakers
- */
-public class DataOutputAssociationParser : BaseChildElementParser {
-
-  public String getElementName() {
-    return ELEMENT_OUTPUT_ASSOCIATION;
-  }
-  
-  public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
-    
-    if (parentElement instanceof Activity == false) return;
-    
-    DataAssociation dataAssociation = new DataAssociation();
-    BpmnXMLUtil.addXMLLocation(dataAssociation, xtr);
-    DataAssociationParser.parseDataAssociation(dataAssociation, getElementName(), xtr);
-    
-    ((Activity) parentElement).getDataOutputAssociations().add(dataAssociation);
-  }
+            ((Activity) parentElement).getDataOutputAssociations().Add(dataAssociation);
+        }
+    }
 }

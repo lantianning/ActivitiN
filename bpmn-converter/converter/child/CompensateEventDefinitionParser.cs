@@ -10,7 +10,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
+
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
+namespace org.activiti.bpmn.converter.child
+{
 
 
 
@@ -22,26 +29,34 @@ namespace org.activiti.bpmn.converter.child{
 
 
 /**
- * @author Tijs Rademakers
- */
-public class CompensateEventDefinitionParser : BaseChildElementParser {
+ * //@author Tijs Rademakers
 
-  public String getElementName() {
-    return ELEMENT_EVENT_COMPENSATEDEFINITION;
-  }
-  
-  public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
-    if (parentElement instanceof Event == false) return;
-    
-    CompensateEventDefinition eventDefinition = new CompensateEventDefinition();
-    BpmnXMLUtil.addXMLLocation(eventDefinition, xtr);
-    eventDefinition.setActivityRef(xtr.getAttributeValue(null, ATTRIBUTE_COMPENSATE_ACTIVITYREF));
-    if (StringUtils.isNotEmpty(xtr.getAttributeValue(null, ATTRIBUTE_COMPENSATE_WAITFORCOMPLETION))) {
-      eventDefinition.setWaitForCompletion(bool.parseBoolean(xtr.getAttributeValue(null, ATTRIBUTE_COMPENSATE_WAITFORCOMPLETION)));
+ */
+
+    public class CompensateEventDefinitionParser : BaseChildElementParser
+    {
+
+        public override String getElementName()
+        {
+            return ELEMENT_EVENT_COMPENSATEDEFINITION;
+        }
+
+        public override void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model)
+        {
+            if (parentElement as Event == null) return;
+
+            CompensateEventDefinition eventDefinition = new CompensateEventDefinition();
+            BpmnXMLUtil.addXMLLocation(eventDefinition, xtr);
+            eventDefinition.setActivityRef(xtr.getAttributeValue(null, ATTRIBUTE_COMPENSATE_ACTIVITYREF));
+            if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_COMPENSATE_WAITFORCOMPLETION)))
+            {
+                eventDefinition.setWaitForCompletion(
+                    bool.Parse(xtr.getAttributeValue(null, ATTRIBUTE_COMPENSATE_WAITFORCOMPLETION)));
+            }
+
+            BpmnXMLUtil.parseChildElements(ELEMENT_EVENT_COMPENSATEDEFINITION, eventDefinition, xtr, model);
+
+            ((Event) parentElement).getEventDefinitions().Add(eventDefinition);
+        }
     }
-    
-    BpmnXMLUtil.parseChildElements(ELEMENT_EVENT_COMPENSATEDEFINITION, eventDefinition, xtr, model);
-    
-    ((Event) parentElement).getEventDefinitions().add(eventDefinition);
-  }
 }

@@ -10,24 +10,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
+
+using System;
+using org.activiti.bpmn.model;
+
+namespace org.activiti.bpmn.converter.child
+{
 
 
 
 
 
 /**
- * @author Tijs Rademakers
- */
-public class TaskListenerParser : ActivitiListenerParser {
+ * //@author Tijs Rademakers
 
-  public String getElementName() {
-  	return ELEMENT_TASK_LISTENER;
-  }
-  
-  public void addListenerToParent(ActivitiListener listener, BaseElement parentElement) {
-    if (parentElement instanceof UserTask) {
-      ((UserTask) parentElement).getTaskListeners().add(listener);
+ */
+
+    public class TaskListenerParser : ActivitiListenerParser
+    {
+
+        public override String getElementName()
+        {
+            return ELEMENT_TASK_LISTENER;
+        }
+
+        public override void addListenerToParent(ActivitiListener listener, BaseElement parentElement)
+        {
+            if (parentElement as UserTask != null)
+            {
+                ((UserTask) parentElement).getTaskListeners().Add(listener);
+            }
+        }
     }
-  }
 }

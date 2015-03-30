@@ -10,71 +10,84 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.export{
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using bpmn_converter.converter;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
 
+namespace org.activiti.bpmn.converter.export
+{
 
-
-
-
-
-
-
-
-
-
-public class ProcessExport : BpmnXMLConstants {
-  /**
+    public class ProcessExport : BpmnXMLConstants
+    {
+        /**
    * default attributes taken from process instance attributes
    */
-  public static final List<ExtensionAttribute> defaultProcessAttributes = Arrays.asList(
-      new ExtensionAttribute(ATTRIBUTE_ID),
-      new ExtensionAttribute(ATTRIBUTE_NAME),
-      new ExtensionAttribute(ATTRIBUTE_PROCESS_EXECUTABLE),
-      new ExtensionAttribute(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_PROCESS_CANDIDATE_USERS),
-      new ExtensionAttribute(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_PROCESS_CANDIDATE_GROUPS)
-  );
 
-  @SuppressWarnings("unchecked")
-  public static void writeProcess(Process process, XMLStreamWriter xtw) throws Exception {
-    // start process element
-    xtw.writeStartElement(ELEMENT_PROCESS);
-    xtw.writeAttribute(ATTRIBUTE_ID, process.getId());
+        public static List<ExtensionAttribute> defaultProcessAttributes = new List<ExtensionAttribute>()
+        {
+            new ExtensionAttribute(ATTRIBUTE_ID),
+            new ExtensionAttribute(ATTRIBUTE_NAME),
+            new ExtensionAttribute(ATTRIBUTE_PROCESS_EXECUTABLE),
+            new ExtensionAttribute(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_PROCESS_CANDIDATE_USERS),
+            new ExtensionAttribute(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_PROCESS_CANDIDATE_GROUPS)
+        };
 
-    if (StringUtils.isNotEmpty(process.getName())) {
-      xtw.writeAttribute(ATTRIBUTE_NAME, process.getName());
+        //@SuppressWarnings("unchecked")
+
+        public static void writeProcess(Process process, XMLStreamWriter xtw)
+        {
+            // start process element
+            xtw.writeStartElement(ELEMENT_PROCESS);
+            xtw.writeAttribute(ATTRIBUTE_ID, process.getId());
+
+            if (!String.IsNullOrWhiteSpace(process.getName()))
+            {
+                xtw.writeAttribute(ATTRIBUTE_NAME, process.getName());
+            }
+
+            xtw.writeAttribute(ATTRIBUTE_PROCESS_EXECUTABLE, process.isExecutable().ToString());
+
+            if (process.getCandidateStarterUsers().Any())
+            {
+                xtw.writeAttribute(ACTIVITI_EXTENSIONS_PREFIX, ACTIVITI_EXTENSIONS_NAMESPACE,
+                    ATTRIBUTE_PROCESS_CANDIDATE_USERS,
+                    BpmnXMLUtil.convertToDelimitedString(process.getCandidateStarterUsers()));
+            }
+
+            if (process.getCandidateStarterGroups().Any())
+            {
+                xtw.writeAttribute(ACTIVITI_EXTENSIONS_PREFIX, ACTIVITI_EXTENSIONS_NAMESPACE,
+                    ATTRIBUTE_PROCESS_CANDIDATE_GROUPS,
+                    BpmnXMLUtil.convertToDelimitedString(process.getCandidateStarterGroups()));
+            }
+
+            // write custom attributes
+            BpmnXMLUtil.writeCustomAttributes(process.getAttributes().Values, xtw, defaultProcessAttributes);
+
+            if (!String.IsNullOrWhiteSpace(process.getDocumentation()))
+            {
+
+                xtw.writeStartElement(ELEMENT_DOCUMENTATION);
+                xtw.writeCharacters(process.getDocumentation());
+                xtw.writeEndElement();
+            }
+
+            bool didWriteExtensionStartElement = ActivitiListenerExport.writeListeners(process, false, xtw);
+            didWriteExtensionStartElement = BpmnXMLUtil.writeExtensionElements(process, didWriteExtensionStartElement,
+                xtw);
+
+            if (didWriteExtensionStartElement)
+            {
+                // closing extensions element
+                xtw.writeEndElement();
+            }
+
+            LaneExport.writeLanes(process, xtw);
+        }
     }
-
-    xtw.writeAttribute(ATTRIBUTE_PROCESS_EXECUTABLE, bool.toString(process.isExecutable()));
-
-    if (!process.getCandidateStarterUsers().isEmpty()) {
-      xtw.writeAttribute(ACTIVITI_EXTENSIONS_PREFIX, ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_PROCESS_CANDIDATE_USERS,
-          BpmnXMLUtil.convertToDelimitedString(process.getCandidateStarterUsers()));
-    }
-
-    if (!process.getCandidateStarterGroups().isEmpty()) {
-      xtw.writeAttribute(ACTIVITI_EXTENSIONS_PREFIX, ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_PROCESS_CANDIDATE_GROUPS,
-          BpmnXMLUtil.convertToDelimitedString(process.getCandidateStarterGroups()));
-    }
-
-    // write custom attributes
-    BpmnXMLUtil.writeCustomAttributes(process.getAttributes().values(), xtw, defaultProcessAttributes);
-
-    if (StringUtils.isNotEmpty(process.getDocumentation())) {
-
-      xtw.writeStartElement(ELEMENT_DOCUMENTATION);
-      xtw.writeCharacters(process.getDocumentation());
-      xtw.writeEndElement();
-    }
-    
-    bool didWriteExtensionStartElement = ActivitiListenerExport.writeListeners(process, false, xtw);
-    didWriteExtensionStartElement = BpmnXMLUtil.writeExtensionElements(process, didWriteExtensionStartElement, xtw);
-    
-    if (didWriteExtensionStartElement) {
-      // closing extensions element
-      xtw.writeEndElement();
-    }
-    
-    LaneExport.writeLanes(process, xtw);
-  }
 }

@@ -10,26 +10,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
 
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.model;
 
+namespace org.activiti.bpmn.converter.child
+{
 
+    public class ScriptTextParser : BaseChildElementParser
+    {
 
+        public override String getElementName()
+        {
+            return ATTRIBUTE_TASK_SCRIPT_TEXT;
+        }
 
+        public override void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model)
+        {
+            if (parentElement as ScriptTask == null) return;
 
-
-/**
- * @author Tijs Rademakers
- */
-public class ScriptTextParser : BaseChildElementParser {
-	
-  public String getElementName() {
-    return ATTRIBUTE_TASK_SCRIPT_TEXT;
-  }
-  
-  public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
-    if (parentElement instanceof ScriptTask == false) return;
-    
-    ((ScriptTask) parentElement).setScript(xtr.getElementText());
-  }
+            ((ScriptTask) parentElement).setScript(xtr.getElementText());
+        }
+    }
 }

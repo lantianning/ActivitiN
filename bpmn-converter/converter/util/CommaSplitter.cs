@@ -10,27 +10,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using System.Collections.Generic;
+using bpmn_converter.converter.util;
+
 namespace org.activiti.bpmn.converter.util{
 
 
 
 
 /**
- * @author Saeid Mirzaei, Tijs Rademakers
+ * //@author Saeid Mirzaei, Tijs Rademakers
+
  */
 
 public class CommaSplitter {
 
   // split the given spring using commas if they are not inside an expression
   public static List<String> splitCommas(String st) {
-    List<String> result = new ArrayList<String>();
+    List<String> result = new List<String>();
     int offset = 0;
     
     bool inExpression = false;
     for (int i = 0; i < st.length(); i++) {
       if (inExpression == false && st.charAt(i) == ',') {
         if ((i - offset) > 1) {
-          result.add(st.substring(offset, i));
+          result.Add(st.Substring(offset, i));
         }
         offset = i + 1;
         
@@ -43,7 +49,7 @@ public class CommaSplitter {
     }
     
     if ((st.length() - offset) > 1) {
-      result.add(st.substring(offset));
+      result.Add(st.Substring(offset));
     }
     return result;
   }

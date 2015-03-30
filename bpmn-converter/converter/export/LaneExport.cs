@@ -10,7 +10,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.export{
+
+using System;
+using System.Linq;
+using bpmn_converter.converter;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.model;
+
+namespace org.activiti.bpmn.converter.export
+{
 
 
 
@@ -19,28 +27,35 @@ namespace org.activiti.bpmn.converter.export{
 
 
 
-public class LaneExport : BpmnXMLConstants {
+    public class LaneExport : BpmnXMLConstants
+    {
 
-  public static void writeLanes(Process process, XMLStreamWriter xtw) throws Exception {
-    if (!process.getLanes().isEmpty()) {
-      xtw.writeStartElement(ELEMENT_LANESET);
-      xtw.writeAttribute(ATTRIBUTE_ID, "laneSet_" + process.getId());
-      for (Lane lane : process.getLanes()) {
-        xtw.writeStartElement(ELEMENT_LANE);
-        xtw.writeAttribute(ATTRIBUTE_ID, lane.getId());
-        if(StringUtils.isNotEmpty(lane.getName())) {
-          xtw.writeAttribute(ATTRIBUTE_NAME, lane.getName());
+        public static void writeLanes(Process process, XMLStreamWriter xtw)
+        {
+            if (process.getLanes().Any())
+            {
+                xtw.writeStartElement(ELEMENT_LANESET);
+                xtw.writeAttribute(ATTRIBUTE_ID, "laneSet_" + process.getId());
+                foreach (Lane lane  in process.getLanes())
+                {
+                    xtw.writeStartElement(ELEMENT_LANE);
+                    xtw.writeAttribute(ATTRIBUTE_ID, lane.getId());
+                    if (!String.IsNullOrWhiteSpace(lane.getName()))
+                    {
+                        xtw.writeAttribute(ATTRIBUTE_NAME, lane.getName());
+                    }
+
+                    foreach (String flowNodeRef  in lane.getFlowReferences())
+                    {
+                        xtw.writeStartElement(ELEMENT_FLOWNODE_REF);
+                        xtw.writeCharacters(flowNodeRef);
+                        xtw.writeEndElement();
+                    }
+
+                    xtw.writeEndElement();
+                }
+                xtw.writeEndElement();
+            }
         }
-        
-        for (String flowNodeRef : lane.getFlowReferences()) {
-          xtw.writeStartElement(ELEMENT_FLOWNODE_REF);
-          xtw.writeCharacters(flowNodeRef);
-          xtw.writeEndElement();
-        }
-        
-        xtw.writeEndElement();
-      }
-      xtw.writeEndElement();
     }
-  }
 }

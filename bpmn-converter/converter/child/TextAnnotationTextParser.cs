@@ -10,26 +10,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
 
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.model;
 
+namespace org.activiti.bpmn.converter.child
+{
 
+    public class TextAnnotationTextParser : BaseChildElementParser
+    {
 
+        public override String getElementName()
+        {
+            return ELEMENT_TEXT_ANNOTATION_TEXT;
+        }
 
+        public override void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model)
+        {
+            if (parentElement as TextAnnotation != null == false) return;
 
-
-/**
- * @author Tijs Rademakers
- */
-public class TextAnnotationTextParser : BaseChildElementParser {
-	
-  public String getElementName() {
-    return ELEMENT_TEXT_ANNOTATION_TEXT;
-  }
-  
-  public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
-    if (parentElement instanceof TextAnnotation == false) return;
-    
-    ((TextAnnotation) parentElement).setText(xtr.getElementText());
-  }
+            ((TextAnnotation) parentElement).setText(xtr.getElementText());
+        }
+    }
 }

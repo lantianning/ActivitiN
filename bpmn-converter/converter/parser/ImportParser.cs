@@ -10,6 +10,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter.parser{
 
 
@@ -20,16 +26,17 @@ namespace org.activiti.bpmn.converter.parser{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class ImportParser : BpmnXMLConstants {
   
-  public void parse(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  public void parse(XMLStreamReader xtr, BpmnModel model) {
     
     BpmnXMLUtil.addXMLLocation(importObject, xtr);
     importObject.setImportType(xtr.getAttributeValue(null, ATTRIBUTE_IMPORT_TYPE));
     importObject.setNamespace(xtr.getAttributeValue(null, ATTRIBUTE_NAMESPACE));
     importObject.setLocation(xtr.getAttributeValue(null, ATTRIBUTE_LOCATION));
-    model.getImports().add(importObject);
+    model.getImports().Add(importObject);
   }
 }

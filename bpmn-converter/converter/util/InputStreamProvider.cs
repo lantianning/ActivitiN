@@ -16,12 +16,14 @@ namespace org.activiti.bpmn.converter.util{
 
 
 /**
- * @author Joram Barrez
+ * //@author Joram Barrez
+
  */
 public interface InputStreamProvider {
   
   /**
-   * Creates a <b>NEW</b> {@link InputStream} to the provided resource.
+   * Creates a <b>NEW</b> {//@link InputStream} to the provided resource.
+
    */
   InputStream getInputStream();
 

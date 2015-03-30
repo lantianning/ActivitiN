@@ -10,6 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter.parser{
 
 
@@ -21,24 +28,25 @@ namespace org.activiti.bpmn.converter.parser{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class DataStoreParser : BpmnXMLConstants {
   
-  public void parse(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  public void parse(XMLStreamReader xtr, BpmnModel model) {
     String id = xtr.getAttributeValue(null, ATTRIBUTE_ID);
-    if (StringUtils.isNotEmpty(id)) {
+    if (!String.IsNullOrWhiteSpace(id)) {
       
       DataStore dataStore = new DataStore();
       dataStore.setId(xtr.getAttributeValue(null, ATTRIBUTE_ID));
       
       String name = xtr.getAttributeValue(null, ATTRIBUTE_NAME);
-      if (StringUtils.isNotEmpty(name)) {
+      if (!String.IsNullOrWhiteSpace(name)) {
         dataStore.setName(name);
       }
       
       String itemSubjectRef = xtr.getAttributeValue(null, ATTRIBUTE_ITEM_SUBJECT_REF);
-      if (StringUtils.isNotEmpty(itemSubjectRef)) {
+      if (!String.IsNullOrWhiteSpace(itemSubjectRef)) {
         dataStore.setItemSubjectRef(itemSubjectRef);
       }
       

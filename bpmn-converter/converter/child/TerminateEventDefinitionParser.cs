@@ -10,34 +10,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
 
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
 
+namespace org.activiti.bpmn.converter.child
+{
 
+    public class TerminateEventDefinitionParser : BaseChildElementParser
+    {
 
+        public override String getElementName()
+        {
+            return ELEMENT_EVENT_TERMINATEDEFINITION;
+        }
 
+        public override void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model)
+        {
+            if (parentElement as EndEvent == null) return;
 
+            TerminateEventDefinition eventDefinition = new TerminateEventDefinition();
+            BpmnXMLUtil.addXMLLocation(eventDefinition, xtr);
 
+            BpmnXMLUtil.parseChildElements(ELEMENT_EVENT_TERMINATEDEFINITION, eventDefinition, xtr, model);
 
-
-
-/**
- * @author Tijs Rademakers
- */
-public class TerminateEventDefinitionParser : BaseChildElementParser {
-
-  public String getElementName() {
-    return ELEMENT_EVENT_TERMINATEDEFINITION;
-  }
-  
-  public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
-    if (parentElement instanceof EndEvent == false) return;
-    
-    TerminateEventDefinition eventDefinition = new TerminateEventDefinition();
-    BpmnXMLUtil.addXMLLocation(eventDefinition, xtr);
-    
-    BpmnXMLUtil.parseChildElements(ELEMENT_EVENT_TERMINATEDEFINITION, eventDefinition, xtr, model);
-    
-    ((Event) parentElement).getEventDefinitions().add(eventDefinition);
-  }
+            ((Event) parentElement).getEventDefinitions().Add(eventDefinition);
+        }
+    }
 }

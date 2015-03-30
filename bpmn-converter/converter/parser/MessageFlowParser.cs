@@ -10,6 +10,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter.parser{
 
 
@@ -22,35 +28,36 @@ namespace org.activiti.bpmn.converter.parser{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class MessageFlowParser : BpmnXMLConstants {
   
-  protected static final Logger LOGGER = LoggerFactory.getLogger(MessageFlowParser.class.getName());
+  protected static  ILog LOGGER = LogManager.GetLogger(typeof(MessageFlowParser).getName());
   
-  public void parse(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  public void parse(XMLStreamReader xtr, BpmnModel model) {
     String id = xtr.getAttributeValue(null, ATTRIBUTE_ID);
-    if (StringUtils.isNotEmpty(id)) {
+    if (!String.IsNullOrWhiteSpace(id)) {
       MessageFlow messageFlow = new MessageFlow();
       messageFlow.setId(id);
       
       String name = xtr.getAttributeValue(null, ATTRIBUTE_NAME);
-      if (StringUtils.isNotEmpty(name)) {
+      if (!String.IsNullOrWhiteSpace(name)) {
         messageFlow.setName(name);
       }
       
       String sourceRef = xtr.getAttributeValue(null, ATTRIBUTE_FLOW_SOURCE_REF);
-      if (StringUtils.isNotEmpty(sourceRef)) {
+      if (!String.IsNullOrWhiteSpace(sourceRef)) {
         messageFlow.setSourceRef(sourceRef);
       }
       
       String targetRef = xtr.getAttributeValue(null, ATTRIBUTE_FLOW_TARGET_REF);
-      if (StringUtils.isNotEmpty(targetRef)) {
+      if (!String.IsNullOrWhiteSpace(targetRef)) {
         messageFlow.setTargetRef(targetRef);
       }
       
       String messageRef = xtr.getAttributeValue(null, ATTRIBUTE_MESSAGE_REF);
-      if (StringUtils.isNotEmpty(messageRef)) {
+      if (!String.IsNullOrWhiteSpace(messageRef)) {
         messageFlow.setMessageRef(messageRef);
       }
       

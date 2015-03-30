@@ -10,6 +10,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using System.Collections.Generic;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter.parser{
 
 
@@ -25,7 +33,8 @@ namespace org.activiti.bpmn.converter.parser{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class SubProcessParser : BpmnXMLConstants {
   
@@ -39,7 +48,7 @@ public class SubProcessParser : BpmnXMLConstants {
 			subProcess = new SubProcess();
 		}
   	BpmnXMLUtil.addXMLLocation(subProcess, xtr);
-		activeSubProcessList.add(subProcess);
+		activeSubProcessList.Add(subProcess);
 		
 		subProcess.setId(xtr.getAttributeValue(null, ATTRIBUTE_ID));
 		subProcess.setName(xtr.getAttributeValue(null, ATTRIBUTE_NAME));
@@ -65,7 +74,7 @@ public class SubProcessParser : BpmnXMLConstants {
 		subProcess.setAsynchronous(async);
 		subProcess.setNotExclusive(notExclusive);
     subProcess.setForCompensation(forCompensation);
-    if(StringUtils.isNotEmpty(xtr.getAttributeValue(null, ATTRIBUTE_DEFAULT))) {
+    if(!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_DEFAULT))) {
       subProcess.setDefaultFlow(xtr.getAttributeValue(null, ATTRIBUTE_DEFAULT));
     }
     

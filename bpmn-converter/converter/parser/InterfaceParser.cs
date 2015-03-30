@@ -10,6 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter.parser{
 
 
@@ -24,13 +31,14 @@ namespace org.activiti.bpmn.converter.parser{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class InterfaceParser : BpmnXMLConstants {
   
-  protected static final Logger LOGGER = LoggerFactory.getLogger(InterfaceParser.class.getName());
+  protected static  ILog LOGGER = LogManager.GetLogger(typeof(InterfaceParser).getName());
   
-  public void parse(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  public void parse(XMLStreamReader xtr, BpmnModel model) {
     
     Interface interfaceObject = new Interface();
     BpmnXMLUtil.addXMLLocation(interfaceObject, xtr);
@@ -43,31 +51,31 @@ public class InterfaceParser : BpmnXMLConstants {
     try {
       while (readyWithInterface == false && xtr.hasNext()) {
         xtr.next();
-        if (xtr.isStartElement() && ELEMENT_OPERATION.equals(xtr.getLocalName())) {
+        if (xtr.isStartElement() && ELEMENT_OPERATION.Equals(xtr.getLocalName())) {
           operation = new Operation();
           BpmnXMLUtil.addXMLLocation(operation, xtr);
           operation.setId(model.getTargetNamespace() + ":" + xtr.getAttributeValue(null, ATTRIBUTE_ID));
           operation.setName(xtr.getAttributeValue(null, ATTRIBUTE_NAME));
           operation.setImplementationRef(parseMessageRef(xtr.getAttributeValue(null, ATTRIBUTE_IMPLEMENTATION_REF), model));
 
-        } else if (xtr.isStartElement() && ELEMENT_IN_MESSAGE.equals(xtr.getLocalName())) {
+        } else if (xtr.isStartElement() && ELEMENT_IN_MESSAGE.Equals(xtr.getLocalName())) {
           String inMessageRef = xtr.getElementText();
-          if (operation != null && StringUtils.isNotEmpty(inMessageRef)) {
-            operation.setInMessageRef(parseMessageRef(inMessageRef.trim(), model));
+          if (operation != null && !String.IsNullOrWhiteSpace(inMessageRef)) {
+            operation.setInMessageRef(parseMessageRef(inMessageRef.Trim(), model));
           }
           
-        } else if (xtr.isStartElement() && ELEMENT_OUT_MESSAGE.equals(xtr.getLocalName())) {
+        } else if (xtr.isStartElement() && ELEMENT_OUT_MESSAGE.Equals(xtr.getLocalName())) {
           String outMessageRef = xtr.getElementText();
-          if (operation != null && StringUtils.isNotEmpty(outMessageRef)) {
-            operation.setOutMessageRef(parseMessageRef(outMessageRef.trim(), model));
+          if (operation != null && !String.IsNullOrWhiteSpace(outMessageRef)) {
+            operation.setOutMessageRef(parseMessageRef(outMessageRef.Trim(), model));
           }
           
         } else if (xtr.isEndElement() && ELEMENT_OPERATION.equalsIgnoreCase(xtr.getLocalName())) {
-          if (operation != null && StringUtils.isNotEmpty(operation.getImplementationRef())) {
-            interfaceObject.getOperations().add(operation);
+          if (operation != null && !String.IsNullOrWhiteSpace(operation.getImplementationRef())) {
+            interfaceObject.getOperations().Add(operation);
           }
           
-        } else if (xtr.isEndElement() && ELEMENT_INTERFACE.equals(xtr.getLocalName())) {
+        } else if (xtr.isEndElement() && ELEMENT_INTERFACE.Equals(xtr.getLocalName())) {
           readyWithInterface = true;
         }
       }
@@ -75,17 +83,17 @@ public class InterfaceParser : BpmnXMLConstants {
       LOGGER.warn("Error parsing interface child elements", e);
     }
     
-    model.getInterfaces().add(interfaceObject);
+    model.getInterfaces().Add(interfaceObject);
   }
   
   protected String parseMessageRef(String messageRef, BpmnModel model) {
     String result = null;
-    if (StringUtils.isNotEmpty(messageRef)) {
+    if (!String.IsNullOrWhiteSpace(messageRef)) {
       int indexOfP = messageRef.indexOf(':');
       if (indexOfP != -1) {
-        String prefix = messageRef.substring(0, indexOfP);
+        String prefix = messageRef.Substring(0, indexOfP);
         String resolvedNamespace = model.getNamespace(prefix);
-        result = resolvedNamespace + ":" + messageRef.substring(indexOfP + 1);
+        result = resolvedNamespace + ":" + messageRef.Substring(indexOfP + 1);
       } else {
         result = model.getTargetNamespace() + ":" + messageRef;
       }

@@ -10,7 +10,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
+
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
+namespace org.activiti.bpmn.converter.child
+{
 
 
 
@@ -22,28 +29,38 @@ namespace org.activiti.bpmn.converter.child{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
-public abstract class ActivitiListenerParser : BaseChildElementParser {
-  
-  public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
-    
-    ActivitiListener listener = new ActivitiListener();
-    BpmnXMLUtil.addXMLLocation(listener, xtr);
-    if (StringUtils.isNotEmpty(xtr.getAttributeValue(null, ATTRIBUTE_LISTENER_CLASS))) {
-      listener.setImplementation(xtr.getAttributeValue(null, ATTRIBUTE_LISTENER_CLASS));
-      listener.setImplementationType(ImplementationType.IMPLEMENTATION_TYPE_CLASS);
-    } else if (StringUtils.isNotEmpty(xtr.getAttributeValue(null, ATTRIBUTE_LISTENER_EXPRESSION))) {
-      listener.setImplementation(xtr.getAttributeValue(null, ATTRIBUTE_LISTENER_EXPRESSION));
-      listener.setImplementationType(ImplementationType.IMPLEMENTATION_TYPE_EXPRESSION);
-    } else if (StringUtils.isNotEmpty(xtr.getAttributeValue(null, ATTRIBUTE_LISTENER_DELEGATEEXPRESSION))) {
-      listener.setImplementation(xtr.getAttributeValue(null, ATTRIBUTE_LISTENER_DELEGATEEXPRESSION));
-      listener.setImplementationType(ImplementationType.IMPLEMENTATION_TYPE_DELEGATEEXPRESSION);
+
+    public abstract class ActivitiListenerParser : BaseChildElementParser
+    {
+
+        public override void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model)
+        {
+
+            ActivitiListener listener = new ActivitiListener();
+            BpmnXMLUtil.addXMLLocation(listener, xtr);
+            if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_LISTENER_CLASS)))
+            {
+                listener.setImplementation(xtr.getAttributeValue(null, ATTRIBUTE_LISTENER_CLASS));
+                listener.setImplementationType(ImplementationType.IMPLEMENTATION_TYPE_CLASS);
+            }
+            else if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_LISTENER_EXPRESSION)))
+            {
+                listener.setImplementation(xtr.getAttributeValue(null, ATTRIBUTE_LISTENER_EXPRESSION));
+                listener.setImplementationType(ImplementationType.IMPLEMENTATION_TYPE_EXPRESSION);
+            }
+            else if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_LISTENER_DELEGATEEXPRESSION)))
+            {
+                listener.setImplementation(xtr.getAttributeValue(null, ATTRIBUTE_LISTENER_DELEGATEEXPRESSION));
+                listener.setImplementationType(ImplementationType.IMPLEMENTATION_TYPE_DELEGATEEXPRESSION);
+            }
+            listener.setEvent(xtr.getAttributeValue(null, ATTRIBUTE_LISTENER_EVENT));
+            addListenerToParent(listener, parentElement);
+            parseChildElements(xtr, listener, model, new FieldExtensionParser());
+        }
+
+        public abstract void addListenerToParent(ActivitiListener listener, BaseElement parentElement);
     }
-    listener.setEvent(xtr.getAttributeValue(null, ATTRIBUTE_LISTENER_EVENT));
-    addListenerToParent(listener, parentElement);
-    parseChildElements(xtr, listener, model, new FieldExtensionParser());
-  }
-  
-  public abstract void addListenerToParent(ActivitiListener listener, BaseElement parentElement);
 }

@@ -10,6 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using bpmn_converter.converter;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter{
 
 
@@ -24,24 +31,27 @@ namespace org.activiti.bpmn.converter{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class BoundaryEventXMLConverter : BaseBpmnXMLConverter {
   
-  public Class<BaseElement> getBpmnElementType() {
-    return BoundaryEvent.class;
+  public Type getBpmnElementType() {
+    return typeof(BoundaryEvent);
   }
   
-  @Override
+  //@Override
+
   protected String getXMLElementName() {
     return ELEMENT_EVENT_BOUNDARY;
   }
   
-  @Override
-  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  //@Override
+
+  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) {
     BoundaryEvent boundaryEvent = new BoundaryEvent();
     BpmnXMLUtil.addXMLLocation(boundaryEvent, xtr);
-    if (StringUtils.isNotEmpty(xtr.getAttributeValue(null, ATTRIBUTE_BOUNDARY_CANCELACTIVITY))) {
+    if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_BOUNDARY_CANCELACTIVITY))) {
       String cancelActivity = xtr.getAttributeValue(null, ATTRIBUTE_BOUNDARY_CANCELACTIVITY);
       if (ATTRIBUTE_VALUE_FALSE.equalsIgnoreCase(cancelActivity)) {
         boundaryEvent.setCancelActivity(false);
@@ -54,7 +64,7 @@ public class BoundaryEventXMLConverter : BaseBpmnXMLConverter {
     if (boundaryEvent.getEventDefinitions().size() == 1) {
       EventDefinition eventDef = boundaryEvent.getEventDefinitions().get(0); 
       
-      if (eventDef instanceof ErrorEventDefinition) {
+      if (eventDef as ErrorEventDefinition !=null) {
         boundaryEvent.setCancelActivity(false);
       }
     }
@@ -62,8 +72,9 @@ public class BoundaryEventXMLConverter : BaseBpmnXMLConverter {
     return boundaryEvent;
   }
 
-  @Override
-  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) {
     BoundaryEvent boundaryEvent = (BoundaryEvent) element;
     if (boundaryEvent.getAttachedToRef() != null) {
       writeDefaultAttribute(ATTRIBUTE_BOUNDARY_ATTACHEDTOREF, boundaryEvent.getAttachedToRef().getId(), xtw);
@@ -72,14 +83,15 @@ public class BoundaryEventXMLConverter : BaseBpmnXMLConverter {
     if (boundaryEvent.getEventDefinitions().size() == 1) {
       EventDefinition eventDef = boundaryEvent.getEventDefinitions().get(0); 
       
-      if (eventDef instanceof ErrorEventDefinition == false) {
-        writeDefaultAttribute(ATTRIBUTE_BOUNDARY_CANCELACTIVITY, String.valueOf(boundaryEvent.isCancelActivity()).toLowerCase(), xtw);
+      if (eventDef as ErrorEventDefinition !=null == false) {
+        writeDefaultAttribute(ATTRIBUTE_BOUNDARY_CANCELACTIVITY, String.Parse(boundaryEvent.isCancelActivity()).toLowerCase(), xtw);
       }
     }
   }
   
-  @Override
-  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) {
     BoundaryEvent boundaryEvent = (BoundaryEvent) element;
     writeEventDefinitions(boundaryEvent, boundaryEvent.getEventDefinitions(), model, xtw);
   }

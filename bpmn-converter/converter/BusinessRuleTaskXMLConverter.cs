@@ -10,6 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using bpmn_converter.converter;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter{
 
 
@@ -22,21 +29,24 @@ namespace org.activiti.bpmn.converter{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class BusinessRuleTaskXMLConverter : BaseBpmnXMLConverter {
   
-  public Class<BaseElement> getBpmnElementType() {
-    return BusinessRuleTask.class;
+  public Type getBpmnElementType() {
+    return typeof(BusinessRuleTask);
   }
   
-  @Override
+  //@Override
+
   protected String getXMLElementName() {
     return ELEMENT_TASK_BUSINESSRULE;
   }
   
-  @Override
-  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  //@Override
+
+  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) {
     BusinessRuleTask businessRuleTask = new BusinessRuleTask();
     BpmnXMLUtil.addXMLLocation(businessRuleTask, xtr);
     businessRuleTask.setInputVariables(parseDelimitedList(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_TASK_RULE_VARIABLES_INPUT)));
@@ -51,21 +61,22 @@ public class BusinessRuleTaskXMLConverter : BaseBpmnXMLConverter {
     return businessRuleTask;
   }
 
-  @Override
-  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) {
     BusinessRuleTask businessRuleTask = (BusinessRuleTask) element;
     String inputVariables = convertToDelimitedString(businessRuleTask.getInputVariables());
-    if (StringUtils.isNotEmpty(inputVariables)) {
+    if (!String.IsNullOrWhiteSpace(inputVariables)) {
       writeQualifiedAttribute(ATTRIBUTE_TASK_RULE_VARIABLES_INPUT, inputVariables, xtw);
     }
     String ruleNames = convertToDelimitedString(businessRuleTask.getRuleNames());
-    if (StringUtils.isNotEmpty(ruleNames)) {
+    if (!String.IsNullOrWhiteSpace(ruleNames)) {
       writeQualifiedAttribute(ATTRIBUTE_TASK_RULE_RULES, ruleNames, xtw);
     }
-    if (StringUtils.isNotEmpty(businessRuleTask.getResultVariableName())) {
+    if (!String.IsNullOrWhiteSpace(businessRuleTask.getResultVariableName())) {
       writeQualifiedAttribute(ATTRIBUTE_TASK_RULE_RESULT_VARIABLE, businessRuleTask.getResultVariableName(), xtw);
     }
-    if (StringUtils.isNotEmpty(businessRuleTask.getClassName())) {
+    if (!String.IsNullOrWhiteSpace(businessRuleTask.getClassName())) {
       writeQualifiedAttribute(ATTRIBUTE_TASK_RULE_CLASS, businessRuleTask.getClassName(), xtw);
     }
     if (businessRuleTask.isExclude()) {
@@ -73,7 +84,8 @@ public class BusinessRuleTaskXMLConverter : BaseBpmnXMLConverter {
     }
   }
   
-  @Override
-  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) {
   }
 }

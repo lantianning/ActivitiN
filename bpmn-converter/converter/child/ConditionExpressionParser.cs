@@ -10,26 +10,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
 
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.model;
 
+namespace org.activiti.bpmn.converter.child
+{
 
+    public class ConditionExpressionParser : BaseChildElementParser
+    {
 
+        public override String getElementName()
+        {
+            return ELEMENT_FLOW_CONDITION;
+        }
 
+        public override void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model)
+        {
+            if (parentElement as SequenceFlow == null) return;
 
-
-/**
- * @author Tijs Rademakers
- */
-public class ConditionExpressionParser : BaseChildElementParser {
-
-  public String getElementName() {
-    return ELEMENT_FLOW_CONDITION;
-  }
-  
-  public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
-    if (parentElement instanceof SequenceFlow == false) return;
-    
-    ((SequenceFlow) parentElement).setConditionExpression(xtr.getElementText().trim());
-  }
+            ((SequenceFlow) parentElement).setConditionExpression(xtr.getElementText().Trim());
+        }
+    }
 }

@@ -10,27 +10,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
+
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.model;
+
+namespace org.activiti.bpmn.converter.child
+{
 
 
+    public class FlowNodeRefParser : BaseChildElementParser
+    {
 
+        public override String getElementName()
+        {
+            return ELEMENT_FLOWNODE_REF;
+        }
 
+        public override void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model)
+        {
+            if (parentElement as Lane == null) return;
 
-
-
-/**
- * @author Tijs Rademakers
- */
-public class FlowNodeRefParser : BaseChildElementParser {
-
-  public String getElementName() {
-    return ELEMENT_FLOWNODE_REF;
-  }
-  
-  public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
-    if (parentElement instanceof Lane == false) return;
-    
-    Lane lane = (Lane) parentElement;
-    lane.getFlowReferences().add(xtr.getElementText());
-  }
+            Lane lane = (Lane) parentElement;
+            lane.getFlowReferences().Add(xtr.getElementText());
+        }
+    }
 }

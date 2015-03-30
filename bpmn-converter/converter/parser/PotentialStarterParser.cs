@@ -10,6 +10,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using System.Collections.Generic;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.constants;
+
 namespace org.activiti.bpmn.converter.parser{
 
 
@@ -24,40 +30,41 @@ namespace org.activiti.bpmn.converter.parser{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class PotentialStarterParser : BpmnXMLConstants {
   
-  public void parse(XMLStreamReader xtr, Process activeProcess) throws Exception {
+  public void parse(XMLStreamReader xtr, Process activeProcess) {
     String resourceElement = XMLStreamReaderUtil.moveDown(xtr);
-    if (StringUtils.isNotEmpty(resourceElement) && "resourceAssignmentExpression".equals(resourceElement)) {
+    if (!String.IsNullOrWhiteSpace(resourceElement) && "resourceAssignmentExpression".Equals(resourceElement)) {
       String expression = XMLStreamReaderUtil.moveDown(xtr);
-      if (StringUtils.isNotEmpty(expression) && "formalExpression".equals(expression)) {
-        List<String> assignmentList = new ArrayList<String>();
+      if (!String.IsNullOrWhiteSpace(expression) && "formalExpression".Equals(expression)) {
+        List<String> assignmentList = new List<String>();
         String assignmentText = xtr.getElementText();
         if (assignmentText.contains(",")) {
           String[] assignmentArray = assignmentText.split(",");
           assignmentList = Arrays.asList(assignmentArray);
         } else {
-          assignmentList.add(assignmentText);
+          assignmentList.Add(assignmentText);
         }
-        for (String assignmentValue : assignmentList) {
+        foreach (String assignmentValue  in assignmentList) {
           if (assignmentValue == null)
             continue;
-          assignmentValue = assignmentValue.trim();
+          assignmentValue = assignmentValue.Trim();
           if (assignmentValue.length() == 0)
             continue;
 
           String userPrefix = "user(";
           String groupPrefix = "group(";
-          if (assignmentValue.startsWith(userPrefix)) {
-            assignmentValue = assignmentValue.substring(userPrefix.length(), assignmentValue.length() - 1).trim();
-            activeProcess.getCandidateStarterUsers().add(assignmentValue);
-          } else if (assignmentValue.startsWith(groupPrefix)) {
-            assignmentValue = assignmentValue.substring(groupPrefix.length(), assignmentValue.length() - 1).trim();
-            activeProcess.getCandidateStarterGroups().add(assignmentValue);
+          if (assignmentValue.StartsWith(userPrefix)) {
+            assignmentValue = assignmentValue.Substring(userPrefix.length(), assignmentValue.length() - 1).Trim();
+            activeProcess.getCandidateStarterUsers().Add(assignmentValue);
+          } else if (assignmentValue.StartsWith(groupPrefix)) {
+            assignmentValue = assignmentValue.Substring(groupPrefix.length(), assignmentValue.length() - 1).Trim();
+            activeProcess.getCandidateStarterGroups().Add(assignmentValue);
           } else {
-            activeProcess.getCandidateStarterGroups().add(assignmentValue);
+            activeProcess.getCandidateStarterGroups().Add(assignmentValue);
           }
         }
       }

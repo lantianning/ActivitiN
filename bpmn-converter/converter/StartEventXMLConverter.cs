@@ -10,6 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using bpmn_converter.converter;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter{
 
 
@@ -23,24 +30,27 @@ namespace org.activiti.bpmn.converter{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class StartEventXMLConverter : BaseBpmnXMLConverter {
   
-  public Class<BaseElement> getBpmnElementType() {
-    return StartEvent.class;
+  public Type getBpmnElementType() {
+    return typeof(StartEvent);
   }
   
-  @Override
+  //@Override
+
   protected String getXMLElementName() {
     return ELEMENT_EVENT_START;
   }
   
-  @Override
-  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  //@Override
+
+  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) {
     String formKey = xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_FORM_FORMKEY);
     StartEvent startEvent = null;
-    if (StringUtils.isNotEmpty(formKey)) {
+    if (!String.IsNullOrWhiteSpace(formKey)) {
       if (model.getStartEventFormTypes() != null && model.getStartEventFormTypes().contains(formKey)) {
         startEvent = new AlfrescoStartEvent();
       }
@@ -57,22 +67,25 @@ public class StartEventXMLConverter : BaseBpmnXMLConverter {
     return startEvent;
   }
   
-  @Override
-  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) {
     StartEvent startEvent = (StartEvent) element;
     writeQualifiedAttribute(ATTRIBUTE_EVENT_START_INITIATOR, startEvent.getInitiator(), xtw);
     writeQualifiedAttribute(ATTRIBUTE_FORM_FORMKEY, startEvent.getFormKey(), xtw);
   }
   
-  @Override
-  protected bool writeExtensionChildElements(BaseElement element, bool didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected bool writeExtensionChildElements(BaseElement element, bool didWriteExtensionStartElement, XMLStreamWriter xtw) {
     StartEvent startEvent = (StartEvent) element;
     didWriteExtensionStartElement = writeFormProperties(startEvent, didWriteExtensionStartElement, xtw);
     return didWriteExtensionStartElement;
   }
   
-  @Override
-  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) {
     StartEvent startEvent = (StartEvent) element;
     writeEventDefinitions(startEvent, startEvent.getEventDefinitions(), model, xtw);
   }

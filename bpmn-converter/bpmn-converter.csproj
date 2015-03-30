@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.3.1.0\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core">
+      <HintPath>..\packages\Common.Logging.Core.3.1.0\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -126,8 +132,11 @@
     <Compile Include="converter\util\BpmnXMLUtil.cs" />
     <Compile Include="converter\util\CommaSplitter.cs" />
     <Compile Include="converter\util\InputStreamProvider.cs" />
+    <Compile Include="converter\util\StringExtensionMethods.cs" />
+    <Compile Include="converter\util\XMLStreamReader.cs" />
     <Compile Include="converter\ValuedDataObjectXMLConverter.cs" />
     <Compile Include="converter\XMLStreamReaderUtil.cs" />
+    <Compile Include="converter\XMLStreamWriter.cs" />
     <Compile Include="exceptions\XMLException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -136,6 +145,9 @@
       <Project>{d7072e59-ed2d-4d4a-83fb-7021694547a0}</Project>
       <Name>bpmn-model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

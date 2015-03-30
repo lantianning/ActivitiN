@@ -10,6 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter.parser{
 
 
@@ -21,12 +28,13 @@ namespace org.activiti.bpmn.converter.parser{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class MessageParser : BpmnXMLConstants {
   
-  public void parse(XMLStreamReader xtr, BpmnModel model) throws Exception {
-    if (StringUtils.isNotEmpty(xtr.getAttributeValue(null, ATTRIBUTE_ID))) {
+  public void parse(XMLStreamReader xtr, BpmnModel model) {
+    if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_ID))) {
       String messageId = model.getTargetNamespace() + ":" + xtr.getAttributeValue(null, ATTRIBUTE_ID);
       String messageName = xtr.getAttributeValue(null, ATTRIBUTE_NAME);
       String itemRef = parseItemRef(xtr.getAttributeValue(null, ATTRIBUTE_ITEM_REF), model);
@@ -39,12 +47,12 @@ public class MessageParser : BpmnXMLConstants {
   
   protected String parseItemRef(String itemRef, BpmnModel model) {
     String result = null;
-    if (StringUtils.isNotEmpty(itemRef)) {
+    if (!String.IsNullOrWhiteSpace(itemRef)) {
       int indexOfP = itemRef.indexOf(':');
       if (indexOfP != -1) {
-        String prefix = itemRef.substring(0, indexOfP);
+        String prefix = itemRef.Substring(0, indexOfP);
         String resolvedNamespace = model.getNamespace(prefix);
-        result = resolvedNamespace + ":" + itemRef.substring(indexOfP + 1);
+        result = resolvedNamespace + ":" + itemRef.Substring(indexOfP + 1);
       } else {
         result = model.getTargetNamespace() + ":" + itemRef;
       }

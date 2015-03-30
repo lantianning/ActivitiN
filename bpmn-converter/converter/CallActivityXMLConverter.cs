@@ -10,6 +10,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using System.Collections.Generic;
+using bpmn_converter.converter;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.child;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter{
 
 
@@ -28,30 +37,33 @@ namespace org.activiti.bpmn.converter{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class CallActivityXMLConverter : BaseBpmnXMLConverter {
   
-  protected Map<String, BaseChildElementParser> childParserMap = new HashMap<String, BaseChildElementParser>();
+  protected Dictionary<String, BaseChildElementParser> childParserMap = new Dictionary<String, BaseChildElementParser>();
   
   public CallActivityXMLConverter() {
   	InParameterParser inParameterParser = new InParameterParser();
-  	childParserMap.put(inParameterParser.getElementName(), inParameterParser);
+  	childParserMap.Add(inParameterParser.getElementName(), inParameterParser);
     OutParameterParser outParameterParser = new OutParameterParser();
-    childParserMap.put(outParameterParser.getElementName(), outParameterParser);
+    childParserMap.Add(outParameterParser.getElementName(), outParameterParser);
   }
 
-  public Class<BaseElement> getBpmnElementType() {
-    return CallActivity.class;
+  public Type getBpmnElementType() {
+    return typeof(CallActivity);
   }
   
-  @Override
+  //@Override
+
   protected String getXMLElementName() {
     return ELEMENT_CALL_ACTIVITY;
   }
   
-  @Override
-  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  //@Override
+
+  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) {
     CallActivity callActivity = new CallActivity();
     BpmnXMLUtil.addXMLLocation(callActivity, xtr);
     callActivity.setCalledElement(xtr.getAttributeValue(null, ATTRIBUTE_CALL_ACTIVITY_CALLEDELEMENT));
@@ -59,43 +71,46 @@ public class CallActivityXMLConverter : BaseBpmnXMLConverter {
     return callActivity;
   }
 
-  @Override
-  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) {
     CallActivity callActivity = (CallActivity) element;
-    if (StringUtils.isNotEmpty(callActivity.getCalledElement())) {
+    if (!String.IsNullOrWhiteSpace(callActivity.getCalledElement())) {
       xtw.writeAttribute(ATTRIBUTE_CALL_ACTIVITY_CALLEDELEMENT, callActivity.getCalledElement());
     }
   }
   
-  @Override
-  protected bool writeExtensionChildElements(BaseElement element, bool didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected bool writeExtensionChildElements(BaseElement element, bool didWriteExtensionStartElement, XMLStreamWriter xtw) {
     CallActivity callActivity = (CallActivity) element;
     didWriteExtensionStartElement = writeIOParameters(ELEMENT_CALL_ACTIVITY_IN_PARAMETERS, callActivity.getInParameters(), didWriteExtensionStartElement, xtw);
     didWriteExtensionStartElement = writeIOParameters(ELEMENT_CALL_ACTIVITY_OUT_PARAMETERS, callActivity.getOutParameters(), didWriteExtensionStartElement, xtw);
     return didWriteExtensionStartElement;
   }
 
-  @Override
-  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) {
   }
   
-  private bool writeIOParameters(String elementName, List<IOParameter> parameterList, bool didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
+  private bool writeIOParameters(String elementName, List<IOParameter> parameterList, bool didWriteExtensionStartElement, XMLStreamWriter xtw) {
     if (parameterList.isEmpty()) return didWriteExtensionStartElement;
     
-    for (IOParameter ioParameter : parameterList) {
+    foreach (IOParameter ioParameter  in parameterList) {
       if (didWriteExtensionStartElement == false) { 
         xtw.writeStartElement(ELEMENT_EXTENSIONS);
         didWriteExtensionStartElement = true;
       }
       
       xtw.writeStartElement(ACTIVITI_EXTENSIONS_PREFIX, elementName, ACTIVITI_EXTENSIONS_NAMESPACE);
-      if (StringUtils.isNotEmpty(ioParameter.getSource())) {
+      if (!String.IsNullOrWhiteSpace(ioParameter.getSource())) {
         writeDefaultAttribute(ATTRIBUTE_IOPARAMETER_SOURCE, ioParameter.getSource(), xtw);
       }
-      if (StringUtils.isNotEmpty(ioParameter.getSourceExpression())) {
+      if (!String.IsNullOrWhiteSpace(ioParameter.getSourceExpression())) {
         writeDefaultAttribute(ATTRIBUTE_IOPARAMETER_SOURCE_EXPRESSION, ioParameter.getSourceExpression(), xtw);
       }
-      if (StringUtils.isNotEmpty(ioParameter.getTarget())) {
+      if (!String.IsNullOrWhiteSpace(ioParameter.getTarget())) {
         writeDefaultAttribute(ATTRIBUTE_IOPARAMETER_TARGET, ioParameter.getTarget(), xtw);
       }
       
@@ -107,18 +122,18 @@ public class CallActivityXMLConverter : BaseBpmnXMLConverter {
   
   public class InParameterParser : BaseChildElementParser {
 
-    public String getElementName() {
+    public override  String getElementName() {
       return ELEMENT_CALL_ACTIVITY_IN_PARAMETERS;
     }
 
-    public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
+    public override void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) {
       String source = xtr.getAttributeValue(null, ATTRIBUTE_IOPARAMETER_SOURCE);
       String sourceExpression = xtr.getAttributeValue(null, ATTRIBUTE_IOPARAMETER_SOURCE_EXPRESSION);
       String target = xtr.getAttributeValue(null, ATTRIBUTE_IOPARAMETER_TARGET);
-      if((StringUtils.isNotEmpty(source) || StringUtils.isNotEmpty(sourceExpression)) && StringUtils.isNotEmpty(target)) {
+      if((!String.IsNullOrWhiteSpace(source) || !String.IsNullOrWhiteSpace(sourceExpression)) && !String.IsNullOrWhiteSpace(target)) {
         
         IOParameter parameter = new IOParameter();
-        if(StringUtils.isNotEmpty(sourceExpression)) {
+        if(!String.IsNullOrWhiteSpace(sourceExpression)) {
           parameter.setSourceExpression(sourceExpression);
         } else {
           parameter.setSource(source);
@@ -126,25 +141,25 @@ public class CallActivityXMLConverter : BaseBpmnXMLConverter {
         
         parameter.setTarget(target);
         
-        ((CallActivity) parentElement).getInParameters().add(parameter);
+        ((CallActivity) parentElement).getInParameters().Add(parameter);
       }
     }
   }
   
   public class OutParameterParser : BaseChildElementParser {
 
-    public String getElementName() {
+    public override  String getElementName() {
       return ELEMENT_CALL_ACTIVITY_OUT_PARAMETERS;
     }
 
-    public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
+    public override void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) {
       String source = xtr.getAttributeValue(null, ATTRIBUTE_IOPARAMETER_SOURCE);
       String sourceExpression = xtr.getAttributeValue(null, ATTRIBUTE_IOPARAMETER_SOURCE_EXPRESSION);
       String target = xtr.getAttributeValue(null, ATTRIBUTE_IOPARAMETER_TARGET);
-      if((StringUtils.isNotEmpty(source) || StringUtils.isNotEmpty(sourceExpression)) && StringUtils.isNotEmpty(target)) {
+      if((!String.IsNullOrWhiteSpace(source) || !String.IsNullOrWhiteSpace(sourceExpression)) && !String.IsNullOrWhiteSpace(target)) {
         
         IOParameter parameter = new IOParameter();
-        if(StringUtils.isNotEmpty(sourceExpression)) {
+        if(!String.IsNullOrWhiteSpace(sourceExpression)) {
           parameter.setSourceExpression(sourceExpression);
         } else {
           parameter.setSource(source);
@@ -152,7 +167,7 @@ public class CallActivityXMLConverter : BaseBpmnXMLConverter {
         
         parameter.setTarget(target);
         
-        ((CallActivity) parentElement).getOutParameters().add(parameter);
+        ((CallActivity) parentElement).getOutParameters().Add(parameter);
       }
     }
   }

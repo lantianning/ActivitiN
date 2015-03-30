@@ -10,6 +10,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter.parser
 {
 
@@ -22,14 +28,15 @@ namespace org.activiti.bpmn.converter.parser
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 
     public class LaneParser : BpmnXMLConstants
     {
 
         public void parse(XMLStreamReader xtr, Process activeProcess, BpmnModel model)
-        private throws Exception { Lane  lane  = new Lane  (); BpmnXMLUtil  . addXMLLocation  ( lane  , xtr  ); lane  .
+        private { Lane  lane  = new Lane  (); BpmnXMLUtil  . addXMLLocation  ( lane  , xtr  ); lane  .
             setId  ( xtr  . getAttributeValue  (null, ATTRIBUTE_ID  )); lane  . setName  ( xtr  .
             getAttributeValue  (null, ATTRIBUTE_NAME  )); lane  . setParentProcess  ( activeProcess  ); activeProcess  .
             getLanes  (). add  ( lane  ); BpmnXMLUtil  . parseChildElements  ( ELEMENT_LANE  , lane  , xtr  , model  );

@@ -10,45 +10,57 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.export{
 
+using System;
+using bpmn_converter.converter;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
 
+namespace org.activiti.bpmn.converter.export
+{
 
+    public class MultiInstanceExport : BpmnXMLConstants
+    {
 
+        public static void writeMultiInstance(Activity activity, XMLStreamWriter xtw)
+        {
+            if (activity.getLoopCharacteristics() != null)
+            {
+                MultiInstanceLoopCharacteristics multiInstanceObject = activity.getLoopCharacteristics();
+                if (!String.IsNullOrWhiteSpace(multiInstanceObject.getLoopCardinality()) ||
+                    !String.IsNullOrWhiteSpace(multiInstanceObject.getInputDataItem()) ||
+                    !String.IsNullOrWhiteSpace(multiInstanceObject.getCompletionCondition()))
+                {
 
-
-
-
-
-public class MultiInstanceExport : BpmnXMLConstants {
-
-  public static void writeMultiInstance(Activity activity, XMLStreamWriter xtw) throws Exception {
-    if (activity.getLoopCharacteristics() != null) {
-      MultiInstanceLoopCharacteristics multiInstanceObject = activity.getLoopCharacteristics();
-      if (StringUtils.isNotEmpty(multiInstanceObject.getLoopCardinality()) ||
-          StringUtils.isNotEmpty(multiInstanceObject.getInputDataItem()) ||
-          StringUtils.isNotEmpty(multiInstanceObject.getCompletionCondition())) {
-        
-        xtw.writeStartElement(ELEMENT_MULTIINSTANCE);
-        BpmnXMLUtil.writeDefaultAttribute(ATTRIBUTE_MULTIINSTANCE_SEQUENTIAL, String.valueOf(multiInstanceObject.isSequential()).toLowerCase(), xtw);
-        if (StringUtils.isNotEmpty(multiInstanceObject.getInputDataItem())) {
-          BpmnXMLUtil.writeQualifiedAttribute(ATTRIBUTE_MULTIINSTANCE_COLLECTION, multiInstanceObject.getInputDataItem(), xtw);
+                    xtw.writeStartElement(ELEMENT_MULTIINSTANCE);
+                    BpmnXMLUtil.writeDefaultAttribute(ATTRIBUTE_MULTIINSTANCE_SEQUENTIAL,
+                        multiInstanceObject.isSequential().ToString().ToLower(), xtw);
+                    if (!String.IsNullOrWhiteSpace(multiInstanceObject.getInputDataItem()))
+                    {
+                        BpmnXMLUtil.writeQualifiedAttribute(ATTRIBUTE_MULTIINSTANCE_COLLECTION,
+                            multiInstanceObject.getInputDataItem(), xtw);
+                    }
+                    if (!String.IsNullOrWhiteSpace(multiInstanceObject.getElementVariable()))
+                    {
+                        BpmnXMLUtil.writeQualifiedAttribute(ATTRIBUTE_MULTIINSTANCE_VARIABLE,
+                            multiInstanceObject.getElementVariable(), xtw);
+                    }
+                    if (!String.IsNullOrWhiteSpace(multiInstanceObject.getLoopCardinality()))
+                    {
+                        xtw.writeStartElement(ELEMENT_MULTIINSTANCE_CARDINALITY);
+                        xtw.writeCharacters(multiInstanceObject.getLoopCardinality());
+                        xtw.writeEndElement();
+                    }
+                    if (!String.IsNullOrWhiteSpace(multiInstanceObject.getCompletionCondition()))
+                    {
+                        xtw.writeStartElement(ELEMENT_MULTIINSTANCE_CONDITION);
+                        xtw.writeCharacters(multiInstanceObject.getCompletionCondition());
+                        xtw.writeEndElement();
+                    }
+                    xtw.writeEndElement();
+                }
+            }
         }
-        if (StringUtils.isNotEmpty(multiInstanceObject.getElementVariable())) {
-          BpmnXMLUtil.writeQualifiedAttribute(ATTRIBUTE_MULTIINSTANCE_VARIABLE, multiInstanceObject.getElementVariable(), xtw);
-        }
-        if (StringUtils.isNotEmpty(multiInstanceObject.getLoopCardinality())) {
-          xtw.writeStartElement(ELEMENT_MULTIINSTANCE_CARDINALITY);
-          xtw.writeCharacters(multiInstanceObject.getLoopCardinality());
-          xtw.writeEndElement();
-        }
-        if (StringUtils.isNotEmpty(multiInstanceObject.getCompletionCondition())) {
-          xtw.writeStartElement(ELEMENT_MULTIINSTANCE_CONDITION);
-          xtw.writeCharacters(multiInstanceObject.getCompletionCondition());
-          xtw.writeEndElement();
-        }
-        xtw.writeEndElement();
-      }
     }
-  }
 }

@@ -10,7 +10,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
+
+using System;
+using bpmn_converter.converter.util;
+using Common.Logging;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.model;
+
+namespace org.activiti.bpmn.converter.child
+{
 
 
 
@@ -22,28 +30,39 @@ namespace org.activiti.bpmn.converter.child{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
-public abstract class BaseChildElementParser : BpmnXMLConstants {
-  
-  protected static final Logger LOGGER = LoggerFactory.getLogger(BaseChildElementParser.class);
 
-  public abstract String getElementName();
-  
-  public abstract void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception;
-  
-  protected void parseChildElements(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model, BaseChildElementParser parser) throws Exception {
-    bool readyWithChildElements = false;
-    while (readyWithChildElements == false && xtr.hasNext()) {
-      xtr.next();
-      if (xtr.isStartElement()) {
-        if (parser.getElementName().equals(xtr.getLocalName())) {
-          parser.parseChildElement(xtr, parentElement, model);
+    public abstract class BaseChildElementParser : BpmnXMLConstants
+    {
+
+        protected static ILog LOGGER = LogManager.GetLogger(typeof(BaseChildElementParser));
+
+        public abstract String getElementName();
+
+        public abstract void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model);
+
+        protected void parseChildElements(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model,
+            BaseChildElementParser parser)
+        {
+            bool readyWithChildElements = false;
+            while (readyWithChildElements == false && xtr.hasNext())
+            {
+                xtr.next();
+                if (xtr.isStartElement())
+                {
+                    if (parser.getElementName().Equals(xtr.getLocalName()))
+                    {
+                        parser.parseChildElement(xtr, parentElement, model);
+                    }
+
+                }
+                else if (xtr.isEndElement() && getElementName().equalsIgnoreCase(xtr.getLocalName()))
+                {
+                    readyWithChildElements = true;
+                }
+            }
         }
-
-      } else if (xtr.isEndElement() && getElementName().equalsIgnoreCase(xtr.getLocalName())) {
-        readyWithChildElements = true;
-      }
     }
-  }
 }

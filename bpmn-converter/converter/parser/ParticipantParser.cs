@@ -10,6 +10,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.constants;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter.parser{
 
 
@@ -23,21 +30,22 @@ namespace org.activiti.bpmn.converter.parser{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class ParticipantParser : BpmnXMLConstants {
   
-  protected static final Logger LOGGER = LoggerFactory.getLogger(ParticipantParser.class.getName());
+  protected static  ILog LOGGER = LogManager.GetLogger(typeof(ParticipantParser).getName());
   
-  public void parse(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  public void parse(XMLStreamReader xtr, BpmnModel model) {
     
-    if (StringUtils.isNotEmpty(xtr.getAttributeValue(null, ATTRIBUTE_ID))) {
+    if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_ID))) {
       Pool pool = new Pool();
       pool.setId(xtr.getAttributeValue(null, ATTRIBUTE_ID));
       pool.setName(xtr.getAttributeValue(null, ATTRIBUTE_NAME));
       pool.setProcessRef(xtr.getAttributeValue(null, ATTRIBUTE_PROCESS_REF));
       BpmnXMLUtil.parseChildElements(ELEMENT_PARTICIPANT, pool, xtr, model);
-      model.getPools().add(pool);
+      model.getPools().Add(pool);
     }
   }
 }

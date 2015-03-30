@@ -10,6 +10,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+using System;
+using bpmn_converter.converter;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.export;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
+
 namespace org.activiti.bpmn.converter{
 
 
@@ -25,36 +33,39 @@ namespace org.activiti.bpmn.converter{
 
 
 /**
- * @author Tijs Rademakers
+ * //@author Tijs Rademakers
+
  */
 public class ServiceTaskXMLConverter : BaseBpmnXMLConverter {
   
-  public Class<BaseElement> getBpmnElementType() {
-    return ServiceTask.class;
+  public Type getBpmnElementType() {
+    return typeof(ServiceTask);
   }
   
-  @Override
+  //@Override
+
   protected String getXMLElementName() {
     return ELEMENT_TASK_SERVICE;
   }
 
-  @Override
-  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) throws Exception {
+  //@Override
+
+  protected BaseElement convertXMLToElement(XMLStreamReader xtr, BpmnModel model) {
 		ServiceTask serviceTask = new ServiceTask();
 		BpmnXMLUtil.addXMLLocation(serviceTask, xtr);
-		if (StringUtils.isNotEmpty(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_TASK_SERVICE_CLASS))) {
+		if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_TASK_SERVICE_CLASS))) {
 			serviceTask.setImplementationType(ImplementationType.IMPLEMENTATION_TYPE_CLASS);
 			serviceTask.setImplementation(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_TASK_SERVICE_CLASS));
 			
-		} else if (StringUtils.isNotEmpty(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_TASK_SERVICE_EXPRESSION))) {
+		} else if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_TASK_SERVICE_EXPRESSION))) {
 			serviceTask.setImplementationType(ImplementationType.IMPLEMENTATION_TYPE_EXPRESSION);
 			serviceTask.setImplementation(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_TASK_SERVICE_EXPRESSION));
 			
-		} else if (StringUtils.isNotEmpty(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_TASK_SERVICE_DELEGATEEXPRESSION))) {
+		} else if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_TASK_SERVICE_DELEGATEEXPRESSION))) {
 			serviceTask.setImplementationType(ImplementationType.IMPLEMENTATION_TYPE_DELEGATEEXPRESSION);
 			serviceTask.setImplementation(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_TASK_SERVICE_DELEGATEEXPRESSION));
 		
-		} else if ("##WebService".equals(xtr.getAttributeValue(null, ATTRIBUTE_TASK_IMPLEMENTATION))) {
+		} else if ("##WebService".Equals(xtr.getAttributeValue(null, ATTRIBUTE_TASK_IMPLEMENTATION))) {
 		  serviceTask.setImplementationType(ImplementationType.IMPLEMENTATION_TYPE_WEBSERVICE);
 		  serviceTask.setOperationRef(parseOperationRef(xtr.getAttributeValue(null, ATTRIBUTE_TASK_OPERATION_REF), model));
 		}
@@ -67,7 +78,7 @@ public class ServiceTaskXMLConverter : BaseBpmnXMLConverter {
 		serviceTask.setType(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_TYPE));
 		serviceTask.setExtensionId(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_TASK_SERVICE_EXTENSIONID));
 	
-		if (StringUtils.isNotEmpty(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_TASK_SERVICE_SKIP_EXPRESSION))) {
+		if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_TASK_SERVICE_SKIP_EXPRESSION))) {
 		  serviceTask.setSkipExpression(xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_TASK_SERVICE_SKIP_EXPRESSION));
 		}
 		parseChildElements(getXMLElementName(), serviceTask, model, xtr);
@@ -75,39 +86,41 @@ public class ServiceTaskXMLConverter : BaseBpmnXMLConverter {
 		return serviceTask;
   }
   
-  @Override
-  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected void writeAdditionalAttributes(BaseElement element, BpmnModel model, XMLStreamWriter xtw) {
     
     ServiceTask serviceTask = (ServiceTask) element;
     
-    if (ImplementationType.IMPLEMENTATION_TYPE_CLASS.equals(serviceTask.getImplementationType())) {
+    if (ImplementationType.IMPLEMENTATION_TYPE_CLASS.Equals(serviceTask.getImplementationType())) {
       writeQualifiedAttribute(ATTRIBUTE_TASK_SERVICE_CLASS, serviceTask.getImplementation(), xtw);
-    } else if (ImplementationType.IMPLEMENTATION_TYPE_EXPRESSION.equals(serviceTask.getImplementationType())) {
+    } else if (ImplementationType.IMPLEMENTATION_TYPE_EXPRESSION.Equals(serviceTask.getImplementationType())) {
       writeQualifiedAttribute(ATTRIBUTE_TASK_SERVICE_EXPRESSION, serviceTask.getImplementation(), xtw);
-    } else if (ImplementationType.IMPLEMENTATION_TYPE_DELEGATEEXPRESSION.equals(serviceTask.getImplementationType())) {
+    } else if (ImplementationType.IMPLEMENTATION_TYPE_DELEGATEEXPRESSION.Equals(serviceTask.getImplementationType())) {
       writeQualifiedAttribute(ATTRIBUTE_TASK_SERVICE_DELEGATEEXPRESSION, serviceTask.getImplementation(), xtw);
     }
     
-    if (StringUtils.isNotEmpty(serviceTask.getResultVariableName())) {
+    if (!String.IsNullOrWhiteSpace(serviceTask.getResultVariableName())) {
       writeQualifiedAttribute(ATTRIBUTE_TASK_SERVICE_RESULTVARIABLE, serviceTask.getResultVariableName(), xtw);
     }
-    if (StringUtils.isNotEmpty(serviceTask.getType())) {
+    if (!String.IsNullOrWhiteSpace(serviceTask.getType())) {
       writeQualifiedAttribute(ATTRIBUTE_TYPE, serviceTask.getType(), xtw);
     }
-    if (StringUtils.isNotEmpty(serviceTask.getExtensionId())) {
+    if (!String.IsNullOrWhiteSpace(serviceTask.getExtensionId())) {
       writeQualifiedAttribute(ATTRIBUTE_TASK_SERVICE_EXTENSIONID, serviceTask.getExtensionId(), xtw);
     }
-    if (StringUtils.isNotEmpty(serviceTask.getSkipExpression())) {
+    if (!String.IsNullOrWhiteSpace(serviceTask.getSkipExpression())) {
       writeQualifiedAttribute(ATTRIBUTE_TASK_SERVICE_SKIP_EXPRESSION, serviceTask.getSkipExpression(), xtw);
     }
   }
   
-  @Override
-  protected bool writeExtensionChildElements(BaseElement element, bool didWriteExtensionStartElement, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected bool writeExtensionChildElements(BaseElement element, bool didWriteExtensionStartElement, XMLStreamWriter xtw) {
     ServiceTask serviceTask = (ServiceTask) element;
     
     if (!serviceTask.getCustomProperties().isEmpty()) {
-      for (CustomProperty customProperty : serviceTask.getCustomProperties()) {
+      foreach (CustomProperty customProperty  in serviceTask.getCustomProperties()) {
         
         if (StringUtils.isEmpty(customProperty.getSimpleValue())) {
           continue;
@@ -137,18 +150,19 @@ public class ServiceTaskXMLConverter : BaseBpmnXMLConverter {
     return didWriteExtensionStartElement;
   }
   
-  @Override
-  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) throws Exception {
+  //@Override
+
+  protected void writeAdditionalChildElements(BaseElement element, BpmnModel model, XMLStreamWriter xtw) {
   }
   
   protected String parseOperationRef(String operationRef, BpmnModel model) {
     String result = null;
-    if (StringUtils.isNotEmpty(operationRef)) {
+    if (!String.IsNullOrWhiteSpace(operationRef)) {
       int indexOfP = operationRef.indexOf(':');
       if (indexOfP != -1) {
-        String prefix = operationRef.substring(0, indexOfP);
+        String prefix = operationRef.Substring(0, indexOfP);
         String resolvedNamespace = model.getNamespace(prefix);
-        result = resolvedNamespace + ":" + operationRef.substring(indexOfP + 1);
+        result = resolvedNamespace + ":" + operationRef.Substring(indexOfP + 1);
       } else {
         result = model.getTargetNamespace() + ":" + operationRef;
       }

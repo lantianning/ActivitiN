@@ -10,30 +10,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
 
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
 
+namespace org.activiti.bpmn.converter.child
+{
 
+    public class CancelEventDefinitionParser : BaseChildElementParser
+    {
 
+        public override String getElementName()
+        {
+            return ELEMENT_EVENT_CANCELDEFINITION;
+        }
 
+        public override void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model)
+        {
+            if (parentElement as Event == null) return;
 
-
-
-
-/**
- * @author Tijs Rademakers
- */
-public class CancelEventDefinitionParser : BaseChildElementParser {
-
-  public String getElementName() {
-    return ELEMENT_EVENT_CANCELDEFINITION;
-  }
-  
-  public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
-    if (parentElement instanceof Event == false) return;
-    
-    CancelEventDefinition eventDefinition = new CancelEventDefinition();
-    BpmnXMLUtil.addXMLLocation(eventDefinition, xtr);
-    ((Event) parentElement).getEventDefinitions().add(eventDefinition);
-  }
+            CancelEventDefinition eventDefinition = new CancelEventDefinition();
+            BpmnXMLUtil.addXMLLocation(eventDefinition, xtr);
+            ((Event) parentElement).getEventDefinitions().Add(eventDefinition);
+        }
+    }
 }

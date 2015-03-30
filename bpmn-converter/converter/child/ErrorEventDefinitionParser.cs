@@ -10,34 +10,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
 
+using System;
+using bpmn_converter.converter.util;
+using org.activiti.bpmn.converter.util;
+using org.activiti.bpmn.model;
 
+namespace org.activiti.bpmn.converter.child
+{
 
+    public class ErrorEventDefinitionParser : BaseChildElementParser
+    {
 
+        public override String getElementName()
+        {
+            return ELEMENT_EVENT_ERRORDEFINITION;
+        }
 
+        public override void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model)
+        {
+            if (parentElement as Event == null) return;
 
+            ErrorEventDefinition eventDefinition = new ErrorEventDefinition();
+            BpmnXMLUtil.addXMLLocation(eventDefinition, xtr);
+            eventDefinition.setErrorCode(xtr.getAttributeValue(null, "errorRef"));
 
+            BpmnXMLUtil.parseChildElements(ELEMENT_EVENT_ERRORDEFINITION, eventDefinition, xtr, model);
 
-
-/**
- * @author Tijs Rademakers
- */
-public class ErrorEventDefinitionParser : BaseChildElementParser {
-
-  public String getElementName() {
-    return ELEMENT_EVENT_ERRORDEFINITION;
-  }
-  
-  public void parseChildElement(XMLStreamReader xtr, BaseElement parentElement, BpmnModel model) throws Exception {
-    if (parentElement instanceof Event == false) return;
-    
-    ErrorEventDefinition eventDefinition = new ErrorEventDefinition();
-    BpmnXMLUtil.addXMLLocation(eventDefinition, xtr);
-    eventDefinition.setErrorCode(xtr.getAttributeValue(null, "errorRef"));
-    
-    BpmnXMLUtil.parseChildElements(ELEMENT_EVENT_ERRORDEFINITION, eventDefinition, xtr, model);
-    
-    ((Event) parentElement).getEventDefinitions().add(eventDefinition);
-  }
+            ((Event) parentElement).getEventDefinitions().Add(eventDefinition);
+        }
+    }
 }

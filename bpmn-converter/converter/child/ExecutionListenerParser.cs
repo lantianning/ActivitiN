@@ -10,24 +10,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-namespace org.activiti.bpmn.converter.child{
 
+using System;
+using org.activiti.bpmn.model;
 
+namespace org.activiti.bpmn.converter.child
+{
 
+    public class ExecutionListenerParser : ActivitiListenerParser
+    {
 
+        public override String getElementName()
+        {
+            return ELEMENT_EXECUTION_LISTENER;
+        }
 
-/**
- * @author Tijs Rademakers
- */
-public class ExecutionListenerParser : ActivitiListenerParser {
-
-  public String getElementName() {
-  	return ELEMENT_EXECUTION_LISTENER;
-  }
-  
-  public void addListenerToParent(ActivitiListener listener, BaseElement parentElement) {
-    if (parentElement instanceof HasExecutionListeners) {
-      ((HasExecutionListeners) parentElement).getExecutionListeners().add(listener);
+        public override void addListenerToParent(ActivitiListener listener, BaseElement parentElement)
+        {
+            if (parentElement as HasExecutionListeners != null)
+            {
+                ((HasExecutionListeners) parentElement).getExecutionListeners().Add(listener);
+            }
+        }
     }
-  }
 }
