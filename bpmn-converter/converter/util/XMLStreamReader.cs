@@ -1,9 +1,19 @@
 ﻿using System;
+using System.IO;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace bpmn_converter.converter.util
 {
     public class XMLStreamReader
     {
+        private XElement xmlreader;
+
+        public XMLStreamReader()
+        {
+            
+        }
+
         public string getAttributeValue(object p0, object attributeListenerClass)
         {
             throw new NotImplementedException();

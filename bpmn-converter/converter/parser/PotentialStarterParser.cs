@@ -13,61 +13,63 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using bpmn_converter.converter.util;
 using org.activiti.bpmn.constants;
+using org.activiti.bpmn.model;
 
-namespace org.activiti.bpmn.converter.parser{
+namespace org.activiti.bpmn.converter.parser
+{
 
+    public class PotentialStarterParser : BpmnXMLConstants
+    {
 
+        public void parse(XMLStreamReader xtr, Process activeProcess)
+        {
+            String resourceElement = XMLStreamReaderUtil.moveDown(xtr);
+            if (!String.IsNullOrWhiteSpace(resourceElement) && "resourceAssignmentExpression".Equals(resourceElement))
+            {
+                String expression = XMLStreamReaderUtil.moveDown(xtr);
+                if (!String.IsNullOrWhiteSpace(expression) && "formalExpression".Equals(expression))
+                {
+                    List<String> assignmentList = new List<String>();
+                    String assignmentText = xtr.getElementText();
+                    if (assignmentText.Contains(","))
+                    {
+                        String[] assignmentArray = assignmentText.Split(',');
+                        assignmentList = assignmentArray.ToList();
+                    }
+                    else
+                    {
+                        assignmentList.Add(assignmentText);
+                    }
+                    foreach (String assignmentValue  in assignmentList)
+                    {
+                        if (assignmentValue == null)
+                            continue;
+                        var value = assignmentValue.Trim();
+                        if (value.length() == 0)
+                            continue;
 
-
-
-
-
-
-
-
-
-
-/**
- * //@author Tijs Rademakers
-
- */
-public class PotentialStarterParser : BpmnXMLConstants {
-  
-  public void parse(XMLStreamReader xtr, Process activeProcess) {
-    String resourceElement = XMLStreamReaderUtil.moveDown(xtr);
-    if (!String.IsNullOrWhiteSpace(resourceElement) && "resourceAssignmentExpression".Equals(resourceElement)) {
-      String expression = XMLStreamReaderUtil.moveDown(xtr);
-      if (!String.IsNullOrWhiteSpace(expression) && "formalExpression".Equals(expression)) {
-        List<String> assignmentList = new List<String>();
-        String assignmentText = xtr.getElementText();
-        if (assignmentText.contains(",")) {
-          String[] assignmentArray = assignmentText.split(",");
-          assignmentList = Arrays.asList(assignmentArray);
-        } else {
-          assignmentList.Add(assignmentText);
+                        String userPrefix = "user(";
+                        String groupPrefix = "group(";
+                        if (value.StartsWith(userPrefix))
+                        {
+                            value = value.Substring(userPrefix.length(), value.length() - 1).Trim();
+                            activeProcess.getCandidateStarterUsers().Add(value);
+                        }
+                        else if (value.StartsWith(groupPrefix))
+                        {
+                            value = value.Substring(groupPrefix.length(), value.length() - 1).Trim();
+                            activeProcess.getCandidateStarterGroups().Add(value);
+                        }
+                        else
+                        {
+                            activeProcess.getCandidateStarterGroups().Add(value);
+                        }
+                    }
+                }
+            }
         }
-        foreach (String assignmentValue  in assignmentList) {
-          if (assignmentValue == null)
-            continue;
-          assignmentValue = assignmentValue.Trim();
-          if (assignmentValue.length() == 0)
-            continue;
-
-          String userPrefix = "user(";
-          String groupPrefix = "group(";
-          if (assignmentValue.StartsWith(userPrefix)) {
-            assignmentValue = assignmentValue.Substring(userPrefix.length(), assignmentValue.length() - 1).Trim();
-            activeProcess.getCandidateStarterUsers().Add(assignmentValue);
-          } else if (assignmentValue.StartsWith(groupPrefix)) {
-            assignmentValue = assignmentValue.Substring(groupPrefix.length(), assignmentValue.length() - 1).Trim();
-            activeProcess.getCandidateStarterGroups().Add(assignmentValue);
-          } else {
-            activeProcess.getCandidateStarterGroups().Add(assignmentValue);
-          }
-        }
-      }
     }
-  }
 }

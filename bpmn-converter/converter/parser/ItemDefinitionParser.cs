@@ -17,7 +17,8 @@ using org.activiti.bpmn.constants;
 using org.activiti.bpmn.converter.util;
 using org.activiti.bpmn.model;
 
-namespace org.activiti.bpmn.converter.parser{
+namespace org.activiti.bpmn.converter.parser
+{
 
 
 
@@ -31,31 +32,40 @@ namespace org.activiti.bpmn.converter.parser{
  * //@author Tijs Rademakers
 
  */
-public class ItemDefinitionParser : BpmnXMLConstants {
-  
-  public void parse(XMLStreamReader xtr, BpmnModel model) {
-    if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_ID))) {
-      String itemDefinitionId = model.getTargetNamespace() + ":" + xtr.getAttributeValue(null, ATTRIBUTE_ID);
-      String structureRef = xtr.getAttributeValue(null, ATTRIBUTE_STRUCTURE_REF);
-      if (!String.IsNullOrWhiteSpace(structureRef)) {
-        ItemDefinition item = new ItemDefinition();
-        item.setId(itemDefinitionId);
-        BpmnXMLUtil.addXMLLocation(item, xtr);
-        
-        int indexOfP = structureRef.indexOf(':');
-        if (indexOfP != -1) {
-          String prefix = structureRef.Substring(0, indexOfP);
-          String resolvedNamespace = model.getNamespace(prefix);
-          structureRef = resolvedNamespace + ":" + structureRef.Substring(indexOfP + 1);
-        } else {
-          structureRef = model.getTargetNamespace() + ":" + structureRef;
+
+    public class ItemDefinitionParser : BpmnXMLConstants
+    {
+
+        public void parse(XMLStreamReader xtr, BpmnModel model)
+        {
+            if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_ID)))
+            {
+                String itemDefinitionId = model.getTargetNamespace() + ":" + xtr.getAttributeValue(null, ATTRIBUTE_ID);
+                String structureRef = xtr.getAttributeValue(null, ATTRIBUTE_STRUCTURE_REF);
+                if (!String.IsNullOrWhiteSpace(structureRef))
+                {
+                    ItemDefinition item = new ItemDefinition();
+                    item.setId(itemDefinitionId);
+                    BpmnXMLUtil.addXMLLocation(item, xtr);
+
+                    int indexOfP = structureRef.IndexOf(':');
+                    if (indexOfP != -1)
+                    {
+                        String prefix = structureRef.Substring(0, indexOfP);
+                        String resolvedNamespace = model.getNamespace(prefix);
+                        structureRef = resolvedNamespace + ":" + structureRef.Substring(indexOfP + 1);
+                    }
+                    else
+                    {
+                        structureRef = model.getTargetNamespace() + ":" + structureRef;
+                    }
+
+                    item.setStructureRef(structureRef);
+                    item.setItemKind(xtr.getAttributeValue(null, ATTRIBUTE_ITEM_KIND));
+                    BpmnXMLUtil.parseChildElements(ELEMENT_ITEM_DEFINITION, item, xtr, model);
+                    model.addItemDefinition(itemDefinitionId, item);
+                }
+            }
         }
-        
-        item.setStructureRef(structureRef);
-        item.setItemKind(xtr.getAttributeValue(null, ATTRIBUTE_ITEM_KIND));
-        BpmnXMLUtil.parseChildElements(ELEMENT_ITEM_DEFINITION, item, xtr, model);
-        model.addItemDefinition(itemDefinitionId, item);
-      }
     }
-  }
 }

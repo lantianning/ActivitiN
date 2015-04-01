@@ -13,10 +13,12 @@
 
 using System;
 using bpmn_converter.converter.util;
+using Common.Logging;
 using org.activiti.bpmn.constants;
 using org.activiti.bpmn.model;
 
-namespace org.activiti.bpmn.converter.parser{
+namespace org.activiti.bpmn.converter.parser
+{
 
 
 
@@ -31,37 +33,46 @@ namespace org.activiti.bpmn.converter.parser{
  * //@author Tijs Rademakers
 
  */
-public class MessageFlowParser : BpmnXMLConstants {
-  
-  protected static  ILog LOGGER = LogManager.GetLogger(typeof(MessageFlowParser).getName());
-  
-  public void parse(XMLStreamReader xtr, BpmnModel model) {
-    String id = xtr.getAttributeValue(null, ATTRIBUTE_ID);
-    if (!String.IsNullOrWhiteSpace(id)) {
-      MessageFlow messageFlow = new MessageFlow();
-      messageFlow.setId(id);
-      
-      String name = xtr.getAttributeValue(null, ATTRIBUTE_NAME);
-      if (!String.IsNullOrWhiteSpace(name)) {
-        messageFlow.setName(name);
-      }
-      
-      String sourceRef = xtr.getAttributeValue(null, ATTRIBUTE_FLOW_SOURCE_REF);
-      if (!String.IsNullOrWhiteSpace(sourceRef)) {
-        messageFlow.setSourceRef(sourceRef);
-      }
-      
-      String targetRef = xtr.getAttributeValue(null, ATTRIBUTE_FLOW_TARGET_REF);
-      if (!String.IsNullOrWhiteSpace(targetRef)) {
-        messageFlow.setTargetRef(targetRef);
-      }
-      
-      String messageRef = xtr.getAttributeValue(null, ATTRIBUTE_MESSAGE_REF);
-      if (!String.IsNullOrWhiteSpace(messageRef)) {
-        messageFlow.setMessageRef(messageRef);
-      }
-      
-      model.addMessageFlow(messageFlow);
+
+    public class MessageFlowParser : BpmnXMLConstants
+    {
+
+        protected static ILog LOGGER = LogManager.GetLogger(typeof (MessageFlowParser));
+
+        public void parse(XMLStreamReader xtr, BpmnModel model)
+        {
+            String id = xtr.getAttributeValue(null, ATTRIBUTE_ID);
+            if (!String.IsNullOrWhiteSpace(id))
+            {
+                MessageFlow messageFlow = new MessageFlow();
+                messageFlow.setId(id);
+
+                String name = xtr.getAttributeValue(null, ATTRIBUTE_NAME);
+                if (!String.IsNullOrWhiteSpace(name))
+                {
+                    messageFlow.setName(name);
+                }
+
+                String sourceRef = xtr.getAttributeValue(null, ATTRIBUTE_FLOW_SOURCE_REF);
+                if (!String.IsNullOrWhiteSpace(sourceRef))
+                {
+                    messageFlow.setSourceRef(sourceRef);
+                }
+
+                String targetRef = xtr.getAttributeValue(null, ATTRIBUTE_FLOW_TARGET_REF);
+                if (!String.IsNullOrWhiteSpace(targetRef))
+                {
+                    messageFlow.setTargetRef(targetRef);
+                }
+
+                String messageRef = xtr.getAttributeValue(null, ATTRIBUTE_MESSAGE_REF);
+                if (!String.IsNullOrWhiteSpace(messageRef))
+                {
+                    messageFlow.setMessageRef(messageRef);
+                }
+
+                model.addMessageFlow(messageFlow);
+            }
+        }
     }
-  }
 }

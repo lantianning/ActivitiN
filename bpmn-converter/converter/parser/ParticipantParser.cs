@@ -13,39 +13,32 @@
 
 using System;
 using bpmn_converter.converter.util;
+using Common.Logging;
 using org.activiti.bpmn.constants;
 using org.activiti.bpmn.converter.util;
 using org.activiti.bpmn.model;
 
-namespace org.activiti.bpmn.converter.parser{
+namespace org.activiti.bpmn.converter.parser
+{
 
 
+    public class ParticipantParser : BpmnXMLConstants
+    {
 
+        protected static ILog LOGGER = LogManager.GetLogger(typeof (ParticipantParser));
 
+        public void parse(XMLStreamReader xtr, BpmnModel model)
+        {
 
-
-
-
-
-
-
-/**
- * //@author Tijs Rademakers
-
- */
-public class ParticipantParser : BpmnXMLConstants {
-  
-  protected static  ILog LOGGER = LogManager.GetLogger(typeof(ParticipantParser).getName());
-  
-  public void parse(XMLStreamReader xtr, BpmnModel model) {
-    
-    if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_ID))) {
-      Pool pool = new Pool();
-      pool.setId(xtr.getAttributeValue(null, ATTRIBUTE_ID));
-      pool.setName(xtr.getAttributeValue(null, ATTRIBUTE_NAME));
-      pool.setProcessRef(xtr.getAttributeValue(null, ATTRIBUTE_PROCESS_REF));
-      BpmnXMLUtil.parseChildElements(ELEMENT_PARTICIPANT, pool, xtr, model);
-      model.getPools().Add(pool);
+            if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_ID)))
+            {
+                Pool pool = new Pool();
+                pool.setId(xtr.getAttributeValue(null, ATTRIBUTE_ID));
+                pool.setName(xtr.getAttributeValue(null, ATTRIBUTE_NAME));
+                pool.setProcessRef(xtr.getAttributeValue(null, ATTRIBUTE_PROCESS_REF));
+                BpmnXMLUtil.parseChildElements(ELEMENT_PARTICIPANT, pool, xtr, model);
+                model.getPools().Add(pool);
+            }
+        }
     }
-  }
 }

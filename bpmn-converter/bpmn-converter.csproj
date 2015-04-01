@@ -129,11 +129,11 @@
     <Compile Include="converter\TextAnnotationXMLConverter.cs" />
     <Compile Include="converter\ThrowEventXMLConverter.cs" />
     <Compile Include="converter\UserTaskXMLConverter.cs" />
+    <Compile Include="converter\util\XMLStreamReader.cs" />
     <Compile Include="converter\util\BpmnXMLUtil.cs" />
     <Compile Include="converter\util\CommaSplitter.cs" />
     <Compile Include="converter\util\InputStreamProvider.cs" />
     <Compile Include="converter\util\StringExtensionMethods.cs" />
-    <Compile Include="converter\util\XMLStreamReader.cs" />
     <Compile Include="converter\ValuedDataObjectXMLConverter.cs" />
     <Compile Include="converter\XMLStreamReaderUtil.cs" />
     <Compile Include="converter\XMLStreamWriter.cs" />

@@ -19,7 +19,8 @@ using org.activiti.bpmn.converter.export;
 using org.activiti.bpmn.converter.util;
 using org.activiti.bpmn.model;
 
-namespace org.activiti.bpmn.converter.parser{
+namespace org.activiti.bpmn.converter.parser
+{
 
 
 
@@ -36,35 +37,45 @@ namespace org.activiti.bpmn.converter.parser{
  * //@author Tijs Rademakers
 
  */
-public class ProcessParser : BpmnXMLConstants {
 
-  public Process parse(XMLStreamReader xtr, BpmnModel model) {
-    Process process = null;
-    if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_ID))) {
-      String processId = xtr.getAttributeValue(null, ATTRIBUTE_ID);
-      process = new Process();
-      process.setId(processId);
-      BpmnXMLUtil.addXMLLocation(process, xtr);
-      process.setName(xtr.getAttributeValue(null, ATTRIBUTE_NAME));
-      if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_PROCESS_EXECUTABLE))) {
-        process.setExecutable(bool.parseBoolean(xtr.getAttributeValue(null, ATTRIBUTE_PROCESS_EXECUTABLE)));
-      }
-      String candidateUsersString = xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_PROCESS_CANDIDATE_USERS);
-      if (!String.IsNullOrWhiteSpace(candidateUsersString)) {
-        List<String> candidateUsers = BpmnXMLUtil.parseDelimitedList(candidateUsersString);
-        process.setCandidateStarterUsers(candidateUsers);
-      }
-      String candidateGroupsString = xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_PROCESS_CANDIDATE_GROUPS);
-      if (!String.IsNullOrWhiteSpace(candidateGroupsString)) {
-        List<String> candidateGroups = BpmnXMLUtil.parseDelimitedList(candidateGroupsString);
-        process.setCandidateStarterGroups(candidateGroups);
-      }
+    public class ProcessParser : BpmnXMLConstants
+    {
 
-      BpmnXMLUtil.addCustomAttributes(xtr, process, ProcessExport.defaultProcessAttributes);
+        public Process parse(XMLStreamReader xtr, BpmnModel model)
+        {
+            Process process = null;
+            if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_ID)))
+            {
+                String processId = xtr.getAttributeValue(null, ATTRIBUTE_ID);
+                process = new Process();
+                process.setId(processId);
+                BpmnXMLUtil.addXMLLocation(process, xtr);
+                process.setName(xtr.getAttributeValue(null, ATTRIBUTE_NAME));
+                if (!String.IsNullOrWhiteSpace(xtr.getAttributeValue(null, ATTRIBUTE_PROCESS_EXECUTABLE)))
+                {
+                    process.setExecutable(bool.Parse(xtr.getAttributeValue(null, ATTRIBUTE_PROCESS_EXECUTABLE)));
+                }
+                String candidateUsersString = xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE,
+                    ATTRIBUTE_PROCESS_CANDIDATE_USERS);
+                if (!String.IsNullOrWhiteSpace(candidateUsersString))
+                {
+                    List<String> candidateUsers = BpmnXMLUtil.parseDelimitedList(candidateUsersString);
+                    process.setCandidateStarterUsers(candidateUsers);
+                }
+                String candidateGroupsString = xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE,
+                    ATTRIBUTE_PROCESS_CANDIDATE_GROUPS);
+                if (!String.IsNullOrWhiteSpace(candidateGroupsString))
+                {
+                    List<String> candidateGroups = BpmnXMLUtil.parseDelimitedList(candidateGroupsString);
+                    process.setCandidateStarterGroups(candidateGroups);
+                }
 
-      model.getProcesses().Add(process);
+                BpmnXMLUtil.addCustomAttributes(xtr, process, ProcessExport.defaultProcessAttributes);
 
+                model.getProcesses().Add(process);
+
+            }
+            return process;
+        }
     }
-    return process;
-  }
 }

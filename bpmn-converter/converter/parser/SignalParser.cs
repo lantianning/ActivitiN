@@ -17,34 +17,28 @@ using org.activiti.bpmn.constants;
 using org.activiti.bpmn.converter.util;
 using org.activiti.bpmn.model;
 
-namespace org.activiti.bpmn.converter.parser{
+namespace org.activiti.bpmn.converter.parser
+{
 
+    public class SignalParser : BpmnXMLConstants
+    {
 
+        public void parse(XMLStreamReader xtr, BpmnModel model)
+        {
+            String signalId = xtr.getAttributeValue(null, ATTRIBUTE_ID);
+            String signalName = xtr.getAttributeValue(null, ATTRIBUTE_NAME);
 
+            Signal signal = new Signal(signalId, signalName);
 
+            String scope = xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_SCOPE);
+            if (scope != null)
+            {
+                signal.setScope(scope);
+            }
 
-
-
-
-/**
- * //@author Tijs Rademakers
-
- */
-public class SignalParser : BpmnXMLConstants {
-  
-  public void parse(XMLStreamReader xtr, BpmnModel model) {
-    String signalId = xtr.getAttributeValue(null, ATTRIBUTE_ID);
-    String signalName = xtr.getAttributeValue(null, ATTRIBUTE_NAME);
-    
-    Signal signal = new Signal(signalId, signalName);
-    
-    String scope = xtr.getAttributeValue(ACTIVITI_EXTENSIONS_NAMESPACE, ATTRIBUTE_SCOPE);
-    if (scope != null) {
-      signal.setScope(scope);
+            BpmnXMLUtil.addXMLLocation(signal, xtr);
+            BpmnXMLUtil.parseChildElements(ELEMENT_SIGNAL, signal, xtr, model);
+            model.addSignal(signal);
+        }
     }
-    
-    BpmnXMLUtil.addXMLLocation(signal, xtr);
-    BpmnXMLUtil.parseChildElements(ELEMENT_SIGNAL, signal, xtr, model);
-    model.addSignal(signal);
-  }
 }

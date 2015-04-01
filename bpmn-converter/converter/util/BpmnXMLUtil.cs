@@ -11,82 +11,36 @@ using org.activiti.bpmn.model;
 
 namespace org.activiti.bpmn.converter.util{
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 public class BpmnXMLUtil : BpmnXMLConstants {
   
   private static Dictionary<String, BaseChildElementParser> genericChildParserMap = new Dictionary<String, BaseChildElementParser>();
   
-  static {
-    addGenericParser(new ActivitiEventListenerParser());
-    addGenericParser(new CancelEventDefinitionParser());
-    addGenericParser(new CompensateEventDefinitionParser());
-    addGenericParser(new ConditionExpressionParser());
-    addGenericParser(new DataInputAssociationParser());
-    addGenericParser(new DataOutputAssociationParser());
-    addGenericParser(new DataStateParser());
-    addGenericParser(new DocumentationParser());
-    addGenericParser(new ErrorEventDefinitionParser());
-    addGenericParser(new ExecutionListenerParser());
-    addGenericParser(new FieldExtensionParser());
-    addGenericParser(new FormPropertyParser());
-    addGenericParser(new IOSpecificationParser());
-    addGenericParser(new MessageEventDefinitionParser());
-    addGenericParser(new MultiInstanceParser());
-    addGenericParser(new SignalEventDefinitionParser());
-    addGenericParser(new TaskListenerParser());
-    addGenericParser(new TerminateEventDefinitionParser());
-    addGenericParser(new TimerEventDefinitionParser());
-    addGenericParser(new TimeDateParser());
-    addGenericParser(new TimeCycleParser());
-    addGenericParser(new TimeDurationParser());
-    addGenericParser(new FlowNodeRefParser());
-    addGenericParser(new ActivitiFailedjobRetryParser());
-  }
+  //static {
+  //  addGenericParser(new ActivitiEventListenerParser());
+  //  addGenericParser(new CancelEventDefinitionParser());
+  //  addGenericParser(new CompensateEventDefinitionParser());
+  //  addGenericParser(new ConditionExpressionParser());
+  //  addGenericParser(new DataInputAssociationParser());
+  //  addGenericParser(new DataOutputAssociationParser());
+  //  addGenericParser(new DataStateParser());
+  //  addGenericParser(new DocumentationParser());
+  //  addGenericParser(new ErrorEventDefinitionParser());
+  //  addGenericParser(new ExecutionListenerParser());
+  //  addGenericParser(new FieldExtensionParser());
+  //  addGenericParser(new FormPropertyParser());
+  //  addGenericParser(new IOSpecificationParser());
+  //  addGenericParser(new MessageEventDefinitionParser());
+  //  addGenericParser(new MultiInstanceParser());
+  //  addGenericParser(new SignalEventDefinitionParser());
+  //  addGenericParser(new TaskListenerParser());
+  //  addGenericParser(new TerminateEventDefinitionParser());
+  //  addGenericParser(new TimerEventDefinitionParser());
+  //  addGenericParser(new TimeDateParser());
+  //  addGenericParser(new TimeCycleParser());
+  //  addGenericParser(new TimeDurationParser());
+  //  addGenericParser(new FlowNodeRefParser());
+  //  addGenericParser(new ActivitiFailedjobRetryParser());
+  //}
   
   private static void addGenericParser(BaseChildElementParser parser) {
     genericChildParserMap.Add(parser.getElementName(), parser);
@@ -338,7 +292,7 @@ public class BpmnXMLUtil : BpmnXMLConstants {
    * //@param blackList
 
    */
-  public static void addCustomAttributes(XMLStreamReader xtr, BaseElement element, List<ExtensionAttribute>... blackLists) {
+  public static void addCustomAttributes(XMLStreamReader xtr, BaseElement element,params List<ExtensionAttribute>[] blackLists) {
     for (int i = 0; i < xtr.getAttributeCount(); i++) {
       ExtensionAttribute extensionAttribute = new ExtensionAttribute();
       extensionAttribute.setName(xtr.getAttributeLocalName(i));

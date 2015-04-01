@@ -36,10 +36,13 @@ namespace org.activiti.bpmn.converter.parser
     {
 
         public void parse(XMLStreamReader xtr, Process activeProcess, BpmnModel model)
-        private { Lane  lane  = new Lane  (); BpmnXMLUtil  . addXMLLocation  ( lane  , xtr  ); lane  .
-            setId  ( xtr  . getAttributeValue  (null, ATTRIBUTE_ID  )); lane  . setName  ( xtr  .
-            getAttributeValue  (null, ATTRIBUTE_NAME  )); lane  . setParentProcess  ( activeProcess  ); activeProcess  .
-            getLanes  (). add  ( lane  ); BpmnXMLUtil  . parseChildElements  ( ELEMENT_LANE  , lane  , xtr  , model  );
+        { Lane  lane  = new Lane  (); 
+            BpmnXMLUtil.addXMLLocation( lane  , xtr  ); 
+            lane.setId( xtr.getAttributeValue  (null, ATTRIBUTE_ID  )); 
+            lane.setName( xtr.getAttributeValue  (null, ATTRIBUTE_NAME  )); 
+            lane.setParentProcess  ( activeProcess  ); 
+            activeProcess.getLanes().Add( lane  ); 
+            BpmnXMLUtil.parseChildElements( ELEMENT_LANE  , lane  , xtr  , model  );
         }
     }
 }
