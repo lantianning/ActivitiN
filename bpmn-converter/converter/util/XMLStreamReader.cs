@@ -38,5 +38,45 @@ namespace bpmn_converter.converter.util
         {
             throw new NotImplementedException();
         }
+
+        public int getNamespaceCount()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getNamespacePrefix(int i)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getNamespaceURI(int i)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int getAttributeCount()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getAttributeLocalName(int i)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getAttributeNamespace(int p0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getAttributeValue(int p0)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getAttributePrefix(int p0)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

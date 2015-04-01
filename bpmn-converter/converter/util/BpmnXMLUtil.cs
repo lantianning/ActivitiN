@@ -369,7 +369,7 @@ public class BpmnXMLUtil : BpmnXMLConstants {
 
    */
   public static void writeCustomAttributes(Collection<List<ExtensionAttribute>> attributes, XMLStreamWriter xtw, Dictionary<String, String> namespaceMap,
-      List<ExtensionAttribute>... blackLists) {
+     params List<ExtensionAttribute>[] blackLists) {
     
     foreach (List<ExtensionAttribute> attributeList  in attributes) {
       if (attributeList != null && !attributeList.isEmpty()) {
@@ -382,7 +382,7 @@ public class BpmnXMLUtil : BpmnXMLConstants {
                 xtw.writeAttribute(attribute.getNamespace(), attribute.getName(), attribute.getValue());
               }
             } else {
-              if (!namespaceMap.containsKey(attribute.getNamespacePrefix())) {
+              if (!namespaceMap.ContainsKey(attribute.getNamespacePrefix())) {
                 namespaceMap.Add(attribute.getNamespacePrefix(), attribute.getNamespace());
                 xtw.writeNamespace(attribute.getNamespacePrefix(), attribute.getNamespace());
               }
@@ -395,9 +395,9 @@ public class BpmnXMLUtil : BpmnXMLConstants {
     }
   }
 
-  public static bool isBlacklisted(ExtensionAttribute attribute, List<ExtensionAttribute>... blackLists) {
+  public static bool isBlacklisted(ExtensionAttribute attribute, params List<ExtensionAttribute>[] blackLists) {
     if (blackLists != null) {
-      foreach (List<ExtensionAttribute> blackList  in blackLists) {
+      foreach (var blackList  in blackLists) {
         foreach (ExtensionAttribute blackAttribute  in blackList) {
           if (blackAttribute.getName().Equals(attribute.getName())) {
             if ( blackAttribute.getNamespace() != null && attribute.getNamespace() != null

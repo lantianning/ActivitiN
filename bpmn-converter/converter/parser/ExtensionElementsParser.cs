@@ -12,63 +12,66 @@
  */
 
 using System.Collections.Generic;
+using System.Linq;
 using bpmn_converter.converter.util;
 using org.activiti.bpmn.constants;
 using org.activiti.bpmn.converter.child;
 using org.activiti.bpmn.converter.util;
 using org.activiti.bpmn.model;
 
-namespace org.activiti.bpmn.converter.parser{
+namespace org.activiti.bpmn.converter.parser
+{
 
+    public class ExtensionElementsParser : BpmnXMLConstants
+    {
 
+        public void parse(XMLStreamReader xtr, List<SubProcess> activeSubProcessList, Process activeProcess,
+            BpmnModel model)
+        {
+            BaseElement parentElement = null;
+            if (activeSubProcessList.Any())
+            {
+                parentElement = activeSubProcessList[activeSubProcessList.Count - 1];
 
+            }
+            else
+            {
+                parentElement = activeProcess;
+            }
 
+            bool readyWithChildElements = false;
+            while (readyWithChildElements == false && xtr.hasNext())
+            {
+                xtr.next();
+                if (xtr.isStartElement())
+                {
+                    if (ELEMENT_EXECUTION_LISTENER.Equals(xtr.getLocalName()))
+                    {
+                        new ExecutionListenerParser().parseChildElement(xtr, parentElement, model);
+                    }
+                    else if (ELEMENT_EVENT_LISTENER.Equals(xtr.getLocalName()))
+                    {
+                        new ActivitiEventListenerParser().parseChildElement(xtr, parentElement, model);
+                    }
+                    else if (ELEMENT_POTENTIAL_STARTER.Equals(xtr.getLocalName()))
+                    {
+                        new PotentialStarterParser().parse(xtr, activeProcess);
+                    }
+                    else
+                    {
+                        ExtensionElement extensionElement = BpmnXMLUtil.parseExtensionElement(xtr);
+                        parentElement.addExtensionElement(extensionElement);
+                    }
 
-
-
-
-
-
-
-
-
-
-
-/**
- * //@author Tijs Rademakers
-
- */
-public class ExtensionElementsParser : BpmnXMLConstants {
-  
-  public void parse(XMLStreamReader xtr, List<SubProcess> activeSubProcessList, Process activeProcess, BpmnModel model) {
-    BaseElement parentElement = null;
-    if (!activeSubProcessList.isEmpty()) {
-      parentElement = activeSubProcessList.get(activeSubProcessList.size() - 1);
-      
-    } else {
-      parentElement = activeProcess;
-    }
-    
-    bool readyWithChildElements = false;
-    while (readyWithChildElements == false && xtr.hasNext()) {
-      xtr.next();
-      if (xtr.isStartElement()) {
-        if (ELEMENT_EXECUTION_LISTENER.Equals(xtr.getLocalName())) {
-          new ExecutionListenerParser().parseChildElement(xtr, parentElement, model);
-        } else if (ELEMENT_EVENT_LISTENER.Equals(xtr.getLocalName())){
-        	new ActivitiEventListenerParser().parseChildElement(xtr, parentElement, model);
-        } else if (ELEMENT_POTENTIAL_STARTER.Equals(xtr.getLocalName())){
-          new PotentialStarterParser().parse(xtr, activeProcess);
-        } else {
-          ExtensionElement extensionElement = BpmnXMLUtil.parseExtensionElement(xtr);
-          parentElement.addExtensionElement(extensionElement);
+                }
+                else if (xtr.isEndElement())
+                {
+                    if (ELEMENT_EXTENSIONS.Equals(xtr.getLocalName()))
+                    {
+                        readyWithChildElements = true;
+                    }
+                }
+            }
         }
-
-      } else if (xtr.isEndElement()) {
-        if (ELEMENT_EXTENSIONS.Equals(xtr.getLocalName())) {
-          readyWithChildElements = true;
-        }
-      }
     }
-  }
 }

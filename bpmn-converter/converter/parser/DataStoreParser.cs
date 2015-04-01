@@ -17,7 +17,8 @@ using org.activiti.bpmn.constants;
 using org.activiti.bpmn.converter.util;
 using org.activiti.bpmn.model;
 
-namespace org.activiti.bpmn.converter.parser{
+namespace org.activiti.bpmn.converter.parser
+{
 
 
 
@@ -31,30 +32,37 @@ namespace org.activiti.bpmn.converter.parser{
  * //@author Tijs Rademakers
 
  */
-public class DataStoreParser : BpmnXMLConstants {
-  
-  public void parse(XMLStreamReader xtr, BpmnModel model) {
-    String id = xtr.getAttributeValue(null, ATTRIBUTE_ID);
-    if (!String.IsNullOrWhiteSpace(id)) {
-      
-      DataStore dataStore = new DataStore();
-      dataStore.setId(xtr.getAttributeValue(null, ATTRIBUTE_ID));
-      
-      String name = xtr.getAttributeValue(null, ATTRIBUTE_NAME);
-      if (!String.IsNullOrWhiteSpace(name)) {
-        dataStore.setName(name);
-      }
-      
-      String itemSubjectRef = xtr.getAttributeValue(null, ATTRIBUTE_ITEM_SUBJECT_REF);
-      if (!String.IsNullOrWhiteSpace(itemSubjectRef)) {
-        dataStore.setItemSubjectRef(itemSubjectRef);
-      }
-      
-      BpmnXMLUtil.addXMLLocation(dataStore, xtr);
-      
-      model.addDataStore(dataStore.getId(), dataStore);
-      
-      BpmnXMLUtil.parseChildElements(ELEMENT_DATA_STORE, dataStore, xtr, model);
+
+    public class DataStoreParser : BpmnXMLConstants
+    {
+
+        public void parse(XMLStreamReader xtr, BpmnModel model)
+        {
+            String id = xtr.getAttributeValue(null, ATTRIBUTE_ID);
+            if (!String.IsNullOrWhiteSpace(id))
+            {
+
+                DataStore dataStore = new DataStore();
+                dataStore.setId(xtr.getAttributeValue(null, ATTRIBUTE_ID));
+
+                String name = xtr.getAttributeValue(null, ATTRIBUTE_NAME);
+                if (!String.IsNullOrWhiteSpace(name))
+                {
+                    dataStore.setName(name);
+                }
+
+                String itemSubjectRef = xtr.getAttributeValue(null, ATTRIBUTE_ITEM_SUBJECT_REF);
+                if (!String.IsNullOrWhiteSpace(itemSubjectRef))
+                {
+                    dataStore.setItemSubjectRef(itemSubjectRef);
+                }
+
+                BpmnXMLUtil.addXMLLocation(dataStore, xtr);
+
+                model.addDataStore(dataStore.getId(), dataStore);
+
+                BpmnXMLUtil.parseChildElements(ELEMENT_DATA_STORE, dataStore, xtr, model);
+            }
+        }
     }
-  }
 }

@@ -18,7 +18,8 @@ using org.activiti.bpmn.constants;
 using org.activiti.bpmn.converter.util;
 using org.activiti.bpmn.model;
 
-namespace org.activiti.bpmn.converter.parser{
+namespace org.activiti.bpmn.converter.parser
+{
 
 
 
@@ -35,38 +36,49 @@ namespace org.activiti.bpmn.converter.parser{
  * //@author Tijs Rademakers
 
  */
-public class DefinitionsParser : BpmnXMLConstants {
-  
-  protected static  List<ExtensionAttribute> defaultAttributes = Arrays.asList(
-      new ExtensionAttribute(TYPE_LANGUAGE_ATTRIBUTE), 
-      new ExtensionAttribute(EXPRESSION_LANGUAGE_ATTRIBUTE), 
-      new ExtensionAttribute(TARGET_NAMESPACE_ATTRIBUTE)
-  );
-  
-  //@SuppressWarnings("unchecked")
 
-  public void parse(XMLStreamReader xtr, BpmnModel model) {
-    model.setTargetNamespace(xtr.getAttributeValue(null, TARGET_NAMESPACE_ATTRIBUTE));
-    for (int i = 0; i < xtr.getNamespaceCount(); i++) {
-      String prefix = xtr.getNamespacePrefix(i);
-      if (!String.IsNullOrWhiteSpace(prefix)) {
-        model.addNamespace(prefix, xtr.getNamespaceURI(i));
-      }
+    public class DefinitionsParser : BpmnXMLConstants
+    {
+
+        protected static List<ExtensionAttribute> defaultAttributes = new List<ExtensionAttribute>()
+        {
+            new ExtensionAttribute(TYPE_LANGUAGE_ATTRIBUTE),
+            new ExtensionAttribute(EXPRESSION_LANGUAGE_ATTRIBUTE),
+            new ExtensionAttribute(TARGET_NAMESPACE_ATTRIBUTE)
+        };
+
+        //@SuppressWarnings("unchecked")
+
+        public void parse(XMLStreamReader xtr, BpmnModel model)
+        {
+            model.setTargetNamespace(xtr.getAttributeValue(null, TARGET_NAMESPACE_ATTRIBUTE));
+            for (int i = 0; i < xtr.getNamespaceCount(); i++)
+            {
+                String prefix = xtr.getNamespacePrefix(i);
+                if (!String.IsNullOrWhiteSpace(prefix))
+                {
+                    model.addNamespace(prefix, xtr.getNamespaceURI(i));
+                }
+            }
+
+            for (int i = 0; i < xtr.getAttributeCount(); i++)
+            {
+                ExtensionAttribute extensionAttribute = new ExtensionAttribute();
+                extensionAttribute.setName(xtr.getAttributeLocalName(i));
+                extensionAttribute.setValue(xtr.getAttributeValue(i));
+                if (!String.IsNullOrWhiteSpace(xtr.getAttributeNamespace(i)))
+                {
+                    extensionAttribute.setNamespace(xtr.getAttributeNamespace(i));
+                }
+                if (!String.IsNullOrWhiteSpace(xtr.getAttributePrefix(i)))
+                {
+                    extensionAttribute.setNamespacePrefix(xtr.getAttributePrefix(i));
+                }
+                if (!BpmnXMLUtil.isBlacklisted(extensionAttribute, defaultAttributes))
+                {
+                    model.addDefinitionsAttribute(extensionAttribute);
+                }
+            }
+        }
     }
-    
-    for (int i = 0; i < xtr.getAttributeCount(); i++) {
-      ExtensionAttribute extensionAttribute = new ExtensionAttribute();
-      extensionAttribute.setName(xtr.getAttributeLocalName(i));
-      extensionAttribute.setValue(xtr.getAttributeValue(i));
-      if (!String.IsNullOrWhiteSpace(xtr.getAttributeNamespace(i))) {
-        extensionAttribute.setNamespace(xtr.getAttributeNamespace(i));
-      }
-      if (!String.IsNullOrWhiteSpace(xtr.getAttributePrefix(i))) {
-        extensionAttribute.setNamespacePrefix(xtr.getAttributePrefix(i));
-      }
-      if (!BpmnXMLUtil.isBlacklisted(extensionAttribute, defaultAttributes)) {
-        model.addDefinitionsAttribute(extensionAttribute);
-      }
-    }
-  }
 }

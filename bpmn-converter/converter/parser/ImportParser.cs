@@ -16,27 +16,20 @@ using org.activiti.bpmn.constants;
 using org.activiti.bpmn.converter.util;
 using org.activiti.bpmn.model;
 
-namespace org.activiti.bpmn.converter.parser{
+namespace org.activiti.bpmn.converter.parser
+{
 
+    public class ImportParser : BpmnXMLConstants
+    {
 
-
-
-
-
-
-
-/**
- * //@author Tijs Rademakers
-
- */
-public class ImportParser : BpmnXMLConstants {
-  
-  public void parse(XMLStreamReader xtr, BpmnModel model) {
-    
-    BpmnXMLUtil.addXMLLocation(importObject, xtr);
-    importObject.setImportType(xtr.getAttributeValue(null, ATTRIBUTE_IMPORT_TYPE));
-    importObject.setNamespace(xtr.getAttributeValue(null, ATTRIBUTE_NAMESPACE));
-    importObject.setLocation(xtr.getAttributeValue(null, ATTRIBUTE_LOCATION));
-    model.getImports().Add(importObject);
-  }
+        public void parse(XMLStreamReader xtr, BpmnModel model)
+        {
+            Import importObject = new Import();
+            BpmnXMLUtil.addXMLLocation(importObject, xtr);
+            importObject.setImportType(xtr.getAttributeValue(null, ATTRIBUTE_IMPORT_TYPE));
+            importObject.setNamespace(xtr.getAttributeValue(null, ATTRIBUTE_NAMESPACE));
+            importObject.setLocation(xtr.getAttributeValue(null, ATTRIBUTE_LOCATION));
+            model.getImports().Add(importObject);
+        }
+    }
 }

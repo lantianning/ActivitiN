@@ -17,7 +17,8 @@ using org.activiti.bpmn.constants;
 using org.activiti.bpmn.converter.util;
 using org.activiti.bpmn.model;
 
-namespace org.activiti.bpmn.converter.parser{
+namespace org.activiti.bpmn.converter.parser
+{
 
 
 
@@ -33,36 +34,46 @@ namespace org.activiti.bpmn.converter.parser{
  * //@author Joram Barrez
 
  */
-public class BpmnShapeParser : BpmnXMLConstants {
-  
-  public void parse(XMLStreamReader xtr, BpmnModel model) {
-    
-  	String id = xtr.getAttributeValue(null, ATTRIBUTE_DI_BPMNELEMENT);
-  	GraphicInfo graphicInfo = new GraphicInfo();
-  	
-  	String strIsExpanded = xtr.getAttributeValue(null, ATTRIBUTE_DI_IS_EXPANDED);
-    if ("true".equalsIgnoreCase(strIsExpanded)) {
-      graphicInfo.setExpanded(true);
+
+    public class BpmnShapeParser : BpmnXMLConstants
+    {
+
+        public void parse(XMLStreamReader xtr, BpmnModel model)
+        {
+
+            String id = xtr.getAttributeValue(null, ATTRIBUTE_DI_BPMNELEMENT);
+            GraphicInfo graphicInfo = new GraphicInfo();
+
+            String strIsExpanded = xtr.getAttributeValue(null, ATTRIBUTE_DI_IS_EXPANDED);
+            if ("true".equalsIgnoreCase(strIsExpanded))
+            {
+                graphicInfo.setExpanded(true);
+            }
+
+            BpmnXMLUtil.addXMLLocation(graphicInfo, xtr);
+            while (xtr.hasNext())
+            {
+                xtr.next();
+                if (xtr.isStartElement() && ELEMENT_DI_BOUNDS.equalsIgnoreCase(xtr.getLocalName()))
+                {
+                    graphicInfo.setX(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_X)));
+                    graphicInfo.setY(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_Y)));
+                    graphicInfo.setWidth(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_WIDTH)));
+                    graphicInfo.setHeight(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_HEIGHT)));
+
+                    model.addGraphicInfo(id, graphicInfo);
+                    break;
+                }
+                else if (xtr.isEndElement() && ELEMENT_DI_SHAPE.equalsIgnoreCase(xtr.getLocalName()))
+                {
+                    break;
+                }
+            }
+        }
+
+        public BaseElement parseElement()
+        {
+            return null;
+        }
     }
-  	
-    BpmnXMLUtil.addXMLLocation(graphicInfo, xtr);
-		while (xtr.hasNext()) {
-			xtr.next();
-			if (xtr.isStartElement() && ELEMENT_DI_BOUNDS.equalsIgnoreCase(xtr.getLocalName())) {
-				graphicInfo.setX(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_X)));
-				graphicInfo.setY(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_Y)));
-				graphicInfo.setWidth(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_WIDTH)));
-				graphicInfo.setHeight(Double.Parse(xtr.getAttributeValue(null, ATTRIBUTE_DI_HEIGHT)));
-				
-				model.addGraphicInfo(id, graphicInfo);
-				break;
-			} else if (xtr.isEndElement() && ELEMENT_DI_SHAPE.equalsIgnoreCase(xtr.getLocalName())) {
-				break;
-			}
-		}
-  }
-  
-  public BaseElement parseElement() {
-  	return null;
-  }
 }
